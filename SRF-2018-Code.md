@@ -53,18 +53,12 @@ ChlA_Data_Porter <-
 
     ## Warning: Duplicated column names deduplicated: 'Site' => 'Site_1' [4]
 
-    ## Warning in rbind(names(probs), probs_f): number of columns of result is not
-    ## a multiple of vector length (arg 2)
-
-    ## Warning: 1 parsing failure.
-    ## row # A tibble: 1 x 5 col     row col        expected actual                       file              expected   <int> <chr>      <chr>    <chr>                        <chr>             actual 1    94 Volume Ad… a double added 5 mL water after Chl-… 'ChlA-Data/ChlA-… file # A tibble: 1 x 5
-
 ``` r
 ChlA_Data_Porter
 ```
 
     ## # A tibble: 72 x 15
-    ## # Groups:   Date_collected, Site_1 [21]
+    ## # Groups:   Date_collected, Site_1 [20]
     ##    Site  Date_collected Date_processed Site_1 `Cobble#_SID` `Pool/Riffle`
     ##    <chr> <chr>          <chr>          <chr>          <dbl> <chr>        
     ##  1 Port… 5/1/18         5/2/18         Frog_…             1 riffle       
@@ -87,28 +81,44 @@ Summarized ChlA Data
 
 ``` r
 Summarized_ChlA_Data <- ChlA_Data_Porter %>%
-  group_by(Date_collected) %>%
+  group_by(Date_collected, Site_1) %>%
   summarise(mean_ChlA_area = mean(Chla_area))
 Summarized_ChlA_Data
 ```
 
-    ## # A tibble: 5 x 2
-    ##   Date_collected mean_ChlA_area
-    ##   <chr>                   <dbl>
-    ## 1 5/1/18                  0.258
-    ## 2 5/18/18                 0.150
-    ## 3 6/13/18                 0.277
-    ## 4 7/13/18                 0.417
-    ## 5 8/8/18                  0.536
+    ## # A tibble: 20 x 3
+    ## # Groups:   Date_collected [?]
+    ##    Date_collected Site_1           mean_ChlA_area
+    ##    <chr>          <chr>                     <dbl>
+    ##  1 5/1/18         Frog_Legs_18.1           0.389 
+    ##  2 5/1/18         Golf_Ball_18.3           0.230 
+    ##  3 5/1/18         Jesus_Toast_18.2         0.208 
+    ##  4 5/1/18         Waterfall_18.4           0.205 
+    ##  5 5/18/18        Frog_Legs_18.1           0.244 
+    ##  6 5/18/18        Golf_Ball_18.3           0.116 
+    ##  7 5/18/18        Jesus_Toast_18.2         0.157 
+    ##  8 5/18/18        Waterfall_18.4           0.0860
+    ##  9 6/13/18        Frog_Legs_18.1           0.236 
+    ## 10 6/13/18        Golf_Ball_18.3           0.263 
+    ## 11 6/13/18        Jesus_Toast_18.2         0.300 
+    ## 12 6/13/18        Waterfall_18.4           0.249 
+    ## 13 7/13/18        Frog_Legs_18.1           0.312 
+    ## 14 7/13/18        Golf_Ball_18.3           0.384 
+    ## 15 7/13/18        Jesus_Toast_18.2         0.546 
+    ## 16 7/13/18        Waterfall_18.4           0.289 
+    ## 17 8/8/18         Frog_Legs_18.1           0.379 
+    ## 18 8/8/18         Golf_Ball_18.3           0.535 
+    ## 19 8/8/18         Jesus_Toast_18.2         0.545 
+    ## 20 8/8/18         Waterfall_18.4           0.609
 
 Plotting ChlA vs Time
 ---------------------
 
 ``` r
 ChlA_Graph <- Summarized_ChlA_Data %>%
-  ggplot(aes(x = Date_collected, y = mean_ChlA_area, group = 1)) +
-  geom_line(color = "blue") +
-  geom_point() +
+  ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
   ggtitle("Chlorophyll-A Measurements vs Time")
 ChlA_Graph
@@ -167,31 +177,41 @@ Summarizing AFD Data
 ``` r
 Summarized_AFD_Data <- AFD_Data_Porter %>%
   filter(!AFD_Weight_g == "NA") %>%
-  group_by(Date_collected) %>%
+  group_by(Date_collected, Site_1) %>%
   summarise(mean_diff = mean(Difference))
 Summarized_AFD_Data
 ```
 
-    ## # A tibble: 5 x 2
-    ##   Date_collected mean_diff
-    ##   <chr>              <dbl>
-    ## 1 5/1/18           0.00269
-    ## 2 5/18/18          0.00249
-    ## 3 6/13/18          0.00323
-    ## 4 7/13/18          0.00475
-    ## 5 8/8/18           0.00361
+    ## # A tibble: 21 x 3
+    ## # Groups:   Date_collected [?]
+    ##    Date_collected Site_1           mean_diff
+    ##    <chr>          <chr>                <dbl>
+    ##  1 5/1/18         Frog_Legs_18.1     0.004  
+    ##  2 5/1/18         Golf_Ball_18.3     0.00222
+    ##  3 5/1/18         Jesus_Toast_18.2   0.00228
+    ##  4 5/1/18         Waterfall_18.4     0.00225
+    ##  5 5/18/18        Frog_Legs_18.1     0.00288
+    ##  6 5/18/18        Golf_Ball_18.3     0.0019 
+    ##  7 5/18/18        Jesus_Toast_18.2   0.00282
+    ##  8 5/18/18        Waterfall_18.4     0.00238
+    ##  9 6/13/18        Frog_Legs_18.1     0.0018 
+    ## 10 6/13/18        Golf_Ball_18.3     0.00267
+    ## # ... with 11 more rows
 
 Plotting AFD vs Time
 --------------------
 
 ``` r
 AFD_Graph <- Summarized_AFD_Data %>%
-  ggplot(aes(x = Date_collected, y = mean_diff, group = 1)) +
-  geom_line(color = "blue") +
-  geom_point() +
+  ggplot(aes(x = Date_collected, y = mean_diff)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
   ggtitle("Ash Free Dry Mass Measurements vs Time")
 AFD_Graph
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-7-1.png)
+
+Dissolved Oxygen Data
+=====================

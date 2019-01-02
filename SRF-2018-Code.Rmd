@@ -29,7 +29,7 @@ ChlA_Data_Porter
 ##Summarized ChlA Data
 ```{r}
 Summarized_ChlA_Data <- ChlA_Data_Porter %>%
-  group_by(Date_collected) %>%
+  group_by(Date_collected, Site_1) %>%
   summarise(mean_ChlA_area = mean(Chla_area))
 Summarized_ChlA_Data
 ```
@@ -37,9 +37,9 @@ Summarized_ChlA_Data
 ##Plotting ChlA vs Time
 ```{r}
 ChlA_Graph <- Summarized_ChlA_Data %>%
-  ggplot(aes(x = Date_collected, y = mean_ChlA_area, group = 1)) +
-  geom_line(color = "blue") +
-  geom_point() +
+  ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
   ggtitle("Chlorophyll-A Measurements vs Time")
 ChlA_Graph
@@ -60,7 +60,7 @@ AFD_Data_Porter
 ```{r}
 Summarized_AFD_Data <- AFD_Data_Porter %>%
   filter(!AFD_Weight_g == "NA") %>%
-  group_by(Date_collected) %>%
+  group_by(Date_collected, Site_1) %>%
   summarise(mean_diff = mean(Difference))
 Summarized_AFD_Data
 ```
@@ -68,10 +68,15 @@ Summarized_AFD_Data
 ##Plotting AFD vs Time
 ```{r}
 AFD_Graph <- Summarized_AFD_Data %>%
-  ggplot(aes(x = Date_collected, y = mean_diff, group = 1)) +
-  geom_line(color = "blue") +
-  geom_point() +
+  ggplot(aes(x = Date_collected, y = mean_diff)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
   ggtitle("Ash Free Dry Mass Measurements vs Time")
 AFD_Graph
+```
+
+#Dissolved Oxygen Data
+```{r}
+
 ```
