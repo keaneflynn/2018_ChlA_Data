@@ -26,23 +26,44 @@ ChlA_Data_Porter <-
 ChlA_Data_Porter
 ```
 
-##Summarized ChlA Data
+##Summarized ChlA Data (Pool)
 ```{r}
-Summarized_ChlA_Data <- ChlA_Data_Porter %>%
+Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
+  filter(Pool_or_Riffle == "pool") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_ChlA_area = mean(Chla_area))
-Summarized_ChlA_Data
+Summarized_ChlA_Data_Pool
 ```
 
-##Plotting ChlA vs Time
+##Plotting ChlA vs Time (Pool)
 ```{r}
-ChlA_Graph <- Summarized_ChlA_Data %>%
+ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Pool)") +
   ggtitle("Chlorophyll-A Measurements vs Time")
-ChlA_Graph
+ChlA_Graph_Pool
+```
+
+##Summarized ChlA Data (Riffe)
+```{r}
+Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_ChlA_area = mean(Chla_area))
+Summarized_ChlA_Data_Pool
+```
+
+##Plotting ChlA vs Time (Riffle)
+```{r}
+ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
+  ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Riffle)") +
+  ggtitle("Chlorophyll-A Measurements vs Time")
+ChlA_Graph_Pool
 ```
 
 #AFD Data
@@ -56,27 +77,74 @@ AFD_Data_Porter <-
 AFD_Data_Porter
 ```
 
-##Summarizing AFD Data
+##Summarizing AFD Data (Pool)
 ```{r}
-Summarized_AFD_Data <- AFD_Data_Porter %>%
+Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
+  filter(Pool_or_Riffle == "pool") %>%
   filter(!AFD_Weight_g == "NA") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_diff = mean(Difference))
-Summarized_AFD_Data
+Summarized_AFD_Data_Pool
 ```
 
-##Plotting AFD vs Time
+##Plotting AFD vs Time (Pool)
 ```{r}
-AFD_Graph <- Summarized_AFD_Data %>%
+AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
-  ggtitle("Ash Free Dry Mass Measurements vs Time")
-AFD_Graph
+  ggtitle("Ash Free Dry Mass Measurements vs Time (Pool)")
+AFD_Graph_Pool
+```
+
+##Summarizing AFD Data (Riffle)
+```{r}
+Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  filter(!AFD_Weight_g == "NA") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_diff = mean(Difference))
+Summarized_AFD_Data_Pool
+```
+
+##Plotting AFD vs Time (Riffle)
+```{r}
+AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
+  ggplot(aes(x = Date_collected, y = mean_diff)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
+  labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
+  ggtitle("Ash Free Dry Mass Measurements vs Time (Riffle)")
+AFD_Graph_Pool
 ```
 
 #Dissolved Oxygen Data
 ```{r}
+DO_Data_Porter <-
+  readr::read_csv(file = "Photosynthesis/2018-Photosynthesis.csv",
+                  col_types = "ccccdcddddcdddcdddcdddccdddddcdddddd") %>%
+  filter(Stream == "Porter") %>%
+  mutate(Max_Depth_DO = (MaxDepth_DO1 + MaxDepth_DO2 + MaxDepth_DO3)/3) %>%
+  select(Stream, Date, Site_Name, Site_Num, Pool_Riffle, Max_Depth_DO, Light_Do_s, Light_DO_e, Dark_Do_s, Dark_DO_e)
+DO_Data_Porter
+```
 
+##Dissolved Oxygen (Pool)
+```{r}
+DO_Data_Porter_Pool <- DO_Data_Porter %>%
+  filter(Pool_Riffle == "P") %>%
+  group_by(Stream, Date, Site_Name, Site_Num, Pool_Riffle) %>%
+  summarise(Max_Depth_DO = mean(Max_Depth_DO), Light_Do_s = mean(Light_Do_s), Light_DO_e = mean(Light_DO_e), Dark_Do_s = mean(Dark_Do_s), Dark_DO_e = mean(Dark_DO_e)) %>%
+  arrange(Date, Site_Num)
+DO_Data_Porter_Pool
+```
+
+##Plotting Max Depth DO (Pool)
+```{r}
+DO_Graph_Pool <- DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Max_Depth_DO)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+DO_Graph_Pool
 ```

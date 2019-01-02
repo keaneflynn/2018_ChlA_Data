@@ -1,4 +1,4 @@
-Site,Date_collected,Date_processed,Site,Cobble#_SID,Pool/Riffle,Volume (mL),Volume Added,Canister_#,Chla_reading,Total_Chla_extracted,Total_Chla_in_Sample,Chla_area,Cobble Area,Notes
+Site,Date_collected,Date_processed,Site,Cobble_SID,Pool_or_Riffle,Volume_mL,Volume_Added_mL,Canister_Num,Chla_reading,Total_Chla_extracted,Total_Chla_in_Sample,Chla_area,Cobble_Area,Notes
 Elder_Below,4/28/18,5/2/18,Rock_Rose_18.4,1,riffle,26.5,0,13,42.06,0.4206,1.11459,0.03046160153,36.59,"flourometer callibrated before sample read: 1:30pm, H=77.72, L=11.28"
 Elder_Below,4/28/18,5/2/18,Rock_Rose_18.4,3,riffle,30,0,8,17.87,0.1787,0.5361,0.01843471683,29.081,
 Elder_Below,4/28/18,5/2/18,Rock_Rose_18.4,7,pool,38,0,2,173.31,1.7331,6.58578,0.115765438,56.889,

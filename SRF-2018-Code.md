@@ -59,72 +59,120 @@ ChlA_Data_Porter
 
     ## # A tibble: 72 x 15
     ## # Groups:   Date_collected, Site_1 [20]
-    ##    Site  Date_collected Date_processed Site_1 `Cobble#_SID` `Pool/Riffle`
-    ##    <chr> <chr>          <chr>          <chr>          <dbl> <chr>        
-    ##  1 Port… 5/1/18         5/2/18         Frog_…             1 riffle       
-    ##  2 Port… 5/1/18         5/2/18         Frog_…             5 riffle       
-    ##  3 Port… 5/1/18         5/2/18         Frog_…             7 pool         
-    ##  4 Port… 5/1/18         5/2/18         Frog_…            11 pool         
-    ##  5 Port… 5/1/18         5/2/18         Jesus…             8 riffle       
-    ##  6 Port… 5/1/18         5/2/18         Jesus…             9 riffle       
-    ##  7 Port… 5/1/18         5/2/18         Jesus…            15 pool         
-    ##  8 Port… 5/1/18         5/2/18         Jesus…            16 pool         
-    ##  9 Port… 5/1/18         5/2/18         Golf_…             4 riffle       
-    ## 10 Port… 5/1/18         5/2/18         Golf_…             6 riffle       
-    ## # ... with 62 more rows, and 9 more variables: `Volume (mL)` <dbl>,
-    ## #   `Volume Added` <dbl>, `Canister_#` <dbl>, Chla_reading <dbl>,
+    ##    Site  Date_collected Date_processed Site_1 Cobble_SID Pool_or_Riffle
+    ##    <chr> <chr>          <chr>          <chr>       <dbl> <chr>         
+    ##  1 Port… 5/1/18         5/2/18         Frog_…          1 riffle        
+    ##  2 Port… 5/1/18         5/2/18         Frog_…          5 riffle        
+    ##  3 Port… 5/1/18         5/2/18         Frog_…          7 pool          
+    ##  4 Port… 5/1/18         5/2/18         Frog_…         11 pool          
+    ##  5 Port… 5/1/18         5/2/18         Jesus…          8 riffle        
+    ##  6 Port… 5/1/18         5/2/18         Jesus…          9 riffle        
+    ##  7 Port… 5/1/18         5/2/18         Jesus…         15 pool          
+    ##  8 Port… 5/1/18         5/2/18         Jesus…         16 pool          
+    ##  9 Port… 5/1/18         5/2/18         Golf_…          4 riffle        
+    ## 10 Port… 5/1/18         5/2/18         Golf_…          6 riffle        
+    ## # ... with 62 more rows, and 9 more variables: Volume_mL <dbl>,
+    ## #   Volume_Added_mL <dbl>, Canister_Num <dbl>, Chla_reading <dbl>,
     ## #   Total_Chla_extracted <dbl>, Total_Chla_in_Sample <dbl>,
-    ## #   Chla_area <dbl>, `Cobble Area` <dbl>, Notes <chr>
+    ## #   Chla_area <dbl>, Cobble_Area <dbl>, Notes <chr>
 
-Summarized ChlA Data
---------------------
+Summarized ChlA Data (Pool)
+---------------------------
 
 ``` r
-Summarized_ChlA_Data <- ChlA_Data_Porter %>%
+Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
+  filter(Pool_or_Riffle == "pool") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_ChlA_area = mean(Chla_area))
-Summarized_ChlA_Data
+Summarized_ChlA_Data_Pool
 ```
 
     ## # A tibble: 20 x 3
     ## # Groups:   Date_collected [?]
     ##    Date_collected Site_1           mean_ChlA_area
     ##    <chr>          <chr>                     <dbl>
-    ##  1 5/1/18         Frog_Legs_18.1           0.389 
-    ##  2 5/1/18         Golf_Ball_18.3           0.230 
-    ##  3 5/1/18         Jesus_Toast_18.2         0.208 
-    ##  4 5/1/18         Waterfall_18.4           0.205 
-    ##  5 5/18/18        Frog_Legs_18.1           0.244 
-    ##  6 5/18/18        Golf_Ball_18.3           0.116 
-    ##  7 5/18/18        Jesus_Toast_18.2         0.157 
-    ##  8 5/18/18        Waterfall_18.4           0.0860
-    ##  9 6/13/18        Frog_Legs_18.1           0.236 
-    ## 10 6/13/18        Golf_Ball_18.3           0.263 
-    ## 11 6/13/18        Jesus_Toast_18.2         0.300 
-    ## 12 6/13/18        Waterfall_18.4           0.249 
-    ## 13 7/13/18        Frog_Legs_18.1           0.312 
-    ## 14 7/13/18        Golf_Ball_18.3           0.384 
-    ## 15 7/13/18        Jesus_Toast_18.2         0.546 
-    ## 16 7/13/18        Waterfall_18.4           0.289 
+    ##  1 5/1/18         Frog_Legs_18.1           0.0551
+    ##  2 5/1/18         Golf_Ball_18.3           0.135 
+    ##  3 5/1/18         Jesus_Toast_18.2         0.133 
+    ##  4 5/1/18         Waterfall_18.4           0.285 
+    ##  5 5/18/18        Frog_Legs_18.1           0.208 
+    ##  6 5/18/18        Golf_Ball_18.3           0.150 
+    ##  7 5/18/18        Jesus_Toast_18.2         0.180 
+    ##  8 5/18/18        Waterfall_18.4           0.0639
+    ##  9 6/13/18        Frog_Legs_18.1           0.239 
+    ## 10 6/13/18        Golf_Ball_18.3           0.186 
+    ## 11 6/13/18        Jesus_Toast_18.2         0.277 
+    ## 12 6/13/18        Waterfall_18.4           0.413 
+    ## 13 7/13/18        Frog_Legs_18.1           0.363 
+    ## 14 7/13/18        Golf_Ball_18.3           0.398 
+    ## 15 7/13/18        Jesus_Toast_18.2         0.701 
+    ## 16 7/13/18        Waterfall_18.4           0.378 
     ## 17 8/8/18         Frog_Legs_18.1           0.379 
     ## 18 8/8/18         Golf_Ball_18.3           0.535 
     ## 19 8/8/18         Jesus_Toast_18.2         0.545 
     ## 20 8/8/18         Waterfall_18.4           0.609
 
-Plotting ChlA vs Time
----------------------
+Plotting ChlA vs Time (Pool)
+----------------------------
 
 ``` r
-ChlA_Graph <- Summarized_ChlA_Data %>%
+ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Pool)") +
   ggtitle("Chlorophyll-A Measurements vs Time")
-ChlA_Graph
+ChlA_Graph_Pool
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
+Summarized ChlA Data (Riffe)
+----------------------------
+
+``` r
+Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_ChlA_area = mean(Chla_area))
+Summarized_ChlA_Data_Pool
+```
+
+    ## # A tibble: 16 x 3
+    ## # Groups:   Date_collected [?]
+    ##    Date_collected Site_1           mean_ChlA_area
+    ##    <chr>          <chr>                     <dbl>
+    ##  1 5/1/18         Frog_Legs_18.1           0.724 
+    ##  2 5/1/18         Golf_Ball_18.3           0.325 
+    ##  3 5/1/18         Jesus_Toast_18.2         0.284 
+    ##  4 5/1/18         Waterfall_18.4           0.125 
+    ##  5 5/18/18        Frog_Legs_18.1           0.281 
+    ##  6 5/18/18        Golf_Ball_18.3           0.0815
+    ##  7 5/18/18        Jesus_Toast_18.2         0.135 
+    ##  8 5/18/18        Waterfall_18.4           0.108 
+    ##  9 6/13/18        Frog_Legs_18.1           0.234 
+    ## 10 6/13/18        Golf_Ball_18.3           0.341 
+    ## 11 6/13/18        Jesus_Toast_18.2         0.323 
+    ## 12 6/13/18        Waterfall_18.4           0.0853
+    ## 13 7/13/18        Frog_Legs_18.1           0.261 
+    ## 14 7/13/18        Golf_Ball_18.3           0.371 
+    ## 15 7/13/18        Jesus_Toast_18.2         0.392 
+    ## 16 7/13/18        Waterfall_18.4           0.200
+
+Plotting ChlA vs Time (Riffle)
+------------------------------
+
+``` r
+ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
+  ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Riffle)") +
+  ggtitle("Chlorophyll-A Measurements vs Time")
+ChlA_Graph_Pool
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
 AFD Data
 ========
@@ -155,7 +203,7 @@ AFD_Data_Porter
 ```
 
     ## # A tibble: 72 x 7
-    ## # Groups:   Date_collected, Site_1 [21]
+    ## # Groups:   Date_collected, Site_1 [20]
     ##    Date_collected Site_1 Cobble_SID Pool_or_Riffle Dry_Weight_g
     ##    <chr>          <chr>       <dbl> <chr>                 <dbl>
     ##  1 5/1/18         Frog_…          1 riffle                 1.14
@@ -171,47 +219,257 @@ AFD_Data_Porter
     ## # ... with 62 more rows, and 2 more variables: AFD_Weight_g <dbl>,
     ## #   Difference <dbl>
 
-Summarizing AFD Data
---------------------
+Summarizing AFD Data (Pool)
+---------------------------
 
 ``` r
-Summarized_AFD_Data <- AFD_Data_Porter %>%
+Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
+  filter(Pool_or_Riffle == "pool") %>%
   filter(!AFD_Weight_g == "NA") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_diff = mean(Difference))
-Summarized_AFD_Data
+Summarized_AFD_Data_Pool
 ```
 
-    ## # A tibble: 21 x 3
+    ## # A tibble: 20 x 3
     ## # Groups:   Date_collected [?]
     ##    Date_collected Site_1           mean_diff
     ##    <chr>          <chr>                <dbl>
-    ##  1 5/1/18         Frog_Legs_18.1     0.004  
-    ##  2 5/1/18         Golf_Ball_18.3     0.00222
-    ##  3 5/1/18         Jesus_Toast_18.2   0.00228
-    ##  4 5/1/18         Waterfall_18.4     0.00225
-    ##  5 5/18/18        Frog_Legs_18.1     0.00288
-    ##  6 5/18/18        Golf_Ball_18.3     0.0019 
-    ##  7 5/18/18        Jesus_Toast_18.2   0.00282
-    ##  8 5/18/18        Waterfall_18.4     0.00238
-    ##  9 6/13/18        Frog_Legs_18.1     0.0018 
-    ## 10 6/13/18        Golf_Ball_18.3     0.00267
-    ## # ... with 11 more rows
+    ##  1 5/1/18         Frog_Legs_18.1     0.00155
+    ##  2 5/1/18         Golf_Ball_18.3     0.00225
+    ##  3 5/1/18         Jesus_Toast_18.2   0.0022 
+    ##  4 5/1/18         Waterfall_18.4     0.0025 
+    ##  5 5/18/18        Frog_Legs_18.1     0.00350
+    ##  6 5/18/18        Golf_Ball_18.3     0.00215
+    ##  7 5/18/18        Jesus_Toast_18.2   0.00295
+    ##  8 5/18/18        Waterfall_18.4     0.0024 
+    ##  9 6/13/18        Frog_Legs_18.1     0.003  
+    ## 10 6/13/18        Golf_Ball_18.3     0.0009 
+    ## 11 6/13/18        Jesus_Toast_18.2   0.0017 
+    ## 12 6/13/18        Waterfall_18.4     0.0049 
+    ## 13 7/13/18        Frog_Legs_18.1     0.00365
+    ## 14 7/13/18        Golf_Ball_18.3     0.00375
+    ## 15 7/13/18        Jesus_Toast_18.2   0.00795
+    ## 16 7/13/18        Waterfall_18.4     0.00535
+    ## 17 8/8/18         Frog_Legs_18.1     0.00315
+    ## 18 8/8/18         Golf_Ball_18.3     0.0024 
+    ## 19 8/8/18         Jesus_Toast_18.2   0.00445
+    ## 20 8/8/18         Waterfall_18.4     0.00445
 
-Plotting AFD vs Time
---------------------
+Plotting AFD vs Time (Pool)
+---------------------------
 
 ``` r
-AFD_Graph <- Summarized_AFD_Data %>%
+AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
-  ggtitle("Ash Free Dry Mass Measurements vs Time")
-AFD_Graph
+  ggtitle("Ash Free Dry Mass Measurements vs Time (Pool)")
+AFD_Graph_Pool
 ```
 
-![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+Summarizing AFD Data (Riffle)
+-----------------------------
+
+``` r
+Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  filter(!AFD_Weight_g == "NA") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_diff = mean(Difference))
+Summarized_AFD_Data_Pool
+```
+
+    ## # A tibble: 16 x 3
+    ## # Groups:   Date_collected [?]
+    ##    Date_collected Site_1           mean_diff
+    ##    <chr>          <chr>                <dbl>
+    ##  1 5/1/18         Frog_Legs_18.1     0.00645
+    ##  2 5/1/18         Golf_Ball_18.3     0.0022 
+    ##  3 5/1/18         Jesus_Toast_18.2   0.00235
+    ##  4 5/1/18         Waterfall_18.4     0.002  
+    ##  5 5/18/18        Frog_Legs_18.1     0.00225
+    ##  6 5/18/18        Golf_Ball_18.3     0.00165
+    ##  7 5/18/18        Jesus_Toast_18.2   0.0027 
+    ##  8 5/18/18        Waterfall_18.4     0.00235
+    ##  9 6/13/18        Frog_Legs_18.1     0.0012 
+    ## 10 6/13/18        Golf_Ball_18.3     0.00355
+    ## 11 6/13/18        Jesus_Toast_18.2   0.0008 
+    ## 12 6/13/18        Waterfall_18.4     0.0115 
+    ## 13 7/13/18        Frog_Legs_18.1     0.0046 
+    ## 14 7/13/18        Golf_Ball_18.3     0.004  
+    ## 15 7/13/18        Jesus_Toast_18.2   0.00625
+    ## 16 7/13/18        Waterfall_18.4     0.00245
+
+Plotting AFD vs Time (Riffle)
+-----------------------------
+
+``` r
+AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
+  ggplot(aes(x = Date_collected, y = mean_diff)) +
+  geom_line(aes(group = Site_1, color = Site_1)) +
+  geom_point(aes(shape = Site_1)) +
+  labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
+  ggtitle("Ash Free Dry Mass Measurements vs Time (Riffle)")
+AFD_Graph_Pool
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 Dissolved Oxygen Data
 =====================
+
+``` r
+DO_Data_Porter <-
+  readr::read_csv(file = "Photosynthesis/2018-Photosynthesis.csv",
+                  col_types = "ccccdcddddcdddcdddcdddccdddddcdddddd") %>%
+  filter(Stream == "Porter") %>%
+  mutate(Max_Depth_DO = (MaxDepth_DO1 + MaxDepth_DO2 + MaxDepth_DO3)/3) %>%
+  select(Stream, Date, Site_Name, Site_Num, Pool_Riffle, Max_Depth_DO, Light_Do_s, Light_DO_e, Dark_Do_s, Dark_DO_e)
+```
+
+    ## Warning in rbind(names(probs), probs_f): number of columns of result is not
+    ## a multiple of vector length (arg 1)
+
+    ## Warning: 49 parsing failures.
+    ## row # A tibble: 5 x 5 col     row col        expected actual            file                         expected   <int> <chr>      <chr>    <chr>             <chr>                        actual 1     1 MaxDepth_… a double n/a (did not mea… 'Photosynthesis/2018-Photos… file 2     1 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos… row 3     1 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos… col 4     2 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos… expected 5     2 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos…
+    ## ... ................. ... .......................................................................... ........ .......................................................................... ...... .......................................................................... .... .......................................................................... ... .......................................................................... ... .......................................................................... ........ ..........................................................................
+    ## See problems(...) for more details.
+
+``` r
+DO_Data_Porter
+```
+
+    ## # A tibble: 72 x 10
+    ##    Stream Date  Site_Name Site_Num Pool_Riffle Max_Depth_DO Light_Do_s
+    ##    <chr>  <chr> <chr>        <dbl> <chr>              <dbl>      <dbl>
+    ##  1 Porter 5/1/… Frog_Legs     18.1 R                   10.4       10.0
+    ##  2 Porter 5/1/… Frog_Legs     18.1 R                   10.4       10.6
+    ##  3 Porter 5/1/… Frog_Legs     18.1 P                   10.4       10.6
+    ##  4 Porter 5/1/… Frog_Legs     18.1 P                   10.4       10.6
+    ##  5 Porter 5/1/… Jesus_To…     18.2 R                   10.1       10.4
+    ##  6 Porter 5/1/… Jesus_To…     18.2 R                   10.1       10.5
+    ##  7 Porter 5/1/… Jesus_To…     18.2 P                   10.1       10.5
+    ##  8 Porter 5/1/… Jesus_To…     18.2 P                   10.1       10.5
+    ##  9 Porter 5/1/… Golf_Ball     18.3 R                   10.0       10.6
+    ## 10 Porter 5/1/… Golf_Ball     18.3 R                   10.0       10.5
+    ## # ... with 62 more rows, and 3 more variables: Light_DO_e <dbl>,
+    ## #   Dark_Do_s <dbl>, Dark_DO_e <chr>
+
+Dissolved Oxygen (Pool)
+-----------------------
+
+``` r
+DO_Data_Porter_Pool <- DO_Data_Porter %>%
+  filter(Pool_Riffle == "P") %>%
+  group_by(Stream, Date, Site_Name, Site_Num, Pool_Riffle) %>%
+  summarise(Max_Depth_DO = mean(Max_Depth_DO), Light_Do_s = mean(Light_Do_s), Light_DO_e = mean(Light_DO_e), Dark_Do_s = mean(Dark_Do_s), Dark_DO_e = mean(Dark_DO_e)) %>%
+  arrange(Date, Site_Num)
+```
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
+    ## returning NA
+
+``` r
+DO_Data_Porter_Pool
+```
+
+    ## # A tibble: 20 x 10
+    ## # Groups:   Stream, Date, Site_Name, Site_Num [20]
+    ##    Stream Date  Site_Name Site_Num Pool_Riffle Max_Depth_DO Light_Do_s
+    ##    <chr>  <chr> <chr>        <dbl> <chr>              <dbl>      <dbl>
+    ##  1 Porter 5/1/… Frog_Legs     18.1 P                  10.4       10.6 
+    ##  2 Porter 5/1/… Jesus_To…     18.2 P                  10.1       10.5 
+    ##  3 Porter 5/1/… Golf_Ball     18.3 P                  10.0       10.5 
+    ##  4 Porter 5/1/… Waterfall     18.4 P                   9.90      10.4 
+    ##  5 Porter 5/18… Frog_Legs     18.1 P                  10.2       10.3 
+    ##  6 Porter 5/18… Jesus_To…     18.2 P                   9.92      10.0 
+    ##  7 Porter 5/18… Golf_Ball     18.3 P                   9.65       9.89
+    ##  8 Porter 5/18… Waterfall     18.4 P                   9.52       9.62
+    ##  9 Porter 6/13… Frog_Legs     18.1 P                  10.3       10.0 
+    ## 10 Porter 6/13… Jesus_To…     18.2 P                  10.3       10.0 
+    ## 11 Porter 6/13… Golf_Ball     18.3 P                  10.3       10.8 
+    ## 12 Porter 6/13… Waterfall     18.4 P                   8.31      10.4 
+    ## 13 Porter 7/13… Frog_Legs     18.1 P                   7.84       7.76
+    ## 14 Porter 7/13… Jesus_To…     18.2 P                   8.51       7.94
+    ## 15 Porter 7/13… Golf_Ball     18.3 P                  10.8       10.7 
+    ## 16 Porter 7/13… Waterfall     18.4 P                   7.60       6.68
+    ## 17 Porter 8/8/… Frog_Legs     18.1 P                   3.17       4.34
+    ## 18 Porter 8/8/… Jesus_To…     18.2 P                   7.90       8.68
+    ## 19 Porter 8/8/… Golf_Ball     18.3 P                   5.83       6.30
+    ## 20 Porter 8/8/… Waterfall     18.4 P                   9.33       9.46
+    ## # ... with 3 more variables: Light_DO_e <dbl>, Dark_Do_s <dbl>,
+    ## #   Dark_DO_e <dbl>
+
+Plotting Max Depth DO (Pool)
+----------------------------
+
+``` r
+DO_Graph_Pool <- DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Max_Depth_DO)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+DO_Graph_Pool
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-14-1.png)
