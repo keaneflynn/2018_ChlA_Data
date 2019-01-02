@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -219,7 +219,7 @@ Dissolved Oxygen Data
 ``` r
 DO_Data_Porter <-
   readr::read_csv(file = "Photosynthesis/2018-Photosynthesis.csv",
-                  col_types = "ccccdcddddcdddcdddcdddccdddddcdddddd") %>%
+                  col_types = "ccccdcddddcdddcdddcdddcddddddcdddddd") %>%
   filter(Stream == "Porter") %>%
   mutate(Max_Depth_DO = (MaxDepth_DO1 + MaxDepth_DO2 + MaxDepth_DO3)/3) %>%
   select(Stream, Date, Site_Name, Site_Num, Pool_Riffle, Max_Depth_DO, Light_Do_s, Light_DO_e, Dark_Do_s, Dark_DO_e)
@@ -228,7 +228,7 @@ DO_Data_Porter <-
     ## Warning in rbind(names(probs), probs_f): number of columns of result is not
     ## a multiple of vector length (arg 1)
 
-    ## Warning: 49 parsing failures.
+    ## Warning: 50 parsing failures.
     ## row # A tibble: 5 x 5 col     row col        expected actual            file                         expected   <int> <chr>      <chr>    <chr>             <chr>                        actual 1     1 MaxDepth_… a double n/a (did not mea… 'Photosynthesis/2018-Photos… file 2     1 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos… row 3     1 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos… col 4     2 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos… expected 5     2 MaxDepth_… a double n/a               'Photosynthesis/2018-Photos…
     ## ... ................. ... .......................................................................... ........ .......................................................................... ...... .......................................................................... .... .......................................................................... ... .......................................................................... ... .......................................................................... ........ ..........................................................................
     ## See problems(...) for more details.
@@ -251,80 +251,17 @@ DO_Data_Porter
     ##  9 Porter 5/1/… Golf_Ball     18.3 R                   10.0       10.6
     ## 10 Porter 5/1/… Golf_Ball     18.3 R                   10.0       10.5
     ## # ... with 62 more rows, and 3 more variables: Light_DO_e <dbl>,
-    ## #   Dark_Do_s <dbl>, Dark_DO_e <chr>
+    ## #   Dark_Do_s <dbl>, Dark_DO_e <dbl>
 
 Dissolved Oxygen (Pool)
 -----------------------
 
 ``` r
-MaxDepth_DO_Data_Porter_Pool <- DO_Data_Porter %>%
+Summary_DO_Data_Porter_Pool <- DO_Data_Porter %>%
   group_by(Stream, Date, Site_Name, Site_Num) %>%
   summarise(Max_Depth_DO = mean(Max_Depth_DO), Light_Do_s = mean(Light_Do_s), Light_DO_e = mean(Light_DO_e), Dark_Do_s = mean(Dark_Do_s), Dark_DO_e = mean(Dark_DO_e)) %>%
   arrange(Date, Site_Num)
-```
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-    ## Warning in mean.default(Dark_DO_e): argument is not numeric or logical:
-    ## returning NA
-
-``` r
-MaxDepth_DO_Data_Porter_Pool
+Summary_DO_Data_Porter_Pool
 ```
 
     ## # A tibble: 20 x 9
@@ -357,7 +294,7 @@ Plotting Max Depth DO (Pool)
 ----------------------------
 
 ``` r
-DO_Graph_Pool <- MaxDepth_DO_Data_Porter_Pool %>%
+DO_Graph_Pool <- Summary_DO_Data_Porter_Pool %>%
   ggplot(aes(Date, Max_Depth_DO)) +
   geom_line(aes(group = Site_Name, color = Site_Name)) +
   geom_point(aes(shape = Site_Name))

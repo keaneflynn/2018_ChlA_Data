@@ -113,7 +113,7 @@ AFD_Graph_Riffle
 ```{r}
 DO_Data_Porter <-
   readr::read_csv(file = "Photosynthesis/2018-Photosynthesis.csv",
-                  col_types = "ccccdcddddcdddcdddcdddccdddddcdddddd") %>%
+                  col_types = "ccccdcddddcdddcdddcdddcddddddcdddddd") %>%
   filter(Stream == "Porter") %>%
   mutate(Max_Depth_DO = (MaxDepth_DO1 + MaxDepth_DO2 + MaxDepth_DO3)/3) %>%
   select(Stream, Date, Site_Name, Site_Num, Pool_Riffle, Max_Depth_DO, Light_Do_s, Light_DO_e, Dark_Do_s, Dark_DO_e)
