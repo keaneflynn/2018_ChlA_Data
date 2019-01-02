@@ -122,16 +122,16 @@ DO_Data_Porter
 
 ##Dissolved Oxygen (Pool)
 ```{r}
-MaxDepth_DO_Data_Porter_Pool <- DO_Data_Porter %>%
+Summary_DO_Data_Porter_Pool <- DO_Data_Porter %>%
   group_by(Stream, Date, Site_Name, Site_Num) %>%
   summarise(Max_Depth_DO = mean(Max_Depth_DO), Light_Do_s = mean(Light_Do_s), Light_DO_e = mean(Light_DO_e), Dark_Do_s = mean(Dark_Do_s), Dark_DO_e = mean(Dark_DO_e)) %>%
   arrange(Date, Site_Num)
-MaxDepth_DO_Data_Porter_Pool
+Summary_DO_Data_Porter_Pool
 ```
 
 ##Plotting Max Depth DO (Pool)
 ```{r}
-DO_Graph_Pool <- MaxDepth_DO_Data_Porter_Pool %>%
+DO_Graph_Pool <- Summary_DO_Data_Porter_Pool %>%
   ggplot(aes(Date, Max_Depth_DO)) +
   geom_line(aes(group = Site_Name, color = Site_Name)) +
   geom_point(aes(shape = Site_Name))
