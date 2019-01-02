@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ───────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ──────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -76,41 +76,20 @@ ChlA_Data_Porter
     ## #   Total_Chla_extracted <dbl>, Total_Chla_in_Sample <dbl>,
     ## #   Chla_area <dbl>, Cobble_Area <dbl>, Notes <chr>
 
-Summarized ChlA Data (Pool)
----------------------------
+Summarized ChlA Data
+--------------------
 
 ``` r
 Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
   filter(Pool_or_Riffle == "pool") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_ChlA_area = mean(Chla_area))
-Summarized_ChlA_Data_Pool
-```
 
-    ## # A tibble: 20 x 3
-    ## # Groups:   Date_collected [?]
-    ##    Date_collected Site_1           mean_ChlA_area
-    ##    <chr>          <chr>                     <dbl>
-    ##  1 5/1/18         Frog_Legs_18.1           0.0551
-    ##  2 5/1/18         Golf_Ball_18.3           0.135 
-    ##  3 5/1/18         Jesus_Toast_18.2         0.133 
-    ##  4 5/1/18         Waterfall_18.4           0.285 
-    ##  5 5/18/18        Frog_Legs_18.1           0.208 
-    ##  6 5/18/18        Golf_Ball_18.3           0.150 
-    ##  7 5/18/18        Jesus_Toast_18.2         0.180 
-    ##  8 5/18/18        Waterfall_18.4           0.0639
-    ##  9 6/13/18        Frog_Legs_18.1           0.239 
-    ## 10 6/13/18        Golf_Ball_18.3           0.186 
-    ## 11 6/13/18        Jesus_Toast_18.2         0.277 
-    ## 12 6/13/18        Waterfall_18.4           0.413 
-    ## 13 7/13/18        Frog_Legs_18.1           0.363 
-    ## 14 7/13/18        Golf_Ball_18.3           0.398 
-    ## 15 7/13/18        Jesus_Toast_18.2         0.701 
-    ## 16 7/13/18        Waterfall_18.4           0.378 
-    ## 17 8/8/18         Frog_Legs_18.1           0.379 
-    ## 18 8/8/18         Golf_Ball_18.3           0.535 
-    ## 19 8/8/18         Jesus_Toast_18.2         0.545 
-    ## 20 8/8/18         Waterfall_18.4           0.609
+Summarized_ChlA_Data_Riffle <- ChlA_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_ChlA_area = mean(Chla_area))
+```
 
 Plotting ChlA vs Time (Pool)
 ----------------------------
@@ -120,59 +99,27 @@ ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Pool)") +
-  ggtitle("Chlorophyll-A Measurements vs Time")
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
+  ggtitle("Chlorophyll-A Measurements vs Time (Pool)")
 ChlA_Graph_Pool
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
-Summarized ChlA Data (Riffe)
-----------------------------
-
-``` r
-Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
-  filter(Pool_or_Riffle == "riffle") %>%
-  group_by(Date_collected, Site_1) %>%
-  summarise(mean_ChlA_area = mean(Chla_area))
-Summarized_ChlA_Data_Pool
-```
-
-    ## # A tibble: 16 x 3
-    ## # Groups:   Date_collected [?]
-    ##    Date_collected Site_1           mean_ChlA_area
-    ##    <chr>          <chr>                     <dbl>
-    ##  1 5/1/18         Frog_Legs_18.1           0.724 
-    ##  2 5/1/18         Golf_Ball_18.3           0.325 
-    ##  3 5/1/18         Jesus_Toast_18.2         0.284 
-    ##  4 5/1/18         Waterfall_18.4           0.125 
-    ##  5 5/18/18        Frog_Legs_18.1           0.281 
-    ##  6 5/18/18        Golf_Ball_18.3           0.0815
-    ##  7 5/18/18        Jesus_Toast_18.2         0.135 
-    ##  8 5/18/18        Waterfall_18.4           0.108 
-    ##  9 6/13/18        Frog_Legs_18.1           0.234 
-    ## 10 6/13/18        Golf_Ball_18.3           0.341 
-    ## 11 6/13/18        Jesus_Toast_18.2         0.323 
-    ## 12 6/13/18        Waterfall_18.4           0.0853
-    ## 13 7/13/18        Frog_Legs_18.1           0.261 
-    ## 14 7/13/18        Golf_Ball_18.3           0.371 
-    ## 15 7/13/18        Jesus_Toast_18.2         0.392 
-    ## 16 7/13/18        Waterfall_18.4           0.200
-
 Plotting ChlA vs Time (Riffle)
 ------------------------------
 
 ``` r
-ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
+ChlA_Graph_Riffle <- Summarized_ChlA_Data_Riffle %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Riffle)") +
-  ggtitle("Chlorophyll-A Measurements vs Time")
-ChlA_Graph_Pool
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
+  ggtitle("Chlorophyll-A Measurements vs Time (Riffle)")
+ChlA_Graph_Riffle
 ```
 
-![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 AFD Data
 ========
@@ -228,33 +175,13 @@ Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
   filter(!AFD_Weight_g == "NA") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_diff = mean(Difference))
-Summarized_AFD_Data_Pool
-```
 
-    ## # A tibble: 20 x 3
-    ## # Groups:   Date_collected [?]
-    ##    Date_collected Site_1           mean_diff
-    ##    <chr>          <chr>                <dbl>
-    ##  1 5/1/18         Frog_Legs_18.1     0.00155
-    ##  2 5/1/18         Golf_Ball_18.3     0.00225
-    ##  3 5/1/18         Jesus_Toast_18.2   0.0022 
-    ##  4 5/1/18         Waterfall_18.4     0.0025 
-    ##  5 5/18/18        Frog_Legs_18.1     0.00350
-    ##  6 5/18/18        Golf_Ball_18.3     0.00215
-    ##  7 5/18/18        Jesus_Toast_18.2   0.00295
-    ##  8 5/18/18        Waterfall_18.4     0.0024 
-    ##  9 6/13/18        Frog_Legs_18.1     0.003  
-    ## 10 6/13/18        Golf_Ball_18.3     0.0009 
-    ## 11 6/13/18        Jesus_Toast_18.2   0.0017 
-    ## 12 6/13/18        Waterfall_18.4     0.0049 
-    ## 13 7/13/18        Frog_Legs_18.1     0.00365
-    ## 14 7/13/18        Golf_Ball_18.3     0.00375
-    ## 15 7/13/18        Jesus_Toast_18.2   0.00795
-    ## 16 7/13/18        Waterfall_18.4     0.00535
-    ## 17 8/8/18         Frog_Legs_18.1     0.00315
-    ## 18 8/8/18         Golf_Ball_18.3     0.0024 
-    ## 19 8/8/18         Jesus_Toast_18.2   0.00445
-    ## 20 8/8/18         Waterfall_18.4     0.00445
+Summarized_AFD_Data_Riffle <- AFD_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  filter(!AFD_Weight_g == "NA") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_diff = mean(Difference))
+```
 
 Plotting AFD vs Time (Pool)
 ---------------------------
@@ -269,55 +196,22 @@ AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
 AFD_Graph_Pool
 ```
 
-![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-9-1.png)
-
-Summarizing AFD Data (Riffle)
------------------------------
-
-``` r
-Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
-  filter(Pool_or_Riffle == "riffle") %>%
-  filter(!AFD_Weight_g == "NA") %>%
-  group_by(Date_collected, Site_1) %>%
-  summarise(mean_diff = mean(Difference))
-Summarized_AFD_Data_Pool
-```
-
-    ## # A tibble: 16 x 3
-    ## # Groups:   Date_collected [?]
-    ##    Date_collected Site_1           mean_diff
-    ##    <chr>          <chr>                <dbl>
-    ##  1 5/1/18         Frog_Legs_18.1     0.00645
-    ##  2 5/1/18         Golf_Ball_18.3     0.0022 
-    ##  3 5/1/18         Jesus_Toast_18.2   0.00235
-    ##  4 5/1/18         Waterfall_18.4     0.002  
-    ##  5 5/18/18        Frog_Legs_18.1     0.00225
-    ##  6 5/18/18        Golf_Ball_18.3     0.00165
-    ##  7 5/18/18        Jesus_Toast_18.2   0.0027 
-    ##  8 5/18/18        Waterfall_18.4     0.00235
-    ##  9 6/13/18        Frog_Legs_18.1     0.0012 
-    ## 10 6/13/18        Golf_Ball_18.3     0.00355
-    ## 11 6/13/18        Jesus_Toast_18.2   0.0008 
-    ## 12 6/13/18        Waterfall_18.4     0.0115 
-    ## 13 7/13/18        Frog_Legs_18.1     0.0046 
-    ## 14 7/13/18        Golf_Ball_18.3     0.004  
-    ## 15 7/13/18        Jesus_Toast_18.2   0.00625
-    ## 16 7/13/18        Waterfall_18.4     0.00245
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 Plotting AFD vs Time (Riffle)
 -----------------------------
 
 ``` r
-AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
+AFD_Graph_Riffle <- Summarized_AFD_Data_Riffle %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
   ggtitle("Ash Free Dry Mass Measurements vs Time (Riffle)")
-AFD_Graph_Pool
+AFD_Graph_Riffle
 ```
 
-![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 Dissolved Oxygen Data
 =====================
@@ -363,9 +257,8 @@ Dissolved Oxygen (Pool)
 -----------------------
 
 ``` r
-DO_Data_Porter_Pool <- DO_Data_Porter %>%
-  filter(Pool_Riffle == "P") %>%
-  group_by(Stream, Date, Site_Name, Site_Num, Pool_Riffle) %>%
+MaxDepth_DO_Data_Porter_Pool <- DO_Data_Porter %>%
+  group_by(Stream, Date, Site_Name, Site_Num) %>%
   summarise(Max_Depth_DO = mean(Max_Depth_DO), Light_Do_s = mean(Light_Do_s), Light_DO_e = mean(Light_DO_e), Dark_Do_s = mean(Dark_Do_s), Dark_DO_e = mean(Dark_DO_e)) %>%
   arrange(Date, Site_Num)
 ```
@@ -431,45 +324,44 @@ DO_Data_Porter_Pool <- DO_Data_Porter %>%
     ## returning NA
 
 ``` r
-DO_Data_Porter_Pool
+MaxDepth_DO_Data_Porter_Pool
 ```
 
-    ## # A tibble: 20 x 10
-    ## # Groups:   Stream, Date, Site_Name, Site_Num [20]
-    ##    Stream Date  Site_Name Site_Num Pool_Riffle Max_Depth_DO Light_Do_s
-    ##    <chr>  <chr> <chr>        <dbl> <chr>              <dbl>      <dbl>
-    ##  1 Porter 5/1/… Frog_Legs     18.1 P                  10.4       10.6 
-    ##  2 Porter 5/1/… Jesus_To…     18.2 P                  10.1       10.5 
-    ##  3 Porter 5/1/… Golf_Ball     18.3 P                  10.0       10.5 
-    ##  4 Porter 5/1/… Waterfall     18.4 P                   9.90      10.4 
-    ##  5 Porter 5/18… Frog_Legs     18.1 P                  10.2       10.3 
-    ##  6 Porter 5/18… Jesus_To…     18.2 P                   9.92      10.0 
-    ##  7 Porter 5/18… Golf_Ball     18.3 P                   9.65       9.89
-    ##  8 Porter 5/18… Waterfall     18.4 P                   9.52       9.62
-    ##  9 Porter 6/13… Frog_Legs     18.1 P                  10.3       10.0 
-    ## 10 Porter 6/13… Jesus_To…     18.2 P                  10.3       10.0 
-    ## 11 Porter 6/13… Golf_Ball     18.3 P                  10.3       10.8 
-    ## 12 Porter 6/13… Waterfall     18.4 P                   8.31      10.4 
-    ## 13 Porter 7/13… Frog_Legs     18.1 P                   7.84       7.76
-    ## 14 Porter 7/13… Jesus_To…     18.2 P                   8.51       7.94
-    ## 15 Porter 7/13… Golf_Ball     18.3 P                  10.8       10.7 
-    ## 16 Porter 7/13… Waterfall     18.4 P                   7.60       6.68
-    ## 17 Porter 8/8/… Frog_Legs     18.1 P                   3.17       4.34
-    ## 18 Porter 8/8/… Jesus_To…     18.2 P                   7.90       8.68
-    ## 19 Porter 8/8/… Golf_Ball     18.3 P                   5.83       6.30
-    ## 20 Porter 8/8/… Waterfall     18.4 P                   9.33       9.46
-    ## # ... with 3 more variables: Light_DO_e <dbl>, Dark_Do_s <dbl>,
-    ## #   Dark_DO_e <dbl>
+    ## # A tibble: 20 x 9
+    ## # Groups:   Stream, Date, Site_Name [20]
+    ##    Stream Date  Site_Name Site_Num Max_Depth_DO Light_Do_s Light_DO_e
+    ##    <chr>  <chr> <chr>        <dbl>        <dbl>      <dbl>      <dbl>
+    ##  1 Porter 5/1/… Frog_Legs     18.1        10.4       10.5       11.1 
+    ##  2 Porter 5/1/… Jesus_To…     18.2        10.1       10.5       11.4 
+    ##  3 Porter 5/1/… Golf_Ball     18.3        10.0       10.5       11.3 
+    ##  4 Porter 5/1/… Waterfall     18.4         9.90      10.3       11.7 
+    ##  5 Porter 5/18… Frog_Legs     18.1        10.2       10.3       10.5 
+    ##  6 Porter 5/18… Jesus_To…     18.2         9.92      10         10.4 
+    ##  7 Porter 5/18… Golf_Ball     18.3         9.65       9.84      10.3 
+    ##  8 Porter 5/18… Waterfall     18.4         9.52       9.62       9.96
+    ##  9 Porter 6/13… Frog_Legs     18.1        10.3       10.0       10.2 
+    ## 10 Porter 6/13… Jesus_To…     18.2        10.3       10.0       10.9 
+    ## 11 Porter 6/13… Golf_Ball     18.3        10.3       10.8       11.5 
+    ## 12 Porter 6/13… Waterfall     18.4         8.31      10.4       10.9 
+    ## 13 Porter 7/13… Frog_Legs     18.1         7.84       7.72       8.34
+    ## 14 Porter 7/13… Jesus_To…     18.2         8.51       7.96       9.44
+    ## 15 Porter 7/13… Golf_Ball     18.3        10.8       10.6       11.7 
+    ## 16 Porter 7/13… Waterfall     18.4         7.60       6.77       8.12
+    ## 17 Porter 8/8/… Frog_Legs     18.1         3.17       4.34       6.02
+    ## 18 Porter 8/8/… Jesus_To…     18.2         7.90       8.68       9.65
+    ## 19 Porter 8/8/… Golf_Ball     18.3         5.83       6.30       6.96
+    ## 20 Porter 8/8/… Waterfall     18.4         9.33       9.46      10.5 
+    ## # ... with 2 more variables: Dark_Do_s <dbl>, Dark_DO_e <dbl>
 
 Plotting Max Depth DO (Pool)
 ----------------------------
 
 ``` r
-DO_Graph_Pool <- DO_Data_Porter_Pool %>%
+DO_Graph_Pool <- MaxDepth_DO_Data_Porter_Pool %>%
   ggplot(aes(Date, Max_Depth_DO)) +
   geom_line(aes(group = Site_Name, color = Site_Name)) +
   geom_point(aes(shape = Site_Name))
 DO_Graph_Pool
 ```
 
-![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-12-1.png)

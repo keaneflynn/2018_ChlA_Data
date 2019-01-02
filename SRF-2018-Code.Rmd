@@ -26,13 +26,17 @@ ChlA_Data_Porter <-
 ChlA_Data_Porter
 ```
 
-##Summarized ChlA Data (Pool)
+##Summarized ChlA Data
 ```{r}
 Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
   filter(Pool_or_Riffle == "pool") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_ChlA_area = mean(Chla_area))
-Summarized_ChlA_Data_Pool
+
+Summarized_ChlA_Data_Riffle <- ChlA_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_ChlA_area = mean(Chla_area))
 ```
 
 ##Plotting ChlA vs Time (Pool)
@@ -41,29 +45,20 @@ ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Pool)") +
-  ggtitle("Chlorophyll-A Measurements vs Time")
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
+  ggtitle("Chlorophyll-A Measurements vs Time (Pool)")
 ChlA_Graph_Pool
-```
-
-##Summarized ChlA Data (Riffe)
-```{r}
-Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
-  filter(Pool_or_Riffle == "riffle") %>%
-  group_by(Date_collected, Site_1) %>%
-  summarise(mean_ChlA_area = mean(Chla_area))
-Summarized_ChlA_Data_Pool
 ```
 
 ##Plotting ChlA vs Time (Riffle)
 ```{r}
-ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
+ChlA_Graph_Riffle <- Summarized_ChlA_Data_Riffle %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble (Riffle)") +
-  ggtitle("Chlorophyll-A Measurements vs Time")
-ChlA_Graph_Pool
+  labs(x = "Date", y = "Average Chlorophyll-A Reading per Unit Area of Cobble") +
+  ggtitle("Chlorophyll-A Measurements vs Time (Riffle)")
+ChlA_Graph_Riffle
 ```
 
 #AFD Data
@@ -84,7 +79,12 @@ Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
   filter(!AFD_Weight_g == "NA") %>%
   group_by(Date_collected, Site_1) %>%
   summarise(mean_diff = mean(Difference))
-Summarized_AFD_Data_Pool
+
+Summarized_AFD_Data_Riffle <- AFD_Data_Porter %>%
+  filter(Pool_or_Riffle == "riffle") %>%
+  filter(!AFD_Weight_g == "NA") %>%
+  group_by(Date_collected, Site_1) %>%
+  summarise(mean_diff = mean(Difference))
 ```
 
 ##Plotting AFD vs Time (Pool)
@@ -98,25 +98,15 @@ AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
 AFD_Graph_Pool
 ```
 
-##Summarizing AFD Data (Riffle)
-```{r}
-Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
-  filter(Pool_or_Riffle == "riffle") %>%
-  filter(!AFD_Weight_g == "NA") %>%
-  group_by(Date_collected, Site_1) %>%
-  summarise(mean_diff = mean(Difference))
-Summarized_AFD_Data_Pool
-```
-
 ##Plotting AFD vs Time (Riffle)
 ```{r}
-AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
+AFD_Graph_Riffle <- Summarized_AFD_Data_Riffle %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
   labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
   ggtitle("Ash Free Dry Mass Measurements vs Time (Riffle)")
-AFD_Graph_Pool
+AFD_Graph_Riffle
 ```
 
 #Dissolved Oxygen Data
@@ -132,17 +122,16 @@ DO_Data_Porter
 
 ##Dissolved Oxygen (Pool)
 ```{r}
-DO_Data_Porter_Pool <- DO_Data_Porter %>%
-  filter(Pool_Riffle == "P") %>%
-  group_by(Stream, Date, Site_Name, Site_Num, Pool_Riffle) %>%
+MaxDepth_DO_Data_Porter_Pool <- DO_Data_Porter %>%
+  group_by(Stream, Date, Site_Name, Site_Num) %>%
   summarise(Max_Depth_DO = mean(Max_Depth_DO), Light_Do_s = mean(Light_Do_s), Light_DO_e = mean(Light_DO_e), Dark_Do_s = mean(Dark_Do_s), Dark_DO_e = mean(Dark_DO_e)) %>%
   arrange(Date, Site_Num)
-DO_Data_Porter_Pool
+MaxDepth_DO_Data_Porter_Pool
 ```
 
 ##Plotting Max Depth DO (Pool)
 ```{r}
-DO_Graph_Pool <- DO_Data_Porter_Pool %>%
+DO_Graph_Pool <- MaxDepth_DO_Data_Porter_Pool %>%
   ggplot(aes(Date, Max_Depth_DO)) +
   geom_line(aes(group = Site_Name, color = Site_Name)) +
   geom_point(aes(shape = Site_Name))
