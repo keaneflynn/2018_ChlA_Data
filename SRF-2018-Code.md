@@ -191,7 +191,7 @@ AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
+  labs(x = "Date", y = "Average Ash Free Dry Mass (Grams)") +
   ggtitle("Ash Free Dry Mass Measurements vs Time (Pool)")
 AFD_Graph_Pool
 ```
@@ -206,7 +206,7 @@ AFD_Graph_Riffle <- Summarized_AFD_Data_Riffle %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
   geom_line(aes(group = Site_1, color = Site_1)) +
   geom_point(aes(shape = Site_1)) +
-  labs(x = "Date", y = "Average Chlorophyll Mass Collected per Cobble") +
+  labs(x = "Date", y = "Average Ash Free Dry Mass (Grams)") +
   ggtitle("Ash Free Dry Mass Measurements vs Time (Riffle)")
 AFD_Graph_Riffle
 ```
