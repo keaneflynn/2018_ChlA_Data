@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ───────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ──────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -40,8 +40,11 @@ library(tidyverse)
 library(ggplot2)
 ```
 
+Productivity Data
+=================
+
 ChlA Data
-=========
+---------
 
 ``` r
 ChlA_Data_Porter <- 
@@ -76,8 +79,7 @@ ChlA_Data_Porter
     ## #   Total_Chla_extracted <dbl>, Total_Chla_in_Sample <dbl>,
     ## #   Chla_area <dbl>, Cobble_Area <dbl>, Notes <chr>
 
-Summarized ChlA Data
---------------------
+### Summarized ChlA Data
 
 ``` r
 Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
@@ -91,8 +93,7 @@ Summarized_ChlA_Data_Riffle <- ChlA_Data_Porter %>%
   summarise(mean_ChlA_area = mean(Chla_area))
 ```
 
-Plotting ChlA vs Time (Pool)
-----------------------------
+### Plotting ChlA vs Time (Pool)
 
 ``` r
 ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
@@ -106,8 +107,7 @@ ChlA_Graph_Pool
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
-Plotting ChlA vs Time (Riffle)
-------------------------------
+### Plotting ChlA vs Time (Riffle)
 
 ``` r
 ChlA_Graph_Riffle <- Summarized_ChlA_Data_Riffle %>%
@@ -122,7 +122,7 @@ ChlA_Graph_Riffle
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 AFD Data
-========
+--------
 
 ``` r
 AFD_Data_Porter <-
@@ -166,8 +166,7 @@ AFD_Data_Porter
     ## # ... with 62 more rows, and 2 more variables: AFD_Weight_g <dbl>,
     ## #   Difference <dbl>
 
-Summarizing AFD Data (Pool)
----------------------------
+### Summarizing AFD Data (Pool)
 
 ``` r
 Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
@@ -183,8 +182,7 @@ Summarized_AFD_Data_Riffle <- AFD_Data_Porter %>%
   summarise(mean_diff = mean(Difference))
 ```
 
-Plotting AFD vs Time (Pool)
----------------------------
+### Plotting AFD vs Time (Pool)
 
 ``` r
 AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
@@ -198,8 +196,7 @@ AFD_Graph_Pool
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
-Plotting AFD vs Time (Riffle)
------------------------------
+### Plotting AFD vs Time (Riffle)
 
 ``` r
 AFD_Graph_Riffle <- Summarized_AFD_Data_Riffle %>%
@@ -354,3 +351,68 @@ Dark_DO_e_Graph
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-16-1.png)
+
+Electrofishing Data
+===================
+
+``` r
+EFishing_Data <-
+  readr::read_csv(file = "FishPopulation/EFishingData2018.csv") %>%
+  filter(Stream == "Porter") %>%
+  arrange(Date, Unit, Fish_Num, Pass_Num)
+```
+
+    ## Warning: Missing column names filled in: 'X36' [36], 'X37' [37],
+    ## 'X38' [38], 'X39' [39], 'X40' [40]
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_character(),
+    ##   Fish_Num_Per_Site = col_integer(),
+    ##   Fish_Num = col_integer(),
+    ##   Stage = col_double(),
+    ##   Width_1 = col_double(),
+    ##   Width_2 = col_double(),
+    ##   Width_3 = col_double(),
+    ##   Max_Depth_cm = col_integer(),
+    ##   DS_RCT_cm = col_integer(),
+    ##   Fat1 = col_double(),
+    ##   Fat2 = col_double(),
+    ##   Fat3 = col_double(),
+    ##   Fat4 = col_double(),
+    ##   Fat5 = col_double(),
+    ##   Fat6 = col_double(),
+    ##   Fat7 = col_double(),
+    ##   Fat8 = col_double(),
+    ##   Fat_AVG = col_double(),
+    ##   X39 = col_double(),
+    ##   X40 = col_integer()
+    ## )
+
+    ## See spec(...) for full column specifications.
+
+``` r
+EFishing_Data
+```
+
+    ## # A tibble: 524 x 40
+    ##    Date  Stream Unit  Fish_Num_Per_Si… Fish_Num Pass_Num Time_Per_Pass_S…
+    ##    <chr> <chr>  <chr>            <int>    <int> <chr>    <chr>           
+    ##  1 5/23… Porter 18.1…               51      120 1        289             
+    ##  2 5/23… Porter 18.1…               52      121 1        289             
+    ##  3 5/23… Porter 18.1…               53      122 1        289             
+    ##  4 5/23… Porter 18.1…               54      123 1        289             
+    ##  5 5/23… Porter 18.1…               55      124 1        289             
+    ##  6 5/23… Porter 18.1…               56      125 1        289             
+    ##  7 5/23… Porter 18.1…               57      126 1        289             
+    ##  8 5/23… Porter 18.1…               58      127 1        289             
+    ##  9 5/23… Porter 18.1…               59      128 1        289             
+    ## 10 5/23… Porter 18.1…               60      129 1        289             
+    ## # ... with 514 more rows, and 33 more variables: Start_Time <chr>,
+    ## #   End_Time <chr>, Length_mm <chr>, Weight_g <chr>, Species <chr>,
+    ## #   Recapture <chr>, PIT <chr>, Fecal_Num <chr>, Mort <chr>, Notes <chr>,
+    ## #   Fin <chr>, Stage <dbl>, `Pool Length` <chr>, Width_1 <dbl>,
+    ## #   Width_2 <dbl>, Width_3 <dbl>, Max_Depth_cm <int>, DS_RCT_cm <int>,
+    ## #   `SeaGrant HabID` <chr>, Fat1 <dbl>, Fat2 <dbl>, Fat3 <dbl>,
+    ## #   Fat4 <dbl>, Fat5 <dbl>, Fat6 <dbl>, Fat7 <dbl>, Fat8 <dbl>,
+    ## #   Fat_AVG <dbl>, X36 <chr>, X37 <chr>, X38 <chr>, X39 <dbl>, X40 <int>

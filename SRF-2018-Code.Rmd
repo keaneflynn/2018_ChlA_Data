@@ -16,7 +16,9 @@ library(tidyverse)
 library(ggplot2)
 ```
 
-#ChlA Data
+#Productivity Data
+
+##ChlA Data
 ```{r}
 ChlA_Data_Porter <- 
   readr::read_csv(file = "ChlA-Data/ChlA-Data.csv",
@@ -26,7 +28,7 @@ ChlA_Data_Porter <-
 ChlA_Data_Porter
 ```
 
-##Summarized ChlA Data
+###Summarized ChlA Data
 ```{r}
 Summarized_ChlA_Data_Pool <- ChlA_Data_Porter %>%
   filter(Pool_or_Riffle == "pool") %>%
@@ -39,7 +41,7 @@ Summarized_ChlA_Data_Riffle <- ChlA_Data_Porter %>%
   summarise(mean_ChlA_area = mean(Chla_area))
 ```
 
-##Plotting ChlA vs Time (Pool)
+###Plotting ChlA vs Time (Pool)
 ```{r}
 ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
@@ -50,7 +52,7 @@ ChlA_Graph_Pool <- Summarized_ChlA_Data_Pool %>%
 ChlA_Graph_Pool
 ```
 
-##Plotting ChlA vs Time (Riffle)
+###Plotting ChlA vs Time (Riffle)
 ```{r}
 ChlA_Graph_Riffle <- Summarized_ChlA_Data_Riffle %>%
   ggplot(aes(x = Date_collected, y = mean_ChlA_area)) +
@@ -61,7 +63,7 @@ ChlA_Graph_Riffle <- Summarized_ChlA_Data_Riffle %>%
 ChlA_Graph_Riffle
 ```
 
-#AFD Data
+##AFD Data
 ```{r}
 AFD_Data_Porter <-
   readr::read_csv(file = "ChlA-Data/AFD-Data.csv",
@@ -72,7 +74,7 @@ AFD_Data_Porter <-
 AFD_Data_Porter
 ```
 
-##Summarizing AFD Data (Pool)
+###Summarizing AFD Data (Pool)
 ```{r}
 Summarized_AFD_Data_Pool <- AFD_Data_Porter %>%
   filter(Pool_or_Riffle == "pool") %>%
@@ -87,7 +89,7 @@ Summarized_AFD_Data_Riffle <- AFD_Data_Porter %>%
   summarise(mean_diff = mean(Difference))
 ```
 
-##Plotting AFD vs Time (Pool)
+###Plotting AFD vs Time (Pool)
 ```{r}
 AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
@@ -98,7 +100,7 @@ AFD_Graph_Pool <- Summarized_AFD_Data_Pool %>%
 AFD_Graph_Pool
 ```
 
-##Plotting AFD vs Time (Riffle)
+###Plotting AFD vs Time (Riffle)
 ```{r}
 AFD_Graph_Riffle <- Summarized_AFD_Data_Riffle %>%
   ggplot(aes(x = Date_collected, y = mean_diff)) +
@@ -172,4 +174,13 @@ Dark_DO_e_Graph <- Summary_DO_Data_Porter_Pool %>%
   geom_line(aes(group = Site_Name, color = Site_Name)) +
   geom_point(aes(shape = Site_Name))
 Dark_DO_e_Graph
+```
+
+#Electrofishing Data
+```{r}
+EFishing_Data <-
+  readr::read_csv(file = "FishPopulation/EFishingData2018.csv") %>%
+  filter(Stream == "Porter") %>%
+  arrange(Date, Unit, Fish_Num, Pass_Num)
+EFishing_Data
 ```
