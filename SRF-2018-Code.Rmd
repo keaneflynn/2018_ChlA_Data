@@ -131,9 +131,45 @@ Summary_DO_Data_Porter_Pool
 
 ##Plotting Max Depth DO (Pool)
 ```{r}
-DO_Graph_Pool <- Summary_DO_Data_Porter_Pool %>%
+Max_Depth_DO_Graph_Pool <- Summary_DO_Data_Porter_Pool %>%
   ggplot(aes(Date, Max_Depth_DO)) +
   geom_line(aes(group = Site_Name, color = Site_Name)) +
   geom_point(aes(shape = Site_Name))
-DO_Graph_Pool
+Max_Depth_DO_Graph_Pool
+```
+
+##Plotting Light DO_s Data
+```{r}
+Light_DO_s_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Light_Do_s)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Light_DO_s_Graph
+```
+
+##Plotting Light DO_e Data
+```{r}
+Light_DO_e_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Light_DO_e)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Light_DO_e_Graph
+```
+
+##Plotting Dark DO_s Data
+```{r}
+Dark_DO_s_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Dark_Do_s)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Dark_DO_s_Graph
+```
+
+##Plotting Dark DO_e Data
+```{r}
+Dark_DO_e_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Dark_DO_e)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Dark_DO_e_Graph
 ```

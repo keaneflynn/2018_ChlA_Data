@@ -294,11 +294,63 @@ Plotting Max Depth DO (Pool)
 ----------------------------
 
 ``` r
-DO_Graph_Pool <- Summary_DO_Data_Porter_Pool %>%
+Max_Depth_DO_Graph_Pool <- Summary_DO_Data_Porter_Pool %>%
   ggplot(aes(Date, Max_Depth_DO)) +
   geom_line(aes(group = Site_Name, color = Site_Name)) +
   geom_point(aes(shape = Site_Name))
-DO_Graph_Pool
+Max_Depth_DO_Graph_Pool
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
+Plotting Light DO\_s Data
+-------------------------
+
+``` r
+Light_DO_s_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Light_Do_s)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Light_DO_s_Graph
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+Plotting Light DO\_e Data
+-------------------------
+
+``` r
+Light_DO_e_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Light_DO_e)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Light_DO_e_Graph
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+Plotting Dark DO\_s Data
+------------------------
+
+``` r
+Dark_DO_s_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Dark_Do_s)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Dark_DO_s_Graph
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+Plotting Dark DO\_e Data
+------------------------
+
+``` r
+Dark_DO_e_Graph <- Summary_DO_Data_Porter_Pool %>%
+  ggplot(aes(Date, Dark_DO_e)) +
+  geom_line(aes(group = Site_Name, color = Site_Name)) +
+  geom_point(aes(shape = Site_Name))
+Dark_DO_e_Graph
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-16-1.png)
