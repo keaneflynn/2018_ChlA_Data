@@ -184,3 +184,13 @@ EFishing_Data <-
   arrange(Date, Unit, Fish_Num, Pass_Num)
 EFishing_Data
 ```
+
+#Movement Data
+```{r}
+PIT_Data <- 
+  readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv") %>%
+  filter(Comments == "(blank)") %>%
+  arrange(PITNumber) %>%
+  str_extract(PITNumber, )
+PIT_Data
+```
