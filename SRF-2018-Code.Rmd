@@ -191,6 +191,6 @@ PIT_Data <-
   readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv") %>%
   filter(Comments == "(blank)") %>%
   arrange(PITNumber) %>%
-  str_extract(PITNumber, )
+  str_extract(PITNumber, "06\\hhhh")
 PIT_Data
 ```
