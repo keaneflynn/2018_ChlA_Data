@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -357,7 +357,8 @@ Electrofishing Data
 
 ``` r
 EFishing_Data <-
-  readr::read_csv(file = "FishPopulation/EFishingData2018.csv") %>%
+  readr::read_csv(file = "FishPopulation/EFishingData2018.csv",
+                  col_types = "cccddddttddcdccdccdddddddcddddddddd") %>%
   filter(Stream == "Porter") %>%
   arrange(Date, Unit, Fish_Num, Pass_Num)
 ```
@@ -365,54 +366,65 @@ EFishing_Data <-
     ## Warning: Missing column names filled in: 'X36' [36], 'X37' [37],
     ## 'X38' [38], 'X39' [39], 'X40' [40]
 
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   Fish_Num_Per_Site = col_integer(),
-    ##   Fish_Num = col_integer(),
-    ##   Stage = col_double(),
-    ##   Width_1 = col_double(),
-    ##   Width_2 = col_double(),
-    ##   Width_3 = col_double(),
-    ##   Max_Depth_cm = col_integer(),
-    ##   DS_RCT_cm = col_integer(),
-    ##   Fat1 = col_double(),
-    ##   Fat2 = col_double(),
-    ##   Fat3 = col_double(),
-    ##   Fat4 = col_double(),
-    ##   Fat5 = col_double(),
-    ##   Fat6 = col_double(),
-    ##   Fat7 = col_double(),
-    ##   Fat8 = col_double(),
-    ##   Fat_AVG = col_double(),
-    ##   X39 = col_double(),
-    ##   X40 = col_integer()
-    ## )
+    ## Warning: Unnamed `col_types` should have the same length as `col_names`.
+    ## Using smaller of the two.
 
-    ## See spec(...) for full column specifications.
+    ## Warning in rbind(names(probs), probs_f): number of columns of result is not
+    ## a multiple of vector length (arg 1)
+
+    ## Warning: 2006 parsing failures.
+    ## row # A tibble: 5 x 5 col     row col               expected   actual   file                         expected   <int> <chr>             <chr>      <chr>    <chr>                        actual 1     1 Time_Per_Pass_Se… a double   N/A      'FishPopulation/EFishingDat… file 2     1 <NA>              35 columns 40 colu… 'FishPopulation/EFishingDat… row 3     2 Time_Per_Pass_Se… a double   N/A      'FishPopulation/EFishingDat… col 4     2 <NA>              35 columns 40 colu… 'FishPopulation/EFishingDat… expected 5     3 Time_Per_Pass_Se… a double   N/A      'FishPopulation/EFishingDat…
+    ## ... ................. ... .......................................................................... ........ .......................................................................... ...... .......................................................................... .... .......................................................................... ... .......................................................................... ... .......................................................................... ........ ..........................................................................
+    ## See problems(...) for more details.
 
 ``` r
 EFishing_Data
 ```
 
-    ## # A tibble: 524 x 40
+    ## # A tibble: 524 x 35
     ##    Date  Stream Unit  Fish_Num_Per_Si… Fish_Num Pass_Num Time_Per_Pass_S…
-    ##    <chr> <chr>  <chr>            <int>    <int> <chr>    <chr>           
-    ##  1 5/23… Porter 18.1…               51      120 1        289             
-    ##  2 5/23… Porter 18.1…               52      121 1        289             
-    ##  3 5/23… Porter 18.1…               53      122 1        289             
-    ##  4 5/23… Porter 18.1…               54      123 1        289             
-    ##  5 5/23… Porter 18.1…               55      124 1        289             
-    ##  6 5/23… Porter 18.1…               56      125 1        289             
-    ##  7 5/23… Porter 18.1…               57      126 1        289             
-    ##  8 5/23… Porter 18.1…               58      127 1        289             
-    ##  9 5/23… Porter 18.1…               59      128 1        289             
-    ## 10 5/23… Porter 18.1…               60      129 1        289             
-    ## # ... with 514 more rows, and 33 more variables: Start_Time <chr>,
-    ## #   End_Time <chr>, Length_mm <chr>, Weight_g <chr>, Species <chr>,
-    ## #   Recapture <chr>, PIT <chr>, Fecal_Num <chr>, Mort <chr>, Notes <chr>,
-    ## #   Fin <chr>, Stage <dbl>, `Pool Length` <chr>, Width_1 <dbl>,
-    ## #   Width_2 <dbl>, Width_3 <dbl>, Max_Depth_cm <int>, DS_RCT_cm <int>,
+    ##    <chr> <chr>  <chr>            <dbl>    <dbl>    <dbl>            <dbl>
+    ##  1 5/23… Porter 18.1…               51      120        1              289
+    ##  2 5/23… Porter 18.1…               52      121        1              289
+    ##  3 5/23… Porter 18.1…               53      122        1              289
+    ##  4 5/23… Porter 18.1…               54      123        1              289
+    ##  5 5/23… Porter 18.1…               55      124        1              289
+    ##  6 5/23… Porter 18.1…               56      125        1              289
+    ##  7 5/23… Porter 18.1…               57      126        1              289
+    ##  8 5/23… Porter 18.1…               58      127        1              289
+    ##  9 5/23… Porter 18.1…               59      128        1              289
+    ## 10 5/23… Porter 18.1…               60      129        1              289
+    ## # ... with 514 more rows, and 28 more variables: Start_Time <time>,
+    ## #   End_Time <time>, Length_mm <dbl>, Weight_g <dbl>, Species <chr>,
+    ## #   Recapture <dbl>, PIT <chr>, Fecal_Num <chr>, Mort <dbl>, Notes <chr>,
+    ## #   Fin <chr>, Stage <dbl>, `Pool Length` <dbl>, Width_1 <dbl>,
+    ## #   Width_2 <dbl>, Width_3 <dbl>, Max_Depth_cm <dbl>, DS_RCT_cm <dbl>,
     ## #   `SeaGrant HabID` <chr>, Fat1 <dbl>, Fat2 <dbl>, Fat3 <dbl>,
     ## #   Fat4 <dbl>, Fat5 <dbl>, Fat6 <dbl>, Fat7 <dbl>, Fat8 <dbl>,
-    ## #   Fat_AVG <dbl>, X36 <chr>, X37 <chr>, X38 <chr>, X39 <dbl>, X40 <int>
+    ## #   Fat_AVG <dbl>
+
+Movement Data
+=============
+
+``` r
+PIT_Data <- 
+  readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv",
+                  col_types = "cccctccccc") 
+PIT_Data
+```
+
+    ## # A tibble: 624 x 10
+    ##    Species_Lookup PITNumber Date_Lookup Date  Time  Site  HabitatType
+    ##    <chr>          <chr>     <chr>       <chr> <tim> <chr> <chr>      
+    ##  1 COHO SALMON    3DD.003C… 6/7/18      6/7/… 12:15 POR 1 POOL       
+    ##  2 COHO SALMON    3DD.003C… 6/7/18      6/8/… 13:28 POR … (blank)    
+    ##  3 COHO SALMON    3DD.003C… 6/7/18      6/12… 19:57 POR … (blank)    
+    ##  4 COHO SALMON    3DD.003C… 6/7/18      6/7/… 12:44 POR 1 POOL       
+    ##  5 COHO SALMON    3DD.003C… 6/7/18      6/8/… 13:42 POR … (blank)    
+    ##  6 COHO SALMON    3DD.003C… 6/7/18      6/8/… 20:35 POR … (blank)    
+    ##  7 COHO SALMON    3DD.003C… 6/7/18      6/7/… 12:23 POR 1 POOL       
+    ##  8 COHO SALMON    3DD.003C… 6/7/18      6/8/… 13:35 POR … (blank)    
+    ##  9 COHO SALMON    3DD.003C… 6/7/18      6/9/… 05:15 POR … (blank)    
+    ## 10 COHO SALMON    3DD.003C… 6/7/18      6/7/… 11:14 POR 1 POOL       
+    ## # ... with 614 more rows, and 3 more variables: UnitNumber <chr>,
+    ## #   Survey <chr>, Comments <chr>

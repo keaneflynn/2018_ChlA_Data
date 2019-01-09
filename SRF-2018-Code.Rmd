@@ -179,7 +179,8 @@ Dark_DO_e_Graph
 #Electrofishing Data
 ```{r}
 EFishing_Data <-
-  readr::read_csv(file = "FishPopulation/EFishingData2018.csv") %>%
+  readr::read_csv(file = "FishPopulation/EFishingData2018.csv",
+                  col_types = "cccddddttddcdccdccdddddddcddddddddd") %>%
   filter(Stream == "Porter") %>%
   arrange(Date, Unit, Fish_Num, Pass_Num)
 EFishing_Data
@@ -188,9 +189,7 @@ EFishing_Data
 #Movement Data
 ```{r}
 PIT_Data <- 
-  readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv") %>%
-  filter(Comments == "(blank)") %>%
-  arrange(PITNumber) %>%
-  str_extract(PITNumber, "06\\hhhh")
+  readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv",
+                  col_types = "cccctccccc") 
 PIT_Data
 ```
