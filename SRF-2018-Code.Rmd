@@ -14,6 +14,7 @@ library(dplyr)
 library(readr)
 library(tidyverse)
 library(ggplot2)
+library(zoo)
 ```
 
 #Productivity Data
@@ -184,12 +185,27 @@ EFishing_Data <-
   filter(Stream == "Porter") %>%
   arrange(Date, Unit, Fish_Num, Pass_Num)
 EFishing_Data
+
+CombiningMovement_Efish <- EFishing_Data %>%
+  filter(!PIT == "N/A")
 ```
 
 #Movement Data
 ```{r}
 PIT_Data <- 
   readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv",
-                  col_types = "cccctccccc") 
+                  col_types = "cccctccccc") %>%
+  mutate(PIT = str_extract(PITNumber, "06....")) %>%
+  select(Species_Lookup, PIT, Date_Lookup, Date, Time, Site, HabitatType, UnitNumber, Survey, Comments)
 PIT_Data
+```
+
+##Joined Movement to Efishing Data
+```{r}
+EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") %>%
+  select(Species, PIT, Date_Lookup, Date.x, Time, Site, UnitNumber, Survey, Unit, Fish_Num_Per_Site, Fish_Num, Length_mm, Weight_g, Recapture, Fat_AVG, Comments) %>%
+  mutate(Survey_tally = if_else(Survey == "ANT", 1, 0)) %>%
+  group_by(Date.x) %>%
+  mutate(Movement_tally = cumsum(Survey_tally))
+EFish_Movement_Data
 ```

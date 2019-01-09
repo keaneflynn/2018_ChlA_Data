@@ -38,7 +38,15 @@ library(tidyverse)
 
 ``` r
 library(ggplot2)
+library(zoo)
 ```
+
+    ## 
+    ## Attaching package: 'zoo'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     as.Date, as.Date.numeric
 
 Productivity Data
 =================
@@ -403,28 +411,66 @@ EFishing_Data
     ## #   Fat4 <dbl>, Fat5 <dbl>, Fat6 <dbl>, Fat7 <dbl>, Fat8 <dbl>,
     ## #   Fat_AVG <dbl>
 
+``` r
+CombiningMovement_Efish <- EFishing_Data %>%
+  filter(!PIT == "N/A")
+```
+
 Movement Data
 =============
 
 ``` r
 PIT_Data <- 
   readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv",
-                  col_types = "cccctccccc") 
+                  col_types = "cccctccccc") %>%
+  mutate(PIT = str_extract(PITNumber, "06....")) %>%
+  select(Species_Lookup, PIT, Date_Lookup, Date, Time, Site, HabitatType, UnitNumber, Survey, Comments)
 PIT_Data
 ```
 
     ## # A tibble: 624 x 10
-    ##    Species_Lookup PITNumber Date_Lookup Date  Time  Site  HabitatType
-    ##    <chr>          <chr>     <chr>       <chr> <tim> <chr> <chr>      
-    ##  1 COHO SALMON    3DD.003C… 6/7/18      6/7/… 12:15 POR 1 POOL       
-    ##  2 COHO SALMON    3DD.003C… 6/7/18      6/8/… 13:28 POR … (blank)    
-    ##  3 COHO SALMON    3DD.003C… 6/7/18      6/12… 19:57 POR … (blank)    
-    ##  4 COHO SALMON    3DD.003C… 6/7/18      6/7/… 12:44 POR 1 POOL       
-    ##  5 COHO SALMON    3DD.003C… 6/7/18      6/8/… 13:42 POR … (blank)    
-    ##  6 COHO SALMON    3DD.003C… 6/7/18      6/8/… 20:35 POR … (blank)    
-    ##  7 COHO SALMON    3DD.003C… 6/7/18      6/7/… 12:23 POR 1 POOL       
-    ##  8 COHO SALMON    3DD.003C… 6/7/18      6/8/… 13:35 POR … (blank)    
-    ##  9 COHO SALMON    3DD.003C… 6/7/18      6/9/… 05:15 POR … (blank)    
-    ## 10 COHO SALMON    3DD.003C… 6/7/18      6/7/… 11:14 POR 1 POOL       
+    ##    Species_Lookup PIT   Date_Lookup Date  Time  Site  HabitatType
+    ##    <chr>          <chr> <chr>       <chr> <tim> <chr> <chr>      
+    ##  1 COHO SALMON    068D… 6/7/18      6/7/… 12:15 POR 1 POOL       
+    ##  2 COHO SALMON    068D… 6/7/18      6/8/… 13:28 POR … (blank)    
+    ##  3 COHO SALMON    068D… 6/7/18      6/12… 19:57 POR … (blank)    
+    ##  4 COHO SALMON    068D… 6/7/18      6/7/… 12:44 POR 1 POOL       
+    ##  5 COHO SALMON    068D… 6/7/18      6/8/… 13:42 POR … (blank)    
+    ##  6 COHO SALMON    068D… 6/7/18      6/8/… 20:35 POR … (blank)    
+    ##  7 COHO SALMON    068D… 6/7/18      6/7/… 12:23 POR 1 POOL       
+    ##  8 COHO SALMON    068D… 6/7/18      6/8/… 13:35 POR … (blank)    
+    ##  9 COHO SALMON    068D… 6/7/18      6/9/… 05:15 POR … (blank)    
+    ## 10 COHO SALMON    06A7… 6/7/18      6/7/… 11:14 POR 1 POOL       
     ## # ... with 614 more rows, and 3 more variables: UnitNumber <chr>,
     ## #   Survey <chr>, Comments <chr>
+
+Joined Movement to Efishing Data
+--------------------------------
+
+``` r
+EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") %>%
+  select(Species, PIT, Date_Lookup, Date.x, Time, Site, UnitNumber, Survey, Unit, Fish_Num_Per_Site, Fish_Num, Length_mm, Weight_g, Recapture, Fat_AVG, Comments) %>%
+  mutate(Survey_tally = if_else(Survey == "ANT", 1, 0)) %>%
+  group_by(Date.x) %>%
+  mutate(Movement_tally = cumsum(Survey_tally))
+EFish_Movement_Data
+```
+
+    ## # A tibble: 1,048 x 18
+    ## # Groups:   Date.x [69]
+    ##    Species PIT   Date_Lookup Date.x Time  Site  UnitNumber Survey Unit 
+    ##    <chr>   <chr> <chr>       <chr>  <tim> <chr> <chr>      <chr>  <chr>
+    ##  1 Okisut… 068D… 6/7/18      6/7/18 12:15 POR 1 18.5       EF     18.5 
+    ##  2 Okisut… 068D… 6/7/18      6/8/18 13:28 POR … (blank)    ANT    18.5 
+    ##  3 Okisut… 068D… 6/7/18      6/12/… 19:57 POR … (blank)    ANT    18.5 
+    ##  4 Okisut… 068D… 6/7/18      6/7/18 12:44 POR 1 18.5       EF     18.5 
+    ##  5 Okisut… 068D… 6/7/18      6/8/18 13:42 POR … (blank)    ANT    18.5 
+    ##  6 Okisut… 068D… 6/7/18      6/8/18 20:35 POR … (blank)    ANT    18.5 
+    ##  7 Okisut… 068D… 6/7/18      6/7/18 12:23 POR 1 18.5       EF     18.5 
+    ##  8 Okisut… 068D… 6/7/18      6/8/18 13:35 POR … (blank)    ANT    18.5 
+    ##  9 Okisut… 068D… 6/7/18      6/9/18 05:15 POR … (blank)    ANT    18.5 
+    ## 10 Okisut… 06A7… 6/7/18      6/7/18 11:14 POR 1 18.600000… EF     18.6 
+    ## # ... with 1,038 more rows, and 9 more variables: Fish_Num_Per_Site <dbl>,
+    ## #   Fish_Num <dbl>, Length_mm <dbl>, Weight_g <dbl>, Recapture <dbl>,
+    ## #   Fat_AVG <dbl>, Comments <chr>, Survey_tally <dbl>,
+    ## #   Movement_tally <dbl>
