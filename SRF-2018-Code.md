@@ -26,27 +26,27 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
 ``` r
 library(ggplot2)
-library(zoo)
+library(lubridate)
 ```
 
     ## 
-    ## Attaching package: 'zoo'
+    ## Attaching package: 'lubridate'
 
-    ## The following objects are masked from 'package:base':
+    ## The following object is masked from 'package:base':
     ## 
-    ##     as.Date, as.Date.numeric
+    ##     date
 
 Productivity Data
 =================
@@ -416,6 +416,49 @@ CombiningMovement_Efish <- EFishing_Data %>%
   filter(!PIT == "N/A")
 ```
 
+Hydrology Data
+==============
+
+``` r
+Porter_FlowData <- 
+  readr::read_csv("Hydrology/PorterCreek_AugmentationData.csv") %>%
+  select(X1, Date, avg_gpm)
+```
+
+    ## Warning: Missing column names filled in: 'X1' [1]
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_integer(),
+    ##   Date = col_character(),
+    ##   avg_gpm = col_double(),
+    ##   Min = col_integer(),
+    ##   Max = col_integer(),
+    ##   avg_clean = col_double(),
+    ##   gpd = col_double(),
+    ##   `ac-ft` = col_double(),
+    ##   cum_ac_ft = col_double()
+    ## )
+
+``` r
+Porter_FlowData
+```
+
+    ## # A tibble: 367 x 3
+    ##       X1 Date    avg_gpm
+    ##    <int> <chr>     <dbl>
+    ##  1     1 1/3/18  73.2   
+    ##  2     2 1/4/18  25.1   
+    ##  3     3 1/5/18   0.0208
+    ##  4     4 1/6/18   0.0625
+    ##  5     5 1/7/18   0     
+    ##  6     6 1/8/18   0.167 
+    ##  7     7 1/9/18   0.0625
+    ##  8     8 1/10/18  0.125 
+    ##  9     9 1/11/18  0.146 
+    ## 10    10 1/12/18  0.0417
+    ## # ... with 357 more rows
+
 Movement Data
 =============
 
@@ -444,19 +487,20 @@ PIT_Data
     ## # ... with 614 more rows, and 3 more variables: UnitNumber <chr>,
     ## #   Survey <chr>, Comments <chr>
 
-Joined Movement to Efishing Data
---------------------------------
+Creating a Movement vs Flow Dataset
+-----------------------------------
 
 ``` r
 EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") %>%
   select(Species, PIT, Date_Lookup, Date.x, Time, Site, UnitNumber, Survey, Unit, Fish_Num_Per_Site, Fish_Num, Length_mm, Weight_g, Recapture, Fat_AVG, Comments) %>%
   mutate(Survey_tally = if_else(Survey == "ANT", 1, 0)) %>%
   group_by(Date.x) %>%
-  mutate(Movement_tally = cumsum(Survey_tally))
+  mutate(Movement_tally = cumsum(Survey_tally)) %>%
+  mutate(Max_Ping_Tally = max(Movement_tally))
 EFish_Movement_Data
 ```
 
-    ## # A tibble: 1,048 x 18
+    ## # A tibble: 1,048 x 19
     ## # Groups:   Date.x [69]
     ##    Species PIT   Date_Lookup Date.x Time  Site  UnitNumber Survey Unit 
     ##    <chr>   <chr> <chr>       <chr>  <tim> <chr> <chr>      <chr>  <chr>
@@ -470,7 +514,53 @@ EFish_Movement_Data
     ##  8 Okisut… 068D… 6/7/18      6/8/18 13:35 POR … (blank)    ANT    18.5 
     ##  9 Okisut… 068D… 6/7/18      6/9/18 05:15 POR … (blank)    ANT    18.5 
     ## 10 Okisut… 06A7… 6/7/18      6/7/18 11:14 POR 1 18.600000… EF     18.6 
-    ## # ... with 1,038 more rows, and 9 more variables: Fish_Num_Per_Site <dbl>,
-    ## #   Fish_Num <dbl>, Length_mm <dbl>, Weight_g <dbl>, Recapture <dbl>,
-    ## #   Fat_AVG <dbl>, Comments <chr>, Survey_tally <dbl>,
-    ## #   Movement_tally <dbl>
+    ## # ... with 1,038 more rows, and 10 more variables:
+    ## #   Fish_Num_Per_Site <dbl>, Fish_Num <dbl>, Length_mm <dbl>,
+    ## #   Weight_g <dbl>, Recapture <dbl>, Fat_AVG <dbl>, Comments <chr>,
+    ## #   Survey_tally <dbl>, Movement_tally <dbl>, Max_Ping_Tally <dbl>
+
+``` r
+Flow_MovementData <- EFish_Movement_Data %>%
+  distinct(Max_Ping_Tally) %>%
+  left_join(Porter_FlowData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
+  arrange(X1) %>%
+  select(X1, Date.x, Max_Ping_Tally, avg_gpm) %>%
+  filter(!X1 == "NA") 
+  names(Flow_MovementData)[2] <- "Date"
+Flow_MovementData 
+```
+
+    ## # A tibble: 68 x 4
+    ## # Groups:   Date.x [68]
+    ##       X1 Date    Max_Ping_Tally avg_gpm
+    ##    <int> <chr>            <dbl>   <dbl>
+    ##  1   153 6/4/18               0  0.132 
+    ##  2   155 6/6/18               5  0.0417
+    ##  3   156 6/7/18              24  0.194 
+    ##  4   157 6/8/18              47  0.0417
+    ##  5   158 6/9/18              29  0     
+    ##  6   159 6/10/18             15  0.174 
+    ##  7   160 6/11/18             26  0     
+    ##  8   161 6/12/18             13  0.0417
+    ##  9   162 6/13/18              6  0.312 
+    ## 10   165 6/16/18              2  0.0208
+    ## # ... with 58 more rows
+
+``` r
+Flow_MovementData$Date <- as.Date(Flow_MovementData$Date, "%m/%d/%Y")
+```
+
+Movement Data vs Flow Graph
+---------------------------
+
+``` r
+ggplot(Flow_MovementData) + 
+  geom_col(aes(x = Date, y = Max_Ping_Tally), width = 0.5, fill = "blue") + 
+  geom_line(aes(x = Date, y = avg_gpm/5), group = 1, color = "red") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Augmentation (GPM)")) + 
+  labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
+  ggtitle("Augmentation vs Interpool Movement Relationship")
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-21-1.png)
