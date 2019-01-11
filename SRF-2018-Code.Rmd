@@ -199,12 +199,32 @@ PIT_Data <-
 PIT_Data
 ```
 
-##Joined Movement to Efishing Data
+##Creating a Movement vs Flow Dataset
 ```{r}
 EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") %>%
   select(Species, PIT, Date_Lookup, Date.x, Time, Site, UnitNumber, Survey, Unit, Fish_Num_Per_Site, Fish_Num, Length_mm, Weight_g, Recapture, Fat_AVG, Comments) %>%
   mutate(Survey_tally = if_else(Survey == "ANT", 1, 0)) %>%
   group_by(Date.x) %>%
-  mutate(Movement_tally = cumsum(Survey_tally))
+  mutate(Movement_tally = cumsum(Survey_tally)) %>%
+  mutate(Max_Ping_Tally = max(Movement_tally))
 EFish_Movement_Data
+
+Flow_MovementData <- EFish_Movement_Data %>%
+  distinct(Max_Ping_Tally) %>%
+  left_join(Porter_FlowData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
+  arrange(X1) %>%
+  select(Date.x, Max_Ping_Tally, avg_gpm)
+Flow_MovementData
+```
+##Movement Data vs Flow Graph
+```{r}
+ggplot(Flow_MovementData) + geom_col(aes(x = Date.x, y = Max_Ping_Tally), width = 0.5) + geom_line(aes(x = Date.x, y = avg_gpm), group = 1)
+```
+
+#Hydrology Data
+```{r}
+Porter_FlowData <- 
+  readr::read_csv("Hydrology/PorterCreek_AugmentationData.csv") %>%
+  select(X1, Date, avg_gpm)
+Porter_FlowData
 ```
