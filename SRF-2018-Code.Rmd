@@ -236,7 +236,7 @@ ggplot(Flow_MovementData) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Augmentation (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
-  ggtitle("Augmentation vs Interpool Movement Relationship")
+  ggtitle("Augmentation vs Interpool Movement Relationship") 
 ```
 
 
