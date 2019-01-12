@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -602,8 +602,7 @@ ggplot(Augmentation_MovementData) +
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Augmentation (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
   ggtitle("Augmentation vs Interpool Movement Relationship") +
-  theme(axis.text.y.right = element_text(colour="red")) +
-  theme(axis.text.y.left = element_text(colour="blue"))
+  theme(axis.text.y.right = element_text(colour="red"), axis.text.y.left = element_text(colour="blue"), axis.title.y.right = element_text(color = "red"), axis.title.y.left = element_text(color = "blue"))
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-22-1.png)
@@ -651,8 +650,7 @@ ggplot(Flow_MovementData) +
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Discharge (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
   ggtitle("Discharge vs Interpool Movement Relationship") +
-  theme(axis.text.y.right = element_text(colour="red")) +
-  theme(axis.text.y.left = element_text(colour="blue"))
+  theme(axis.text.y.right = element_text(colour="red"), axis.text.y.left = element_text(colour="blue"), axis.title.y.right = element_text(color = "red"), axis.title.y.left = element_text(color = "blue"))
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-24-1.png)

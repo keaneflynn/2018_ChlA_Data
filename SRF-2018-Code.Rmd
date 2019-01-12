@@ -252,8 +252,7 @@ ggplot(Augmentation_MovementData) +
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Augmentation (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
   ggtitle("Augmentation vs Interpool Movement Relationship") +
-  theme(axis.text.y.right = element_text(colour="red")) +
-  theme(axis.text.y.left = element_text(colour="blue"))
+  theme(axis.text.y.right = element_text(colour="red"), axis.text.y.left = element_text(colour="blue"), axis.title.y.right = element_text(color = "red"), axis.title.y.left = element_text(color = "blue"))
 ```
 
 ##Movement Data vs Discharge Data
@@ -277,6 +276,5 @@ ggplot(Flow_MovementData) +
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Discharge (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
   ggtitle("Discharge vs Interpool Movement Relationship") +
-  theme(axis.text.y.right = element_text(colour="red")) +
-  theme(axis.text.y.left = element_text(colour="blue"))
+  theme(axis.text.y.right = element_text(colour="red"), axis.text.y.left = element_text(colour="blue"), axis.title.y.right = element_text(color = "red"), axis.title.y.left = element_text(color = "blue"))
 ```
