@@ -416,11 +416,52 @@ CombiningMovement_Efish <- EFishing_Data %>%
   filter(!PIT == "N/A")
 ```
 
-Hydrology Data
-==============
+TU Hydrology Data
+=================
 
 ``` r
-Porter_FlowData <- 
+Porter_FlowData <-
+  readr::read_csv("Hydrology/PorterCreek_FlowData_TU.csv") %>%
+  mutate(Date = str_extract(SampleDate, "\\d......")) %>%
+  group_by(Date) %>%
+  summarise(Streamflow_cfs = mean(Streamflow_cfs)) %>%
+  mutate(Streamflow_gpm = Streamflow_cfs*448) %>%
+  mutate(Date = str_extract(Date, "[0-9]{1,2}/[0-9]{1,2}/18")) %>%
+  filter(!Date == "NA") 
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   SampleDate = col_character(),
+    ##   WaterTemp_C = col_double(),
+    ##   WaterDepth_ft = col_double(),
+    ##   Streamflow_cfs = col_double()
+    ## )
+
+``` r
+Porter_FlowData
+```
+
+    ## # A tibble: 247 x 3
+    ##    Date    Streamflow_cfs Streamflow_gpm
+    ##    <chr>            <dbl>          <dbl>
+    ##  1 1/1/18           0.470           210.
+    ##  2 1/10/18         13.2            5893.
+    ##  3 1/11/18          7.14           3197.
+    ##  4 1/12/18          4.74           2126.
+    ##  5 1/13/18          3.44           1540.
+    ##  6 1/14/18          2.69           1206.
+    ##  7 1/15/18          2.19            983.
+    ##  8 1/16/18          2.07            925.
+    ##  9 1/17/18          1.75            782.
+    ## 10 1/18/18          1.95            874.
+    ## # ... with 237 more rows
+
+Augmentation Data
+=================
+
+``` r
+Porter_AugmentationData <- 
   readr::read_csv("Hydrology/PorterCreek_AugmentationData.csv") %>%
   select(X1, Date, avg_gpm)
 ```
@@ -441,7 +482,7 @@ Porter_FlowData <-
     ## )
 
 ``` r
-Porter_FlowData
+Porter_AugmentationData
 ```
 
     ## # A tibble: 367 x 3
@@ -487,8 +528,8 @@ PIT_Data
     ## # ... with 614 more rows, and 3 more variables: UnitNumber <chr>,
     ## #   Survey <chr>, Comments <chr>
 
-Creating a Movement vs Flow Dataset
------------------------------------
+Creating a Movement vs Augmentation Dataset
+-------------------------------------------
 
 ``` r
 EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") %>%
@@ -497,7 +538,7 @@ EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") 
   group_by(Date.x) %>%
   mutate(Movement_tally = cumsum(Survey_tally)) %>%
   mutate(Max_Ping_Tally = max(Movement_tally)) %>%
-  arrange(Date.x) 
+  arrange(Date.x, Time) 
 EFish_Movement_Data
 ```
 
@@ -505,30 +546,30 @@ EFish_Movement_Data
     ## # Groups:   Date.x [69]
     ##    Species PIT   Date_Lookup Date.x Time  Site  UnitNumber Survey Unit 
     ##    <chr>   <chr> <chr>       <chr>  <tim> <chr> <chr>      <chr>  <chr>
-    ##  1 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
-    ##  2 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
-    ##  3 Okisut… 06A7… 6/7/18      6/10/… 18:26 POR … (blank)    ANT    18.6 
-    ##  4 Okisut… 06A7… 6/7/18      6/10/… 18:26 POR … (blank)    ANT    18.6 
-    ##  5 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
-    ##  6 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
-    ##  7 Okisut… 06A8… 6/7/18      6/10/… 20:49 POR … (blank)    ANT    18.6 
-    ##  8 Okisut… 06A8… 6/7/18      6/10/… 20:49 POR … (blank)    ANT    18.6 
-    ##  9 Cottus… 06A7… 6/7/18      6/10/… 03:54 POR … (blank)    ANT    18.6 
-    ## 10 Omykiss 068D… 6/7/18      6/10/… 05:45 POR … (blank)    ANT    18.55
+    ##  1 Omykiss 06A7… 6/7/18      6/10/… 02:00 POR … (blank)    ANT    18.6 
+    ##  2 Cottus… 06A7… 6/7/18      6/10/… 03:54 POR … (blank)    ANT    18.6 
+    ##  3 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
+    ##  4 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
+    ##  5 Omykiss 068D… 6/7/18      6/10/… 05:45 POR … (blank)    ANT    18.55
+    ##  6 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
+    ##  7 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
+    ##  8 Omykiss 06A8… 6/4/18      6/10/… 09:54 POR … (blank)    ANT    18.3 
+    ##  9 Omykiss 068D… 6/7/18      6/10/… 15:39 POR … (blank)    ANT    18.55
+    ## 10 Omykiss 068D… 6/7/18      6/10/… 17:29 POR … (blank)    ANT    18.5 
     ## # ... with 1,038 more rows, and 10 more variables:
     ## #   Fish_Num_Per_Site <dbl>, Fish_Num <dbl>, Length_mm <dbl>,
     ## #   Weight_g <dbl>, Recapture <dbl>, Fat_AVG <dbl>, Comments <chr>,
     ## #   Survey_tally <dbl>, Movement_tally <dbl>, Max_Ping_Tally <dbl>
 
 ``` r
-Flow_MovementData <- EFish_Movement_Data %>%
+Augmentation_MovementData <- EFish_Movement_Data %>%
   distinct(Max_Ping_Tally) %>%
-  left_join(Porter_FlowData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
+  left_join(Porter_AugmentationData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
   arrange(X1) %>%
   select(X1, Date.x, Max_Ping_Tally, avg_gpm) %>%
   filter(!X1 == "NA") 
-  names(Flow_MovementData)[2] <- "Date"
-Flow_MovementData 
+  names(Augmentation_MovementData)[2] <- "Date"
+Augmentation_MovementData 
 ```
 
     ## # A tibble: 68 x 4
@@ -548,14 +589,13 @@ Flow_MovementData
     ## # ... with 58 more rows
 
 ``` r
-Flow_MovementData$Date <- as.Date(Flow_MovementData$Date, "%m/%d/%Y")
+Augmentation_MovementData$Date <- as.Date(Augmentation_MovementData$Date, "%m/%d/%Y")
 ```
 
-Movement Data vs Flow Graph
----------------------------
+### Movement Data vs Flow Graph
 
 ``` r
-ggplot(Flow_MovementData) + 
+ggplot(Augmentation_MovementData) + 
   geom_col(aes(x = Date, y = Max_Ping_Tally), width = 0.5, fill = "blue") + 
   geom_line(aes(x = Date, y = avg_gpm/5), group = 1, color = "red") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
@@ -566,4 +606,53 @@ ggplot(Flow_MovementData) +
   theme(axis.text.y.left = element_text(colour="blue"))
 ```
 
-![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-21-1.png)
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-22-1.png)
+
+Movement Data vs Discharge Data
+-------------------------------
+
+``` r
+Flow_MovementData <- EFish_Movement_Data %>%
+  distinct(Max_Ping_Tally) %>%
+  left_join(Porter_FlowData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
+  select(Date.x, Max_Ping_Tally, Streamflow_gpm) %>%
+  filter(!Date.x == "NA")
+  names(Flow_MovementData)[1] <- "Date"
+Flow_MovementData
+```
+
+    ## # A tibble: 68 x 3
+    ## # Groups:   Date.x [68]
+    ##    Date    Max_Ping_Tally Streamflow_gpm
+    ##    <chr>            <dbl>          <dbl>
+    ##  1 6/10/18             15           242.
+    ##  2 6/11/18             26           234.
+    ##  3 6/12/18             13           229.
+    ##  4 6/13/18              6           212.
+    ##  5 6/16/18              2           204.
+    ##  6 6/18/18              1           228.
+    ##  7 6/19/18              3           220.
+    ##  8 6/22/18              2           175 
+    ##  9 6/30/18              6           473.
+    ## 10 6/4/18               0           298.
+    ## # ... with 58 more rows
+
+``` r
+Flow_MovementData$Date <- as.Date(Flow_MovementData$Date, "%m/%d/%Y")
+```
+
+### Movement Data vs Discharge Data
+
+``` r
+ggplot(Flow_MovementData) + 
+  geom_col(aes(x = Date, y = Max_Ping_Tally), width = 0.5, fill = "blue") + 
+  geom_line(aes(x = Date, y = Streamflow_gpm/5), group = 1, color = "red") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Discharge (GPM)")) + 
+  labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
+  ggtitle("Discharge vs Interpool Movement Relationship") +
+  theme(axis.text.y.right = element_text(colour="red")) +
+  theme(axis.text.y.left = element_text(colour="blue"))
+```
+
+![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-24-1.png)

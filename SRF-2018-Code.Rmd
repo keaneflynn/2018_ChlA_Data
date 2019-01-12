@@ -190,12 +190,25 @@ CombiningMovement_Efish <- EFishing_Data %>%
   filter(!PIT == "N/A")
 ```
 
-#Hydrology Data
+#TU Hydrology Data
 ```{r}
-Porter_FlowData <- 
+Porter_FlowData <-
+  readr::read_csv("Hydrology/PorterCreek_FlowData_TU.csv") %>%
+  mutate(Date = str_extract(SampleDate, "\\d......")) %>%
+  group_by(Date) %>%
+  summarise(Streamflow_cfs = mean(Streamflow_cfs)) %>%
+  mutate(Streamflow_gpm = Streamflow_cfs*448) %>%
+  mutate(Date = str_extract(Date, "[0-9]{1,2}/[0-9]{1,2}/18")) %>%
+  filter(!Date == "NA") 
+Porter_FlowData
+```
+
+#Augmentation Data
+```{r}
+Porter_AugmentationData <- 
   readr::read_csv("Hydrology/PorterCreek_AugmentationData.csv") %>%
   select(X1, Date, avg_gpm)
-Porter_FlowData
+Porter_AugmentationData
 ```
 
 #Movement Data
@@ -208,7 +221,7 @@ PIT_Data <-
 PIT_Data
 ```
 
-##Creating a Movement vs Flow Dataset
+##Creating a Movement vs Augmentation Dataset
 ```{r}
 EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") %>%
   select(Species, PIT, Date_Lookup, Date.x, Time, Site, UnitNumber, Survey, Unit, Fish_Num_Per_Site, Fish_Num, Length_mm, Weight_g, Recapture, Fat_AVG, Comments) %>%
@@ -216,22 +229,23 @@ EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") 
   group_by(Date.x) %>%
   mutate(Movement_tally = cumsum(Survey_tally)) %>%
   mutate(Max_Ping_Tally = max(Movement_tally)) %>%
-  arrange(Date.x) 
+  arrange(Date.x, Time) 
 EFish_Movement_Data
 
-Flow_MovementData <- EFish_Movement_Data %>%
+Augmentation_MovementData <- EFish_Movement_Data %>%
   distinct(Max_Ping_Tally) %>%
-  left_join(Porter_FlowData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
+  left_join(Porter_AugmentationData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
   arrange(X1) %>%
   select(X1, Date.x, Max_Ping_Tally, avg_gpm) %>%
   filter(!X1 == "NA") 
-  names(Flow_MovementData)[2] <- "Date"
-Flow_MovementData 
-Flow_MovementData$Date <- as.Date(Flow_MovementData$Date, "%m/%d/%Y")
+  names(Augmentation_MovementData)[2] <- "Date"
+Augmentation_MovementData 
+Augmentation_MovementData$Date <- as.Date(Augmentation_MovementData$Date, "%m/%d/%Y")
 ```
-##Movement Data vs Flow Graph
+
+###Movement Data vs Flow Graph
 ```{r}
-ggplot(Flow_MovementData) + 
+ggplot(Augmentation_MovementData) + 
   geom_col(aes(x = Date, y = Max_Ping_Tally), width = 0.5, fill = "blue") + 
   geom_line(aes(x = Date, y = avg_gpm/5), group = 1, color = "red") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
@@ -242,4 +256,27 @@ ggplot(Flow_MovementData) +
   theme(axis.text.y.left = element_text(colour="blue"))
 ```
 
+##Movement Data vs Discharge Data
+```{r}
+Flow_MovementData <- EFish_Movement_Data %>%
+  distinct(Max_Ping_Tally) %>%
+  left_join(Porter_FlowData, EFish_Movement_Data, by = c("Date.x" = "Date")) %>%
+  select(Date.x, Max_Ping_Tally, Streamflow_gpm) %>%
+  filter(!Date.x == "NA")
+  names(Flow_MovementData)[1] <- "Date"
+Flow_MovementData
+Flow_MovementData$Date <- as.Date(Flow_MovementData$Date, "%m/%d/%Y")
+```
 
+###Movement Data vs Discharge Data
+```{r}
+ggplot(Flow_MovementData) + 
+  geom_col(aes(x = Date, y = Max_Ping_Tally), width = 0.5, fill = "blue") + 
+  geom_line(aes(x = Date, y = Streamflow_gpm/5), group = 1, color = "red") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Discharge (GPM)")) + 
+  labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
+  ggtitle("Discharge vs Interpool Movement Relationship") +
+  theme(axis.text.y.right = element_text(colour="red")) +
+  theme(axis.text.y.left = element_text(colour="blue"))
+```
