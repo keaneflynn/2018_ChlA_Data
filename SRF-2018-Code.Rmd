@@ -204,7 +204,7 @@ PIT_Data <-
   readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv",
                   col_types = "cccctccccc") %>%
   mutate(PIT = str_extract(PITNumber, "06....")) %>%
-  select(Species_Lookup, PIT, Date_Lookup, Date, Time, Site, HabitatType, UnitNumber, Survey, Comments)
+  select(Species_Lookup, PIT, Date_Lookup, Date, Time, Site, HabitatType, UnitNumber, Survey, Comments) 
 PIT_Data
 ```
 
@@ -215,7 +215,8 @@ EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") 
   mutate(Survey_tally = if_else(Survey == "ANT", 1, 0)) %>%
   group_by(Date.x) %>%
   mutate(Movement_tally = cumsum(Survey_tally)) %>%
-  mutate(Max_Ping_Tally = max(Movement_tally))
+  mutate(Max_Ping_Tally = max(Movement_tally)) %>%
+  arrange(Date.x) 
 EFish_Movement_Data
 
 Flow_MovementData <- EFish_Movement_Data %>%

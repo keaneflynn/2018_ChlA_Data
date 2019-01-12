@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -467,7 +467,7 @@ PIT_Data <-
   readr::read_csv(file = "FishPopulation/POR_MovementStudy.csv",
                   col_types = "cccctccccc") %>%
   mutate(PIT = str_extract(PITNumber, "06....")) %>%
-  select(Species_Lookup, PIT, Date_Lookup, Date, Time, Site, HabitatType, UnitNumber, Survey, Comments)
+  select(Species_Lookup, PIT, Date_Lookup, Date, Time, Site, HabitatType, UnitNumber, Survey, Comments) 
 PIT_Data
 ```
 
@@ -496,7 +496,8 @@ EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") 
   mutate(Survey_tally = if_else(Survey == "ANT", 1, 0)) %>%
   group_by(Date.x) %>%
   mutate(Movement_tally = cumsum(Survey_tally)) %>%
-  mutate(Max_Ping_Tally = max(Movement_tally))
+  mutate(Max_Ping_Tally = max(Movement_tally)) %>%
+  arrange(Date.x) 
 EFish_Movement_Data
 ```
 
@@ -504,16 +505,16 @@ EFish_Movement_Data
     ## # Groups:   Date.x [69]
     ##    Species PIT   Date_Lookup Date.x Time  Site  UnitNumber Survey Unit 
     ##    <chr>   <chr> <chr>       <chr>  <tim> <chr> <chr>      <chr>  <chr>
-    ##  1 Okisut… 068D… 6/7/18      6/7/18 12:15 POR 1 18.5       EF     18.5 
-    ##  2 Okisut… 068D… 6/7/18      6/8/18 13:28 POR … (blank)    ANT    18.5 
-    ##  3 Okisut… 068D… 6/7/18      6/12/… 19:57 POR … (blank)    ANT    18.5 
-    ##  4 Okisut… 068D… 6/7/18      6/7/18 12:44 POR 1 18.5       EF     18.5 
-    ##  5 Okisut… 068D… 6/7/18      6/8/18 13:42 POR … (blank)    ANT    18.5 
-    ##  6 Okisut… 068D… 6/7/18      6/8/18 20:35 POR … (blank)    ANT    18.5 
-    ##  7 Okisut… 068D… 6/7/18      6/7/18 12:23 POR 1 18.5       EF     18.5 
-    ##  8 Okisut… 068D… 6/7/18      6/8/18 13:35 POR … (blank)    ANT    18.5 
-    ##  9 Okisut… 068D… 6/7/18      6/9/18 05:15 POR … (blank)    ANT    18.5 
-    ## 10 Okisut… 06A7… 6/7/18      6/7/18 11:14 POR 1 18.600000… EF     18.6 
+    ##  1 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
+    ##  2 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
+    ##  3 Okisut… 06A7… 6/7/18      6/10/… 18:26 POR … (blank)    ANT    18.6 
+    ##  4 Okisut… 06A7… 6/7/18      6/10/… 18:26 POR … (blank)    ANT    18.6 
+    ##  5 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
+    ##  6 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
+    ##  7 Okisut… 06A8… 6/7/18      6/10/… 20:49 POR … (blank)    ANT    18.6 
+    ##  8 Okisut… 06A8… 6/7/18      6/10/… 20:49 POR … (blank)    ANT    18.6 
+    ##  9 Cottus… 06A7… 6/7/18      6/10/… 03:54 POR … (blank)    ANT    18.6 
+    ## 10 Omykiss 068D… 6/7/18      6/10/… 05:45 POR … (blank)    ANT    18.55
     ## # ... with 1,038 more rows, and 10 more variables:
     ## #   Fish_Num_Per_Site <dbl>, Fish_Num <dbl>, Length_mm <dbl>,
     ## #   Weight_g <dbl>, Recapture <dbl>, Fat_AVG <dbl>, Comments <chr>,
