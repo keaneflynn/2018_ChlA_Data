@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -560,7 +560,9 @@ ggplot(Flow_MovementData) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Augmentation (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
-  ggtitle("Augmentation vs Interpool Movement Relationship")
+  ggtitle("Augmentation vs Interpool Movement Relationship") +
+  theme(axis.text.y.right = element_text(colour="red")) +
+  theme(axis.text.y.left = element_text(colour="blue"))
 ```
 
 ![](SRF-2018-Code_files/figure-markdown_github/unnamed-chunk-21-1.png)
