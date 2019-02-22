@@ -287,19 +287,19 @@ This section of the code is devoted to importing, analyzing, and creating correl
 ##Importing Data
 ###Pre-Augmentation
 ```{r}
-GolfBall_VidSync <- 
+GolfBall_VidSync_Pre <- 
   readr::read_csv(file = "VidSync-Data/PreAugmentation/Porter_BACI_GolfBall_30June2018_Part3.csv",
            skip = 2,
                     col_names = c("objects", "event", "timecode", "time", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
                     col_types = "cccdddddddd")
 
-HalfTire_VidSync <-
+HalfTire_VidSync_Pre <-
   readr::read_csv(file = "VidSync-Data/PreAugmentation/Porter_BACI_HalfTire_29June2018_Part2.csv",
            skip = 2,
                     col_names = c("objects", "event", "timecode", "time", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
                     col_types = "cccdddddddd")
 
-RoachRun_VidSync <-
+RoachRun_VidSync_Pre <-
   readr::read_csv(file = "VidSync-Data/PreAugmentation/Porter_BACI_RoachRun_29June2018_Part3.csv",
            skip = 2,
                     col_names = c("objects", "event", "timecode", "time", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
@@ -307,6 +307,16 @@ RoachRun_VidSync <-
 ```
 ###Post-Augmentation
 ```{r}
+GolfBall_VidSync_Post <-
+  readr::read_csv(file = "VidSync-Data/PostAugmentation/Porter_BACI_Golfball_6July2018_Part1.csv",
+           skip = 2,
+                    col_names = c("objects", "event", "timecode", "time", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
+                    col_types = "cccdddddddd")
 
+RoachRun_VidSync_Post <-
+  readr::read_csv(file = "VidSync-Data/PostAugmentation/Porter_BACI_RoachRun_5July2018_Part1.csv",
+           skip = 2,
+                    col_names = c("objects", "event", "timecode", "time", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
+                    col_types = "cccdddddddd")
 ```
 ##Analyzation
