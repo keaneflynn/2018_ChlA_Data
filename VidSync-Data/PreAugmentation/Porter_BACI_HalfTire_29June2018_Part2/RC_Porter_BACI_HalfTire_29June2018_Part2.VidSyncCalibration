@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>0,0
+5,0
+10,0
+15,0
+20,0
+25,0
+30,0
+35,0
+40,0
+0,5
+5,5
+10,5
+15,5
+20,5
+25,5
+30,5
+35,5
+40,5
+0,10
+5,10
+10,10
+15,10
+20,10
+25,10
+30,10
+35,10
+40,10
+0,15
+5,15
+10,15
+15,15
+20,15
+25,15
+30,15
+35,15
+40,15
+0,20
+5,20
+10,20
+15,20
+20,20
+25,20
+30,20
+35,20
+40,20
+0,25
+5,25
+10,25
+15,25
+20,25
+25,25
+30,25
+35,25
+40,25
+0,30
+5,30
+10,30
+15,30
+20,30
+25,30
+30,30
+35,30
+40,30</string>
+	<string>0,0
+10,0
+20,0
+30,0
+40,0
+0,5
+10,5
+20,5
+30,5
+40,5
+0,10
+10,10
+20,10
+30,10
+40,10
+0,15
+10,15
+20,15
+30,15
+40,15
+0,20
+10,20
+20,20
+30,20
+40,20
+0,25
+10,25
+20,25
+30,25
+40,25
+0,30
+10,30
+20,30
+30,30
+40,30</string>
+	<real>0.0</real>
+	<real>20</real>
+	<string>x</string>
+	<string>z</string>
+	<array>
+		<array>
+			<real>680.4061279296875</real>
+			<real>340.33395385742188</real>
+			<real>10</real>
+			<real>0.0</real>
+			<integer>3</integer>
+		</array>
+		<array>
+			<real>657.53515625</real>
+			<real>643.21978759765625</real>
+			<real>10</real>
+			<real>20</real>
+			<integer>39</integer>
+		</array>
+		<array>
+			<real>812.3531494140625</real>
+			<real>408.9501953125</real>
+			<real>20</real>
+			<real>5</real>
+			<integer>14</integer>
+		</array>
+		<array>
+			<real>747.06622314453125</real>
+			<real>335.85748291015625</real>
+			<real>15</real>
+			<real>0.0</real>
+			<integer>4</integer>
+		</array>
+		<array>
+			<real>647.64404296875</real>
+			<real>800.84381103515625</real>
+			<real>10</real>
+			<real>30</real>
+			<integer>57</integer>
+		</array>
+		<array>
+			<real>1041.7203369140625</real>
+			<real>486.20297241210938</real>
+			<real>35</real>
+			<real>10</real>
+			<integer>26</integer>
+		</array>
+		<array>
+			<real>1124.752685546875</real>
+			<real>573.52191162109375</real>
+			<real>40</real>
+			<real>15</real>
+			<integer>36</integer>
+		</array>
+		<array>
+			<real>674.1103515625</real>
+			<real>413.95684814453125</real>
+			<real>10</real>
+			<real>5</real>
+			<integer>12</integer>
+		</array>
+		<array>
+			<real>817.42144775390625</real>
+			<real>331.9400634765625</real>
+			<real>20</real>
+			<real>0.0</real>
+			<integer>5</integer>
+		</array>
+		<array>
+			<real>1029.0120849609375</real>
+			<real>837.5081787109375</real>
+			<real>35</real>
+			<real>30</real>
+			<integer>62</integer>
+		</array>
+		<array>
+			<real>518.69903564453125</real>
+			<real>787.42236328125</real>
+			<real>0.0</real>
+			<real>30</real>
+			<integer>55</integer>
+		</array>
+		<array>
+			<real>949.0372314453125</real>
+			<real>742.39111328125</real>
+			<real>30</real>
+			<real>25</real>
+			<integer>52</integer>
+		</array>
+		<array>
+			<real>1044.8389892578125</real>
+			<real>401.7586669921875</real>
+			<real>35</real>
+			<real>5</real>
+			<integer>17</integer>
+		</array>
+		<array>
+			<real>1116.3568115234375</real>
+			<real>844.22406005859375</real>
+			<real>40</real>
+			<real>30</real>
+			<integer>63</integer>
+		</array>
+		<array>
+			<real>964.05938720703125</real>
+			<real>404.19558715820312</real>
+			<real>30</real>
+			<real>5</real>
+			<integer>16</integer>
+		</array>
+		<array>
+			<real>865.6494140625</real>
+			<real>822.13385009765625</real>
+			<real>25</real>
+			<real>30</real>
+			<integer>60</integer>
+		</array>
+		<array>
+			<real>668.16668701171875</real>
+			<real>489.24411010742188</real>
+			<real>10</real>
+			<real>10</real>
+			<integer>21</integer>
+		</array>
+		<array>
+			<real>798.01080322265625</real>
+			<real>649.35333251953125</real>
+			<real>20</real>
+			<real>20</real>
+			<integer>41</integer>
+		</array>
+		<array>
+			<real>524.71697998046875</real>
+			<real>711.84271240234375</real>
+			<real>0.0</real>
+			<real>25</real>
+			<integer>46</integer>
+		</array>
+		<array>
+			<real>603.61590576171875</real>
+			<real>490.208984375</real>
+			<real>5</real>
+			<real>10</real>
+			<integer>20</integer>
+		</array>
+		<array>
+			<real>581.64398193359375</real>
+			<real>794.0247802734375</real>
+			<real>5</real>
+			<real>30</real>
+			<integer>56</integer>
+		</array>
+		<array>
+			<real>890.67730712890625</real>
+			<real>327.327392578125</real>
+			<real>25</real>
+			<real>0.0</real>
+			<integer>6</integer>
+		</array>
+		<array>
+			<real>720.8441162109375</real>
+			<real>726.52569580078125</real>
+			<real>15</real>
+			<real>25</real>
+			<integer>49</integer>
+		</array>
+		<array>
+			<real>555.041259765625</real>
+			<real>348.11392211914062</real>
+			<real>0.0</real>
+			<real>0.0</real>
+			<integer>1</integer>
+		</array>
+		<array>
+			<real>877.721435546875</real>
+			<real>569.35968017578125</real>
+			<real>25</real>
+			<real>15</real>
+			<integer>33</integer>
+		</array>
+		<array>
+			<real>652.276123046875</real>
+			<real>721.73138427734375</real>
+			<real>10</real>
+			<real>25</real>
+			<integer>48</integer>
+		</array>
+		<array>
+			<real>741.45562744140625</real>
+			<real>411.26971435546875</real>
+			<real>15</real>
+			<real>5</real>
+			<integer>13</integer>
+		</array>
+		<array>
+			<real>725.67822265625</real>
+			<real>646.16595458984375</real>
+			<real>15</real>
+			<real>20</real>
+			<integer>40</integer>
+		</array>
+		<array>
+			<real>1129.586669921875</real>
+			<real>399.9080810546875</real>
+			<real>40</real>
+			<real>5</real>
+			<integer>18</integer>
+		</array>
+		<array>
+			<real>807.77691650390625</real>
+			<real>487.86822509765625</real>
+			<real>20</real>
+			<real>10</real>
+			<integer>23</integer>
+		</array>
+		<array>
+			<real>610.14044189453125</real>
+			<real>416.19509887695312</real>
+			<real>5</real>
+			<real>5</real>
+			<integer>11</integer>
+		</array>
+		<array>
+			<real>1032.213623046875</real>
+			<real>747.56488037109375</real>
+			<real>35</real>
+			<real>25</real>
+			<integer>53</integer>
+		</array>
+		<array>
+			<real>869.76580810546875</real>
+			<real>737.31524658203125</real>
+			<real>25</real>
+			<real>25</real>
+			<integer>51</integer>
+		</array>
+		<array>
+			<real>956.6904296875</real>
+			<real>570.6912841796875</real>
+			<real>30</real>
+			<real>15</real>
+			<integer>34</integer>
+		</array>
+		<array>
+			<real>1038.822021484375</real>
+			<real>572.32373046875</real>
+			<real>35</real>
+			<real>15</real>
+			<integer>35</integer>
+		</array>
+		<array>
+			<real>616.45501708984375</real>
+			<real>343.62109375</real>
+			<real>5</real>
+			<real>0.0</real>
+			<integer>2</integer>
+		</array>
+		<array>
+			<real>597.75177001953125</real>
+			<real>564.951171875</real>
+			<real>5</real>
+			<real>15</real>
+			<integer>29</integer>
+		</array>
+		<array>
+			<real>1122.1630859375</real>
+			<real>662.636474609375</real>
+			<real>40</real>
+			<real>20</real>
+			<integer>45</integer>
+		</array>
+		<array>
+			<real>541.755615234375</real>
+			<real>490.40673828125</real>
+			<real>0.0</real>
+			<real>10</real>
+			<integer>19</integer>
+		</array>
+		<array>
+			<real>945.42584228515625</real>
+			<real>829.51556396484375</real>
+			<real>30</real>
+			<real>30</real>
+			<integer>61</integer>
+		</array>
+		<array>
+			<real>882.2166748046875</real>
+			<real>487.3173828125</real>
+			<real>25</real>
+			<real>10</real>
+			<integer>24</integer>
+		</array>
+		<array>
+			<real>1127.052978515625</real>
+			<real>485.63848876953125</real>
+			<real>40</real>
+			<real>10</real>
+			<integer>27</integer>
+		</array>
+		<array>
+			<real>1035.7474365234375</real>
+			<real>659.40093994140625</real>
+			<real>35</real>
+			<real>20</real>
+			<integer>44</integer>
+		</array>
+		<array>
+			<real>873.625</real>
+			<real>652.96319580078125</real>
+			<real>25</real>
+			<real>20</real>
+			<integer>42</integer>
+		</array>
+		<array>
+			<real>967.60308837890625</real>
+			<real>323.1776123046875</real>
+			<real>30</real>
+			<real>0.0</real>
+			<integer>7</integer>
+		</array>
+		<array>
+			<real>736.01885986328125</real>
+			<real>488.3677978515625</real>
+			<real>15</real>
+			<real>10</real>
+			<integer>22</integer>
+		</array>
+		<array>
+			<real>1131.0556640625</real>
+			<real>315.45135498046875</real>
+			<real>40</real>
+			<real>0.0</real>
+			<integer>9</integer>
+		</array>
+		<array>
+			<real>1047.46630859375</real>
+			<real>319.249267578125</real>
+			<real>35</real>
+			<real>0.0</real>
+			<integer>8</integer>
+		</array>
+		<array>
+			<real>886.70343017578125</real>
+			<real>406.6385498046875</real>
+			<real>25</real>
+			<real>5</real>
+			<integer>15</integer>
+		</array>
+		<array>
+			<real>730.9102783203125</real>
+			<real>566.81024169921875</real>
+			<real>15</real>
+			<real>15</real>
+			<integer>31</integer>
+		</array>
+		<array>
+			<real>586.80902099609375</real>
+			<real>716.63702392578125</real>
+			<real>5</real>
+			<real>25</real>
+			<integer>47</integer>
+		</array>
+		<array>
+			<real>535.9072265625</real>
+			<real>563.75213623046875</real>
+			<real>0.0</real>
+			<real>15</real>
+			<integer>28</integer>
+		</array>
+		<array>
+			<real>530.00543212890625</real>
+			<real>637.19482421875</real>
+			<real>0.0</real>
+			<real>20</real>
+			<integer>37</integer>
+		</array>
+		<array>
+			<real>789.248046875</real>
+			<real>815.2396240234375</real>
+			<real>20</real>
+			<real>30</real>
+			<integer>59</integer>
+		</array>
+		<array>
+			<real>952.98260498046875</real>
+			<real>655.95758056640625</real>
+			<real>30</real>
+			<real>20</real>
+			<integer>43</integer>
+		</array>
+		<array>
+			<real>960.1959228515625</real>
+			<real>486.4783935546875</real>
+			<real>30</real>
+			<real>10</real>
+			<integer>25</integer>
+		</array>
+		<array>
+			<real>793.563720703125</real>
+			<real>731.921875</real>
+			<real>20</real>
+			<real>25</real>
+			<integer>50</integer>
+		</array>
+		<array>
+			<real>716.4501953125</real>
+			<real>807.74627685546875</real>
+			<real>15</real>
+			<real>30</real>
+			<integer>58</integer>
+		</array>
+		<array>
+			<real>1119.14111328125</real>
+			<real>752.9573974609375</real>
+			<real>40</real>
+			<real>25</real>
+			<integer>54</integer>
+		</array>
+		<array>
+			<real>548.686279296875</real>
+			<real>418.5567626953125</real>
+			<real>0.0</real>
+			<real>5</real>
+			<integer>10</integer>
+		</array>
+		<array>
+			<real>662.52972412109375</real>
+			<real>566.1893310546875</real>
+			<real>10</real>
+			<real>15</real>
+			<integer>30</integer>
+		</array>
+		<array>
+			<real>802.830322265625</real>
+			<real>568.4215087890625</real>
+			<real>20</real>
+			<real>15</real>
+			<integer>32</integer>
+		</array>
+		<array>
+			<real>591.96856689453125</real>
+			<real>640.07366943359375</real>
+			<real>5</real>
+			<real>20</real>
+			<integer>38</integer>
+		</array>
+	</array>
+	<array>
+		<array>
+			<real>1180.4251708984375</real>
+			<real>474.69271850585938</real>
+			<real>40</real>
+			<real>5</real>
+			<integer>10</integer>
+		</array>
+		<array>
+			<real>818.96685791015625</real>
+			<real>657.941650390625</real>
+			<real>10</real>
+			<real>20</real>
+			<integer>22</integer>
+		</array>
+		<array>
+			<real>708.28619384765625</real>
+			<real>771.18719482421875</real>
+			<real>0.0</real>
+			<real>30</real>
+			<integer>31</integer>
+		</array>
+		<array>
+			<real>928.51702880859375</real>
+			<real>724.09393310546875</real>
+			<real>20</real>
+			<real>25</real>
+			<integer>28</integer>
+		</array>
+		<array>
+			<real>1049.6912841796875</real>
+			<real>730.5875244140625</real>
+			<real>30</real>
+			<real>25</real>
+			<integer>29</integer>
+		</array>
+		<array>
+			<real>1180.3165283203125</real>
+			<real>538.763916015625</real>
+			<real>40</real>
+			<real>10</real>
+			<integer>15</integer>
+		</array>
+		<array>
+			<real>824.7236328125</real>
+			<real>539.94085693359375</real>
+			<real>10</real>
+			<real>10</real>
+			<integer>12</integer>
+		</array>
+		<array>
+			<real>933.2952880859375</real>
+			<real>600.2535400390625</real>
+			<real>20</real>
+			<real>15</real>
+			<integer>18</integer>
+		</array>
+		<array>
+			<real>711.14898681640625</real>
+			<real>712.22003173828125</real>
+			<real>0.0</real>
+			<real>25</real>
+			<integer>26</integer>
+		</array>
+		<array>
+			<real>925.383056640625</real>
+			<real>787.36651611328125</real>
+			<real>20</real>
+			<real>30</real>
+			<integer>33</integer>
+		</array>
+		<array>
+			<real>1179.1561279296875</real>
+			<real>669.9757080078125</real>
+			<real>40</real>
+			<real>20</real>
+			<integer>25</integer>
+		</array>
+		<array>
+			<real>1180.7896728515625</real>
+			<real>411.1505126953125</real>
+			<real>40</real>
+			<real>0.0</real>
+			<integer>5</integer>
+		</array>
+		<array>
+			<real>821.5372314453125</real>
+			<real>599.09759521484375</real>
+			<real>10</real>
+			<real>15</real>
+			<integer>17</integer>
+		</array>
+		<array>
+			<real>938.5030517578125</real>
+			<real>479.70941162109375</real>
+			<real>20</real>
+			<real>5</real>
+			<integer>8</integer>
+		</array>
+		<array>
+			<real>724.05511474609375</real>
+			<real>483.30047607421875</real>
+			<real>0.0</real>
+			<real>5</real>
+			<integer>6</integer>
+		</array>
+		<array>
+			<real>1177.6741943359375</real>
+			<real>735.8408203125</real>
+			<real>40</real>
+			<real>25</real>
+			<integer>30</integer>
+		</array>
+		<array>
+			<real>829.5089111328125</real>
+			<real>424.13552856445312</real>
+			<real>10</real>
+			<real>0.0</real>
+			<integer>2</integer>
+		</array>
+		<array>
+			<real>716.4434814453125</real>
+			<real>596.95037841796875</real>
+			<real>0.0</real>
+			<real>15</real>
+			<integer>16</integer>
+		</array>
+		<array>
+			<real>713.55889892578125</real>
+			<real>653.7557373046875</real>
+			<real>0.0</real>
+			<real>20</real>
+			<integer>21</integer>
+		</array>
+		<array>
+			<real>939.08270263671875</real>
+			<real>420.43011474609375</real>
+			<real>20</real>
+			<real>0.0</real>
+			<integer>3</integer>
+		</array>
+		<array>
+			<real>1050.8892822265625</real>
+			<real>665.6588134765625</real>
+			<real>30</real>
+			<real>20</real>
+			<integer>24</integer>
+		</array>
+		<array>
+			<real>720.390380859375</real>
+			<real>540.1064453125</real>
+			<real>0.0</real>
+			<real>10</real>
+			<integer>11</integer>
+		</array>
+		<array>
+			<real>1054.9490966796875</real>
+			<real>539.216796875</real>
+			<real>30</real>
+			<real>10</real>
+			<integer>14</integer>
+		</array>
+		<array>
+			<real>931.41802978515625</real>
+			<real>661.72802734375</real>
+			<real>20</real>
+			<real>20</real>
+			<integer>23</integer>
+		</array>
+		<array>
+			<real>1053.7327880859375</real>
+			<real>603.32745361328125</real>
+			<real>30</real>
+			<real>15</real>
+			<integer>19</integer>
+		</array>
+		<array>
+			<real>726.98223876953125</real>
+			<real>428.27163696289062</real>
+			<real>0.0</real>
+			<real>0.0</real>
+			<integer>1</integer>
+		</array>
+		<array>
+			<real>815.52349853515625</real>
+			<real>718.0650634765625</real>
+			<real>10</real>
+			<real>25</real>
+			<integer>27</integer>
+		</array>
+		<array>
+			<real>1048.5428466796875</real>
+			<real>794.25897216796875</real>
+			<real>30</real>
+			<real>30</real>
+			<integer>34</integer>
+		</array>
+		<array>
+			<real>812.57366943359375</real>
+			<real>778.97503662109375</real>
+			<real>10</real>
+			<real>30</real>
+			<integer>32</integer>
+		</array>
+		<array>
+			<real>1056.657958984375</real>
+			<real>414.43246459960938</real>
+			<real>30</real>
+			<real>0.0</real>
+			<integer>4</integer>
+		</array>
+		<array>
+			<real>826.8538818359375</real>
+			<real>482.22396850585938</real>
+			<real>10</real>
+			<real>5</real>
+			<integer>7</integer>
+		</array>
+		<array>
+			<real>935.6124267578125</real>
+			<real>539.6314697265625</real>
+			<real>20</real>
+			<real>10</real>
+			<integer>13</integer>
+		</array>
+		<array>
+			<real>1179.9024658203125</real>
+			<real>604.56201171875</real>
+			<real>40</real>
+			<real>15</real>
+			<integer>20</integer>
+		</array>
+	</array>
+	<false/>
+	<string>0:00:12:38.28463/60000</string>
+	<integer>1</integer>
+	<real>6.3499999999999996</real>
+	<real>1.585</real>
+	<real>1.3364</real>
+</array>
+</plist>

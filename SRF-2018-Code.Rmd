@@ -278,3 +278,17 @@ ggplot(Flow_MovementData) +
   ggtitle("Discharge vs Interpool Movement Relationship") +
   theme(axis.text.y.right = element_text(colour="red"), axis.text.y.left = element_text(colour="blue"), axis.title.y.right = element_text(color = "red"), axis.title.y.left = element_text(color = "blue"))
 ```
+
+#VidSync Data
+This section of the code is devoted to importing, analyzing, and creating correlations with 3-D Videogrammetry data collected using VidSync from the summer of 2018 on Porter Creek. This is my child and I will keep it neat.
+
+##Importing Data
+###Pre-Augmentation
+```{r}
+
+```
+###Post-Augmentation
+```{r}
+
+```
+##Analyzation
