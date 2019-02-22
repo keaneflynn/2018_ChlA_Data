@@ -231,7 +231,8 @@ EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") 
   group_by(Date.x) %>%
   mutate(Movement_tally = cumsum(Survey_tally)) %>%
   mutate(Max_Ping_Tally = max(Movement_tally)) %>%
-  arrange(Date.x, Time) 
+  arrange(Date.x, Time) %>%
+  filter(!Species == "Cottus_spp")
 EFish_Movement_Data
 
 Augmentation_MovementData <- EFish_Movement_Data %>%
