@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -58,7 +58,10 @@ library(geometry)
 
 ``` r
 library(rgl)
+library(hypervolume)
 ```
+
+    ## Loading required package: Rcpp
 
 Productivity Data
 =================
@@ -550,28 +553,29 @@ EFish_Movement_Data <- left_join(PIT_Data, CombiningMovement_Efish, by = "PIT") 
   group_by(Date.x) %>%
   mutate(Movement_tally = cumsum(Survey_tally)) %>%
   mutate(Max_Ping_Tally = max(Movement_tally)) %>%
-  arrange(Date.x, Time) 
+  arrange(Date.x, Time) %>%
+  filter(!Species == "Cottus_spp")
 EFish_Movement_Data
 ```
 
-    ## # A tibble: 1,048 x 19
-    ## # Groups:   Date.x [69]
+    ## # A tibble: 995 x 19
+    ## # Groups:   Date.x [68]
     ##    Species PIT   Date_Lookup Date.x Time  Site  UnitNumber Survey Unit 
     ##    <chr>   <chr> <chr>       <chr>  <tim> <chr> <chr>      <chr>  <chr>
     ##  1 Omykiss 06A7… 6/7/18      6/10/… 02:00 POR … (blank)    ANT    18.6 
-    ##  2 Cottus… 06A7… 6/7/18      6/10/… 03:54 POR … (blank)    ANT    18.6 
+    ##  2 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
     ##  3 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
-    ##  4 Okisut… 06A8… 6/7/18      6/10/… 05:19 POR … (blank)    ANT    18.6 
-    ##  5 Omykiss 068D… 6/7/18      6/10/… 05:45 POR … (blank)    ANT    18.55
+    ##  4 Omykiss 068D… 6/7/18      6/10/… 05:45 POR … (blank)    ANT    18.55
+    ##  5 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
     ##  6 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
-    ##  7 Okisut… 06A7… 6/7/18      6/10/… 06:02 POR … (blank)    ANT    18.6 
-    ##  8 Omykiss 06A8… 6/4/18      6/10/… 09:54 POR … (blank)    ANT    18.3 
-    ##  9 Omykiss 068D… 6/7/18      6/10/… 15:39 POR … (blank)    ANT    18.55
-    ## 10 Omykiss 068D… 6/7/18      6/10/… 17:29 POR … (blank)    ANT    18.5 
-    ## # ... with 1,038 more rows, and 10 more variables:
-    ## #   Fish_Num_Per_Site <dbl>, Fish_Num <dbl>, Length_mm <dbl>,
-    ## #   Weight_g <dbl>, Recapture <dbl>, Fat_AVG <dbl>, Comments <chr>,
-    ## #   Survey_tally <dbl>, Movement_tally <dbl>, Max_Ping_Tally <dbl>
+    ##  7 Omykiss 06A8… 6/4/18      6/10/… 09:54 POR … (blank)    ANT    18.3 
+    ##  8 Omykiss 068D… 6/7/18      6/10/… 15:39 POR … (blank)    ANT    18.55
+    ##  9 Omykiss 068D… 6/7/18      6/10/… 17:29 POR … (blank)    ANT    18.5 
+    ## 10 Okisut… 06A7… 6/7/18      6/10/… 18:26 POR … (blank)    ANT    18.6 
+    ## # ... with 985 more rows, and 10 more variables: Fish_Num_Per_Site <dbl>,
+    ## #   Fish_Num <dbl>, Length_mm <dbl>, Weight_g <dbl>, Recapture <dbl>,
+    ## #   Fat_AVG <dbl>, Comments <chr>, Survey_tally <dbl>,
+    ## #   Movement_tally <dbl>, Max_Ping_Tally <dbl>
 
 ``` r
 Augmentation_MovementData <- EFish_Movement_Data %>%
@@ -753,3 +757,382 @@ RoachRun_VidSync_Post <-
 
 Analyzation
 -----------
+
+We will be analyzing functions such as NND, distance travelled per time (cm/s), distance to forage attempt (DFA), proportion of forage types, volume occupied, overlap in forage volumes, etc. \#\#\#Nearest Neighbor Distance (NND) This will use the three dimensional distance formula to look at nearest neighbor at any given time during the subsample rather than the average centroid point. \#\#\#\#Pre-Augmentation
+
+#### Post-Augmentation
+
+### Distance Travelled per Time (cm/s)
+
+This will use the three dimensional distance formula divided by time. \#\#\#\#Pre-Augmentation
+
+#### Post-Augmentation
+
+### Distance to Forage Attempt (DFA)
+
+Finding the centroid point then looking at the average distance to each subsequent point taken in the subsample and taking the average.
+
+#### Pre-Augmentation
+
+#### Post-Augmentation
+
+### Proportion of Forage Types
+
+Breaking down the proportion of each type of forage event and how it changes throughout the study period.
+
+#### Pre-Augmentation
+
+#### Post-Augmentation
+
+### Volume Occupied
+
+Using Delaunay Triangulation to calculate the volume each fish is occupying during each subsample.
+
+#### Pre-Augmentation
+
+``` r
+RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
+  arrange(objects) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  transform(index = as.numeric(index),
+            subsample = as.numeric(subsample)) %>%
+  arrange(subsample, index, time) %>%
+  select(index, X, Y, Z) %>%
+  arrange(index) 
+
+for (i in 1:19) {
+  if (i == 3) {
+    next
+  }
+  if (i == 7) {
+    next
+  }
+  if (i == 14) {
+    next
+  }
+  if (i == 16) {
+    next
+  }
+  index <- RoachRun_Volume_Pre %>%
+    filter(index == i) %>%
+    select(X, Y, Z) %>%
+    as.matrix() %>%
+    convhulln("FA") %>%
+    print()
+}
+```
+
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    3    2    7
+    ##  [2,]    1    2    7
+    ##  [3,]    1    9    2
+    ##  [4,]   10    1    7
+    ##  [5,]   10    1    9
+    ##  [6,]   10    8    7
+    ##  [7,]   10    8    9
+    ##  [8,]    6    3    7
+    ##  [9,]    6    8    7
+    ## [10,]    6    8    3
+    ## [11,]    4    8    3
+    ## [12,]    4    8    9
+    ## [13,]    4    3    2
+    ## [14,]    4    9    2
+    ## 
+    ## $area
+    ## [1] 92.91676
+    ## 
+    ## $vol
+    ## [1] 35.39281
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    2    3    1
+    ##  [2,]    4    2    1
+    ##  [3,]    9    3    7
+    ##  [4,]    9    3    1
+    ##  [5,]   11    2    3
+    ##  [6,]   11    4    2
+    ##  [7,]   11    3    7
+    ##  [8,]    6   11    7
+    ##  [9,]    6   11    4
+    ## [10,]    5    4    1
+    ## [11,]    5    9    1
+    ## [12,]    5    6    4
+    ## [13,]    5    9    7
+    ## [14,]    5    6    7
+    ## 
+    ## $area
+    ## [1] 166.9069
+    ## 
+    ## $vol
+    ## [1] 53.06112
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    8    1    7
+    ##  [2,]    8    4    7
+    ##  [3,]    9    8    1
+    ##  [4,]    9    8    4
+    ##  [5,]    6    1    7
+    ##  [6,]    6    4    7
+    ##  [7,]    3    9    1
+    ##  [8,]    3    9    4
+    ##  [9,]    3    6    1
+    ## [10,]    3    6    4
+    ## 
+    ## $area
+    ## [1] 909.039
+    ## 
+    ## $vol
+    ## [1] 1089.977
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    7    6   10
+    ##  [2,]    2    6   10
+    ##  [3,]   11    7    1
+    ##  [4,]   11    2    1
+    ##  [5,]   11    2   10
+    ##  [6,]    3    2    1
+    ##  [7,]    3    2    6
+    ##  [8,]    8    7   10
+    ##  [9,]    8   11   10
+    ## [10,]    8   11    7
+    ## [11,]    4    3    1
+    ## [12,]    4    7    1
+    ## [13,]    5    3    6
+    ## [14,]    5    4    3
+    ## [15,]    5    7    6
+    ## [16,]    5    4    7
+    ## 
+    ## $area
+    ## [1] 82.60097
+    ## 
+    ## $vol
+    ## [1] 33.98795
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    4    7    2
+    ##  [2,]    6    5    7
+    ##  [3,]    6    4    7
+    ##  [4,]    6    4    5
+    ##  [5,]    1    7    2
+    ##  [6,]    1    5    7
+    ##  [7,]    3    4    5
+    ##  [8,]    3    1    5
+    ##  [9,]    3    4    2
+    ## [10,]    3    1    2
+    ## 
+    ## $area
+    ## [1] 5345.584
+    ## 
+    ## $vol
+    ## [1] 6648.572
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    3    1    4
+    ##  [2,]    9    8    4
+    ##  [3,]    9    3    4
+    ##  [4,]    6    1    4
+    ##  [5,]    6    8    4
+    ##  [6,]    2    3    1
+    ##  [7,]    2    9    3
+    ##  [8,]    7    9    8
+    ##  [9,]   11    6    1
+    ## [10,]   11    2    1
+    ## [11,]   11    6    8
+    ## [12,]   11    7    8
+    ## [13,]   11    2    9
+    ## [14,]   11    7    9
+    ## 
+    ## $area
+    ## [1] 10.56231
+    ## 
+    ## $vol
+    ## [1] 1.759631
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    1    2    8
+    ##  [2,]    4    8    5
+    ##  [3,]    4    1    8
+    ##  [4,]    7    2    8
+    ##  [5,]    7    6    2
+    ##  [6,]    7    8    5
+    ##  [7,]    7    6    5
+    ##  [8,]    3    1    2
+    ##  [9,]    3    4    1
+    ## [10,]    3    6    2
+    ## [11,]    3    6    5
+    ## [12,]    3    4    5
+    ## 
+    ## $area
+    ## [1] 956.7945
+    ## 
+    ## $vol
+    ## [1] 1030.59
+    ## 
+    ## $hull
+    ##      [,1] [,2] [,3]
+    ## [1,]    2    1    3
+    ## [2,]    6    2    3
+    ## [3,]    6    2    1
+    ## [4,]    4    1    3
+    ## [5,]    4    6    3
+    ## [6,]    5    6    1
+    ## [7,]    5    4    1
+    ## [8,]    5    4    6
+    ## 
+    ## $area
+    ## [1] 508.412
+    ## 
+    ## $vol
+    ## [1] 160.8925
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    3    2    4
+    ##  [2,]    3    8    4
+    ##  [3,]    7    2    9
+    ##  [4,]    7    2    4
+    ##  [5,]    7    8    9
+    ##  [6,]    7    8    4
+    ##  [7,]    6    2    9
+    ##  [8,]    6    8    9
+    ##  [9,]    1    3    2
+    ## [10,]    1    3    8
+    ## [11,]    1    6    2
+    ## [12,]    1    6    8
+    ## 
+    ## $area
+    ## [1] 2.771477
+    ## 
+    ## $vol
+    ## [1] 0.1886601
+    ## 
+    ## $hull
+    ##      [,1] [,2] [,3]
+    ## [1,]    2    5    1
+    ## [2,]    2    3    1
+    ## [3,]    2    3    5
+    ## [4,]    4    5    1
+    ## [5,]    4    3    1
+    ## [6,]    4    3    5
+    ## 
+    ## $area
+    ## [1] 16.44502
+    ## 
+    ## $vol
+    ## [1] 1.156468
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    2    5    1
+    ##  [2,]    6    2    1
+    ##  [3,]   11    5   10
+    ##  [4,]   11    6   10
+    ##  [5,]   11    6    1
+    ##  [6,]    8    6    2
+    ##  [7,]    8    2    5
+    ##  [8,]    4    5    1
+    ##  [9,]    4   11    1
+    ## [10,]    4   11    5
+    ## [11,]    9    5   10
+    ## [12,]    9    8    5
+    ## [13,]    9    6   10
+    ## [14,]    9    8    6
+    ## 
+    ## $area
+    ## [1] 108.2664
+    ## 
+    ## $vol
+    ## [1] 69.95656
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    2    7    5
+    ##  [2,]    8    2    7
+    ##  [3,]    8   11    7
+    ##  [4,]    6    7    5
+    ##  [5,]    6   11    7
+    ##  [6,]   10    8    2
+    ##  [7,]   10    8   11
+    ##  [8,]    4    6    5
+    ##  [9,]    4    2    5
+    ## [10,]    4   10    2
+    ## [11,]    3   10   11
+    ## [12,]    3    4   10
+    ## [13,]    3    6   11
+    ## [14,]    3    4    6
+    ## 
+    ## $area
+    ## [1] 224.6459
+    ## 
+    ## $vol
+    ## [1] 174.4089
+    ## 
+    ## $hull
+    ##       [,1] [,2] [,3]
+    ##  [1,]    9    7   10
+    ##  [2,]    5    7   10
+    ##  [3,]    8    7    1
+    ##  [4,]    8    9    1
+    ##  [5,]    8    9    7
+    ##  [6,]   11    5   10
+    ##  [7,]   11    9   10
+    ##  [8,]   11    9    1
+    ##  [9,]    2    7    1
+    ## [10,]    2    5    7
+    ## [11,]    2   11    1
+    ## [12,]    2   11    5
+    ## 
+    ## $area
+    ## [1] 441.4269
+    ## 
+    ## $vol
+    ## [1] 222.4795
+    ## 
+    ## $hull
+    ##      [,1] [,2] [,3]
+    ## [1,]    2    6    3
+    ## [2,]    1    2    3
+    ## [3,]    1    2    6
+    ## [4,]    4    6    3
+    ## [5,]    4    1    3
+    ## [6,]    4    1    6
+    ## 
+    ## $area
+    ## [1] 540.7251
+    ## 
+    ## $vol
+    ## [1] 164.438
+    ## 
+    ## $hull
+    ##      [,1] [,2] [,3]
+    ## [1,]    3    1    4
+    ## [2,]    2    1    4
+    ## [3,]    2    3    4
+    ## [4,]    2    3    1
+    ## 
+    ## $area
+    ## [1] 7.671573
+    ## 
+    ## $vol
+    ## [1] 0.1675174
+
+#### Post-Augmentation
+
+### Overlap in Forage Volumes
+
+Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
+
+#### Pre-Augmentation
+
+#### Post-Augmentation

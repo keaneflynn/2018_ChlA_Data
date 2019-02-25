@@ -345,6 +345,7 @@ This will use the three dimensional distance formula divided by time.
 ```
 ###Distance to Forage Attempt (DFA)
 Finding the centroid point then looking at the average distance to each subsequent point taken in the subsample and taking the average.
+
 ####Pre-Augmentation
 ```{r}
 
@@ -355,6 +356,7 @@ Finding the centroid point then looking at the average distance to each subseque
 ```
 ###Proportion of Forage Types
 Breaking down the proportion of each type of forage event and how it changes throughout the study period.
+
 ####Pre-Augmentation
 ```{r}
 
@@ -364,17 +366,8 @@ Breaking down the proportion of each type of forage event and how it changes thr
 
 ```
 ###Volume Occupied
-Using Delaunay Triangulation to calculate the volume each fish is occupying during each subsample
-####Pre-Augmentation
-```{r}
+Using Delaunay Triangulation to calculate the volume each fish is occupying during each subsample.
 
-```
-####Post-Augmentation
-```{r}
-
-```
-###Overlap in Forage Volumes
-Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
 ####Pre-Augmentation
 ```{r}
 RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
@@ -388,7 +381,39 @@ RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(index, X, Y, Z) %>%
-  arrange(index)
+  arrange(index) 
+
+for (i in 1:19) {
+  if (i == 3) {
+    next
+  }
+  if (i == 7) {
+    next
+  }
+  if (i == 14) {
+    next
+  }
+  if (i == 16) {
+    next
+  }
+  index <- RoachRun_Volume_Pre %>%
+    filter(index == i) %>%
+    select(X, Y, Z) %>%
+    as.matrix() %>%
+    convhulln("FA") %>%
+    print()
+}
+```
+####Post-Augmentation
+```{r}
+
+```
+###Overlap in Forage Volumes
+Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
+
+####Pre-Augmentation
+```{r}
+
 ```
 ####Post-Augmentation
 ```{r}
