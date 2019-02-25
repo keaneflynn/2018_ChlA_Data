@@ -17,6 +17,7 @@ library(ggplot2)
 library(lubridate)
 library(geometry)
 library(rgl)
+library(hypervolume)
 ```
 
 #Productivity Data
@@ -321,3 +322,75 @@ RoachRun_VidSync_Post <-
                     col_types = "cccdddddddd")
 ```
 ##Analyzation
+We will be analyzing functions such as NND, distance travelled per time (cm/s), distance to forage attempt (DFA), proportion of forage types, volume occupied, overlap in forage volumes, etc.
+###Nearest Neighbor Distance (NND)
+This will use the three dimensional distance formula to look at nearest neighbor at any given time during the subsample rather than the average centroid point.
+####Pre-Augmentation
+```{r}
+
+```
+####Post-Augmentation
+```{r}
+
+```
+###Distance Travelled per Time (cm/s)
+This will use the three dimensional distance formula divided by time.
+####Pre-Augmentation
+```{r}
+
+```
+####Post-Augmentation
+```{r}
+
+```
+###Distance to Forage Attempt (DFA)
+Finding the centroid point then looking at the average distance to each subsequent point taken in the subsample and taking the average.
+####Pre-Augmentation
+```{r}
+
+```
+####Post-Augmentation
+```{r}
+
+```
+###Proportion of Forage Types
+Breaking down the proportion of each type of forage event and how it changes throughout the study period.
+####Pre-Augmentation
+```{r}
+
+```
+####Post-Augmentation
+```{r}
+
+```
+###Volume Occupied
+Using Delaunay Triangulation to calculate the volume each fish is occupying during each subsample
+####Pre-Augmentation
+```{r}
+
+```
+####Post-Augmentation
+```{r}
+
+```
+###Overlap in Forage Volumes
+Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
+####Pre-Augmentation
+```{r}
+RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
+  arrange(objects) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  transform(index = as.numeric(index),
+            subsample = as.numeric(subsample)) %>%
+  arrange(subsample, index, time) %>%
+  select(index, X, Y, Z) %>%
+  arrange(index)
+```
+####Post-Augmentation
+```{r}
+
+```
