@@ -370,6 +370,34 @@ Using Delaunay Triangulation to calculate the volume each fish is occupying duri
 
 ####Pre-Augmentation
 ```{r}
+GolfBall_Volume_Pre <- GolfBall_VidSync_Pre %>%
+  arrange(objects) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  transform(index = as.numeric(index),
+            subsample = as.numeric(subsample)) %>%
+  arrange(subsample, index, time) %>%
+  select(index, X, Y, Z) %>%
+  arrange(index)
+
+for (i in 1:13) {
+  if (i == 3) {
+    next
+  }
+  if (i == 10) {
+    next
+  }
+  index <- GolfBall_Volume_Pre %>%
+    filter(index == i) %>%
+    select(X, Y, Z) %>%
+    as.matrix() %>%
+    convhulln("FA") %>%
+    print()
+}
+
 RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
   arrange(objects) %>%
   filter(!grepl("Surface_Shots.*", objects)) %>%
@@ -406,7 +434,27 @@ for (i in 1:19) {
 ```
 ####Post-Augmentation
 ```{r}
+RoachRun_Volume_Post <- RoachRun_VidSync_Post %>%
+  arrange(objects) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  transform(index = as.numeric(index),
+            subsample = as.numeric(subsample)) %>%
+  arrange(subsample, index, time) %>%
+  select(index, X, Y, Z) %>%
+  arrange(index)
 
+for (i in 1:33) {
+  index <- RoachRun_Volume_Post %>%
+    filter(index == i) %>%
+    select(X, Y, Z) %>%
+    as.matrix() %>%
+    convhulln("FA") %>%
+    print()
+}
 ```
 ###Overlap in Forage Volumes
 Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
