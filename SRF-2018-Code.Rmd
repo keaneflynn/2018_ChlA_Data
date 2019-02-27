@@ -427,7 +427,7 @@ GolfBall_DistPerTime_Post <- GolfBall_VidSync_Post %>%
 
 
 RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
-  arrange(objects, time) %>%
+  arrange(objects, time) %>% 
   filter(!grepl("Surface_Shots.*", objects)) %>%
   filter(!grepl("^Length.*", event)) %>%
   mutate(subsample = str_extract(objects, "\\d")) %>%
