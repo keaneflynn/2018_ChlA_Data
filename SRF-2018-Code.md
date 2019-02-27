@@ -780,11 +780,13 @@ GolfBall_DistPerTime_Pre <- GolfBall_VidSync_Pre %>%
   mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
+  mutate(date = as.Date("2018-06-30")) %>%
+  mutate(site = "18.3") %>%
   group_by(objects) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
 
 
 HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
@@ -800,11 +802,13 @@ HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
   mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
+  mutate(date = as.Date("2018-06-29")) %>%
+  mutate(site = "18.8") %>%
   group_by(objects) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
   
 
 RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
@@ -820,11 +824,13 @@ RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
   mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
+  mutate(date = as.Date("2018-06-29")) %>%
+  mutate(site = "18.5") %>%
   group_by(objects) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
 ```
 
 #### Post-Augmentation
@@ -843,11 +849,13 @@ GolfBall_DistPerTime_Post <- GolfBall_VidSync_Post %>%
   mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
+  mutate(date = as.Date("2018-07-06")) %>%
+  mutate(site = "18.3") %>%
   group_by(objects) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
 
 
 RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
@@ -863,11 +871,13 @@ RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
   mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
+  mutate(date = as.Date("2018-07-05")) %>%
+  mutate(site = "18.5") %>%
   group_by(objects) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
 ```
 
 ### Distance to Forage Attempt (DFA)
