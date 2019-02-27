@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -784,9 +784,9 @@ GolfBall_DistPerTime_Pre <- GolfBall_VidSync_Pre %>%
   mutate(site = "18.3") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
   dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 
@@ -808,9 +808,9 @@ HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
   mutate(site = "18.8") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
   dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
   
@@ -832,9 +832,9 @@ RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
   mutate(site = "18.5") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
   dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 ```
@@ -859,9 +859,9 @@ GolfBall_DistPerTime_Post <- GolfBall_VidSync_Post %>%
   mutate(site = "18.3") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
   dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 
@@ -883,9 +883,9 @@ RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
   mutate(site = "18.5") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
   dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 ```
