@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -766,7 +766,109 @@ We will be analyzing functions such as NND, distance travelled per time (cm/s), 
 
 This will use the three dimensional distance formula divided by time. \#\#\#\#Pre-Augmentation
 
+``` r
+GolfBall_DistPerTime_Pre <- GolfBall_VidSync_Pre %>%
+  arrange(objects, time) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(objects) %>%
+  mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
+  ungroup() %>%
+  dplyr::select(subsample, index, distance_cm_per_sec)
+
+
+HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
+  arrange(objects, time) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(objects) %>%
+  mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
+  ungroup() %>%
+  dplyr::select(subsample, index, distance_cm_per_sec)
+  
+
+RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
+  arrange(objects, time) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(objects) %>%
+  mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
+  ungroup() %>%
+  dplyr::select(subsample, index, distance_cm_per_sec)
+```
+
 #### Post-Augmentation
+
+``` r
+GolfBall_DistPerTime_Post <- GolfBall_VidSync_Post %>%
+  arrange(objects, time) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(objects) %>%
+  mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
+  ungroup() %>%
+  dplyr::select(subsample, index, distance_cm_per_sec)
+
+
+RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
+  arrange(objects, time) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(objects) %>%
+  mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
+  ungroup() %>%
+  dplyr::select(subsample, index, distance_cm_per_sec)
+```
 
 ### Distance to Forage Attempt (DFA)
 
