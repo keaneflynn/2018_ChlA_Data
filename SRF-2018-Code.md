@@ -782,11 +782,13 @@ GolfBall_DistPerTime_Pre <- GolfBall_VidSync_Pre %>%
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-06-30")) %>%
   mutate(site = "18.3") %>%
-  group_by(objects) %>%
+  group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
+  mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 
 
 HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
@@ -804,11 +806,13 @@ HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-06-29")) %>%
   mutate(site = "18.8") %>%
-  group_by(objects) %>%
+  group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
+  mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
   
 
 RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
@@ -826,11 +830,13 @@ RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-06-29")) %>%
   mutate(site = "18.5") %>%
-  group_by(objects) %>%
+  group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
+  mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 ```
 
 #### Post-Augmentation
@@ -851,15 +857,17 @@ GolfBall_DistPerTime_Post <- GolfBall_VidSync_Post %>%
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-07-06")) %>%
   mutate(site = "18.3") %>%
-  group_by(objects) %>%
+  group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
+  mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 
 
 RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
-  arrange(objects, time) %>%
+  arrange(objects, time) %>% 
   filter(!grepl("Surface_Shots.*", objects)) %>%
   filter(!grepl("^Length.*", event)) %>%
   mutate(subsample = str_extract(objects, "\\d")) %>%
@@ -873,11 +881,13 @@ RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-07-05")) %>%
   mutate(site = "18.5") %>%
-  group_by(objects) %>%
+  group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
+  mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec)
+  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
 ```
 
 ### Distance to Forage Attempt (DFA)
