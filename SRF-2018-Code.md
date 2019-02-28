@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -933,7 +933,7 @@ for (i in 1:13) {
   if (i == 10) {
     next
   }
-  index <- GolfBall_Volume_Pre %>%
+  GolfBall_Volume_Pre %>%
     filter(index == i) %>%
     select(X, Y, Z) %>%
     as.matrix() %>%
@@ -1186,7 +1186,7 @@ HalfTire_Volume_Pre <- HalfTire_VidSync_Pre %>%
   arrange(index)
 
 for (i in 1:8) {
-  index <- HalfTire_Volume_Pre %>%
+  HalfTire_Volume_Pre %>%
     filter(index == i) %>%
     select(X, Y, Z) %>%
     as.matrix() %>%
@@ -1362,7 +1362,7 @@ for (i in 1:19) {
   if (i == 16) {
     next
   }
-  index <- RoachRun_Volume_Pre %>%
+  RoachRun_Volume_Pre %>%
     filter(index == i) %>%
     select(X, Y, Z) %>%
     as.matrix() %>%
@@ -1689,7 +1689,7 @@ GolfBall_Volume_Post <- GolfBall_VidSync_Post %>%
   arrange(index)
 
 for (i in 1:6) {
-  index <- GolfBall_Volume_Post %>%
+  GolfBall_Volume_Post %>%
     filter(index == i) %>%
     select(X, Y, Z) %>%
     as.matrix() %>%
@@ -1839,7 +1839,7 @@ RoachRun_Volume_Post <- RoachRun_VidSync_Post %>%
   arrange(index)
 
 for (i in 1:33) {
-  index <- RoachRun_Volume_Post %>%
+  RoachRun_Volume_Post %>%
     filter(index == i) %>%
     select(X, Y, Z) %>%
     as.matrix() %>%
