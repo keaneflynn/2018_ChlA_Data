@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ───────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -781,14 +781,16 @@ GolfBall_DistPerTime_Pre <- GolfBall_VidSync_Pre %>%
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-06-30")) %>%
+  mutate(BACI_date = as.Date("2018-06-29")) %>%
   mutate(site = "18.3") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
+  dplyr::select(date, BACI_date, site, subsample, index, DistPerTime_Median, DistPerTime_Mean) %>%
+  distinct() %>%
+  arrange(as.numeric(index))
 
 
 HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
@@ -805,14 +807,16 @@ HalfTire_DistPerTime_Pre <- HalfTire_VidSync_Pre %>%
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-06-29")) %>%
+  mutate(BACI_date = as.Date("2018-06-29")) %>%
   mutate(site = "18.8") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
+  dplyr::select(date, BACI_date, site, subsample, index, DistPerTime_Median, DistPerTime_Mean) %>%
+  distinct() %>%
+  arrange(as.numeric(index))
   
 
 RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
@@ -829,14 +833,16 @@ RoachRun_DistPerTime_Pre <- RoachRun_VidSync_Pre %>%
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-06-29")) %>%
+  mutate(BACI_date = as.Date("2018-06-29")) %>%
   mutate(site = "18.5") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
+  dplyr::select(date, BACI_date, site, subsample, index, DistPerTime_Median, DistPerTime_Mean) %>%
+  distinct() %>%
+  arrange(as.numeric(index))
 ```
 
 #### Post-Augmentation
@@ -856,14 +862,16 @@ GolfBall_DistPerTime_Post <- GolfBall_VidSync_Post %>%
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-07-06")) %>%
+  mutate(BACI_date = as.Date("2018-07-05")) %>%
   mutate(site = "18.3") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
+  dplyr::select(date, BACI_date, site, subsample, index, DistPerTime_Median, DistPerTime_Mean) %>%
+  distinct() %>%
+  arrange(as.numeric(index))
 
 
 RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
@@ -880,15 +888,38 @@ RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
                                         + (distance_travelled_Y_cm)^2
                                         + (distance_travelled_Z_cm)^2)) %>%
   mutate(date = as.Date("2018-07-05")) %>%
+  mutate(BACI_date = as.Date("2018-07-05")) %>%
   mutate(site = "18.5") %>%
   group_by(index) %>%
   mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
   filter(!distance_cm_per_sec == Inf) %>%
   mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
   mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
-  ungroup() %>%
-  dplyr::select(date, site, subsample, index, distance_cm_per_sec, DistPerTime_Median, DistPerTime_Mean)
+  dplyr::select(date, BACI_date, site, subsample, index, DistPerTime_Median, DistPerTime_Mean) %>%
+  distinct() %>%
+  arrange(as.numeric(index))
+
+MovementPerTime_Data <-
+bind_rows(GolfBall_DistPerTime_Pre, HalfTire_DistPerTime_Pre, RoachRun_DistPerTime_Pre, GolfBall_DistPerTime_Post, RoachRun_DistPerTime_Post) %>%
+  arrange(BACI_date, site)
+MovementPerTime_Data
 ```
+
+    ## # A tibble: 78 x 7
+    ## # Groups:   index [33]
+    ##    date       BACI_date  site  subsample index DistPerTime_Med…
+    ##    <date>     <date>     <chr> <chr>     <chr>            <dbl>
+    ##  1 2018-06-30 2018-06-29 18.3  1         " 1"             0.877
+    ##  2 2018-06-30 2018-06-29 18.3  1         " 2"             0.150
+    ##  3 2018-06-30 2018-06-29 18.3  1         " 3"            22.6  
+    ##  4 2018-06-30 2018-06-29 18.3  2         " 4"             0.299
+    ##  5 2018-06-30 2018-06-29 18.3  3         " 5"             0.136
+    ##  6 2018-06-30 2018-06-29 18.3  3         " 6"             4.16 
+    ##  7 2018-06-30 2018-06-29 18.3  3         " 7"            12.3  
+    ##  8 2018-06-30 2018-06-29 18.3  4         " 8"             3.33 
+    ##  9 2018-06-30 2018-06-29 18.3  4         " 9"            80.4  
+    ## 10 2018-06-30 2018-06-29 18.3  4         " 10"            0.815
+    ## # ... with 68 more rows, and 1 more variable: DistPerTime_Mean <dbl>
 
 ### Distance to Forage Attempt (DFA)
 
