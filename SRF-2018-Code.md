@@ -954,7 +954,7 @@ GolfBall_Volume_Pre <- GolfBall_VidSync_Pre %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:13) {
@@ -1213,7 +1213,7 @@ HalfTire_Volume_Pre <- HalfTire_VidSync_Pre %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:8) {
@@ -1377,7 +1377,7 @@ RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index) 
 
 for (i in 1:19) {
@@ -1716,7 +1716,7 @@ GolfBall_Volume_Post <- GolfBall_VidSync_Post %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:6) {
@@ -1866,7 +1866,7 @@ RoachRun_Volume_Post <- RoachRun_VidSync_Post %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:33) {
@@ -2539,5 +2539,159 @@ for (i in 1:33) {
 Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
 
 #### Pre-Augmentation
+
+``` r
+HV2 <- GolfBall_Volume_Pre %>%
+  filter(index == "2") %>%
+  select(X, Y, Z) %>%
+  as.matrix() %>%
+  expectation_convex(check.memory = FALSE)
+```
+
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+
+``` r
+HV4 <- GolfBall_Volume_Pre %>%
+  filter(index == "4") %>%
+  select(X, Y, Z) %>%
+  as.matrix() %>%
+  expectation_convex(check.memory = FALSE)
+```
+
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+
+``` r
+hypervolume_set(HV2, HV4, num.points.max = NULL,
+verbose = TRUE, check.memory = FALSE, distance.factor = 1)
+```
+
+    ## Choosing num.points.max=53958 (use a larger value for more accuracy.)
+    ## Using minimum density of 5109527.568638
+    ## Retaining 27431 points in hv1 and 53958 points in hv2.
+    ## Beginning ball queries... 
+    ## 
+    ## Building tree... 
+    ## done.
+    ## Ball query... 
+    ## 
+    ## done.
+    ## 
+    ## Building tree... 
+    ## done.
+    ## Ball query... 
+    ## 
+    ## done.
+    ## Finished ball queries.
+
+    ## HypervolumeList with 6 elements:
+    ## 
+    ## 
+    ## $`HV1` (1 / 6) 
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(25.511185, 25.525606, 25.346043, 25.281542, 25.349791, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 0.005369
+    ## Random point density: 10050412.574196
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## 
+    ## $`HV2` (2 / 6) 
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(25.059107, 25.185759, 25.236544, 25.3286, 25.387087, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 0.010560
+    ## Random point density: 5109527.568638
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## 
+    ## $`Intersection` (3 / 6) 
+    ## ***** Object of class Hypervolume *****
+    ## Name: Intersection of (Convex expectation for structure(c(25.511185, 25.525606, 25.346043, 25.281542, 25.349791, , Convex expectation for structure(c(25.059107, 25.185759, 25.236544, 25.3286, 25.387087, )
+    ## Method: Set operations
+    ## Number of data points (after weighting): 0
+    ## Dimensionality: 3
+    ## Volume: 0.002883
+    ## Random point density: 10339852.575015
+    ## Number of random points: 29809
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## 
+    ## $`Union` (4 / 6) 
+    ## ***** Object of class Hypervolume *****
+    ## Name: Union of (Convex expectation for structure(c(25.511185, 25.525606, 25.346043, 25.281542, 25.349791, , Convex expectation for structure(c(25.059107, 25.185759, 25.236544, 25.3286, 25.387087, )
+    ## Method: Set operations
+    ## Number of data points (after weighting): 0
+    ## Dimensionality: 3
+    ## Volume: 0.013046
+    ## Random point density: 5082751.451292
+    ## Number of random points: 66310
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## 
+    ## $`Unique_1` (5 / 6) 
+    ## ***** Object of class Hypervolume *****
+    ## Name: Unique component of (Convex expectation for structure(c(25.511185, 25.525606, 25.346043, 25.281542, 25.349791, ) relative to (Convex expectation for structure(c(25.059107, 25.185759, 25.236544, 25.3286, 25.387087, )
+    ## Method: Set operations
+    ## Number of data points (after weighting): 0
+    ## Dimensionality: 3
+    ## Volume: 0.002486
+    ## Random point density: 5109397.444730
+    ## Number of random points: 12701
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## 
+    ## $`Unique_2` (6 / 6) 
+    ## ***** Object of class Hypervolume *****
+    ## Name: Unique component of (Convex expectation for structure(c(25.059107, 25.185759, 25.236544, 25.3286, 25.387087, ) relative to (Convex expectation for structure(c(25.511185, 25.525606, 25.346043, 25.281542, 25.349791, )
+    ## Method: Set operations
+    ## Number of data points (after weighting): 0
+    ## Dimensionality: 3
+    ## Volume: 0.007677
+    ## Random point density: 5064118.029985
+    ## Number of random points: 38879
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
 
 #### Post-Augmentation

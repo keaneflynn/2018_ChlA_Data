@@ -509,7 +509,7 @@ GolfBall_Volume_Pre <- GolfBall_VidSync_Pre %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:13) {
@@ -537,7 +537,7 @@ HalfTire_Volume_Pre <- HalfTire_VidSync_Pre %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:8) {
@@ -559,7 +559,7 @@ RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index) 
 
 for (i in 1:19) {
@@ -595,7 +595,7 @@ GolfBall_Volume_Post <- GolfBall_VidSync_Post %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:6) {
@@ -617,7 +617,7 @@ RoachRun_Volume_Post <- RoachRun_VidSync_Post %>%
   transform(index = as.numeric(index),
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
-  select(index, X, Y, Z) %>%
+  select(subsample, index, X, Y, Z) %>%
   arrange(index)
 
 for (i in 1:33) {
@@ -634,7 +634,20 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
 
 ####Pre-Augmentation
 ```{r}
+HV2 <- GolfBall_Volume_Pre %>%
+  filter(index == "2") %>%
+  select(X, Y, Z) %>%
+  as.matrix() %>%
+  expectation_convex(check.memory = FALSE)
 
+HV4 <- GolfBall_Volume_Pre %>%
+  filter(index == "4") %>%
+  select(X, Y, Z) %>%
+  as.matrix() %>%
+  expectation_convex(check.memory = FALSE)
+
+hypervolume_set(HV2, HV4, num.points.max = NULL,
+verbose = TRUE, check.memory = FALSE, distance.factor = 1)
 ```
 ####Post-Augmentation
 ```{r}
