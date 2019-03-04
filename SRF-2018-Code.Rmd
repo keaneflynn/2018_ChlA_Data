@@ -655,6 +655,8 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
       print()
   }
 
+#look into making a function or creating a list (i.e. list1 = c(HV1, HV2, HV3, etc.) for each forloop scenario)
+
 HV2 <- GolfBall_Volume_Pre %>%
   filter(index == "2") %>%
   select(X, Y, Z) %>%
