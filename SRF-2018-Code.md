@@ -26,13 +26,13 @@ library(readr)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ stringr 1.3.1
     ## ✔ tidyr   0.8.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -955,7 +955,7 @@ GolfBall_Volume_Pre <- GolfBall_VidSync_Pre %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:13) {
   if (i == 3) {
@@ -1214,7 +1214,7 @@ HalfTire_Volume_Pre <- HalfTire_VidSync_Pre %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:8) {
   HalfTire_Volume_Pre %>%
@@ -1378,7 +1378,7 @@ RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index) 
+  arrange(subsample, index)
 
 for (i in 1:19) {
   if (i == 3) {
@@ -1717,7 +1717,7 @@ GolfBall_Volume_Post <- GolfBall_VidSync_Post %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:6) {
   GolfBall_Volume_Post %>%
@@ -1867,7 +1867,7 @@ RoachRun_Volume_Post <- RoachRun_VidSync_Post %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:33) {
   RoachRun_Volume_Post %>%
@@ -2541,6 +2541,233 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
 #### Pre-Augmentation
 
 ``` r
+  for (B in 1:13) {
+    if (B == 3) {
+      next
+    }
+    if (B == 10) {
+      next
+    }
+    HV <- GolfBall_Volume_Pre %>%
+      filter(index == B) %>%
+      select(X, Y, Z) %>%
+      as.matrix() %>%
+      expectation_convex(check.memory = FALSE) %>%
+      print()
+  }
+```
+
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(37.850792, 38.178982, 37.495903, 35.734364, 35.492439, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 3.572776
+    ## Random point density: 15102.540403
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(25.511185, 25.525606, 25.346043, 25.281542, 25.349791, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 0.005369
+    ## Random point density: 10050412.574196
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(25.059107, 25.185759, 25.236544, 25.3286, 25.387087, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 0.010560
+    ## Random point density: 5109527.568638
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(25.34897, 25.42646, 25.363958, 25.197002, 25.156748, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 0.001130
+    ## Random point density: 47763352.560065
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(42.212994, 37.165382, 36.612492, 40.051975, 38.21645, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 6
+    ## Dimensionality: 3
+    ## Volume: 16.181097
+    ## Random point density: 3334.631720
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(-37.342072, -37.40937, -37.436523, -37.699223, -37.347225, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 10
+    ## Dimensionality: 3
+    ## Volume: 1298.271289
+    ## Random point density: 41.561421
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(25.155287, 25.285204, 24.950783, 25.292545, 21.626997, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 17.897031
+    ## Random point density: 3014.913439
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(44.372398, 109.714851, 40.734455, 41.77066, -29.070122, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 4
+    ## Dimensionality: 3
+    ## Volume: 22.316425
+    ## Random point density: 2417.860372
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(-0.106614, -3.117003, -6.070379, -9.2648, -12.205731, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 11
+    ## Dimensionality: 3
+    ## Volume: 34.668470
+    ## Random point density: 1556.399813
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(-37.238571, -37.896358, -37.231556, -37.174625, -37.438675, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 9
+    ## Dimensionality: 3
+    ## Volume: 0.194245
+    ## Random point density: 277783.887519
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+    ## Calculating linear constraints...done.
+    ## Sampling 53958 random points via hit-and-run, 1000 per chunk...
+    ## 
+    ## done.
+    ## ***** Object of class Hypervolume *****
+    ## Name: Convex expectation for structure(c(-29.73686, -31.581978, -25.707537, -9.604844, 1.236114, 
+    ## Method: Adaptive hit and run convex expectation
+    ## Number of data points (after weighting): 5
+    ## Dimensionality: 3
+    ## Volume: 2627.808415
+    ## Random point density: 20.533460
+    ## Number of random points: 53958
+    ## Random point values:
+    ##  min: 1.000
+    ##  mean: 1.000
+    ##  median: 1.000
+    ##  max:1.000
+    ## Parameters:
+    ##  (none)
+
+``` r
 HV2 <- GolfBall_Volume_Pre %>%
   filter(index == "2") %>%
   select(X, Y, Z) %>%
@@ -2632,9 +2859,9 @@ verbose = TRUE, check.memory = FALSE, distance.factor = 1)
     ## Method: Set operations
     ## Number of data points (after weighting): 0
     ## Dimensionality: 3
-    ## Volume: 0.002883
-    ## Random point density: 10339852.575015
-    ## Number of random points: 29809
+    ## Volume: 0.002880
+    ## Random point density: 10351434.361013
+    ## Number of random points: 29812
     ## Random point values:
     ##  min: 1.000
     ##  mean: 1.000
@@ -2649,9 +2876,9 @@ verbose = TRUE, check.memory = FALSE, distance.factor = 1)
     ## Method: Set operations
     ## Number of data points (after weighting): 0
     ## Dimensionality: 3
-    ## Volume: 0.013046
-    ## Random point density: 5082751.451292
-    ## Number of random points: 66310
+    ## Volume: 0.013049
+    ## Random point density: 5080228.520425
+    ## Number of random points: 66292
     ## Random point values:
     ##  min: 1.000
     ##  mean: 1.000
@@ -2666,9 +2893,9 @@ verbose = TRUE, check.memory = FALSE, distance.factor = 1)
     ## Method: Set operations
     ## Number of data points (after weighting): 0
     ## Dimensionality: 3
-    ## Volume: 0.002486
+    ## Volume: 0.002489
     ## Random point density: 5109397.444730
-    ## Number of random points: 12701
+    ## Number of random points: 12716
     ## Random point values:
     ##  min: 1.000
     ##  mean: 1.000
@@ -2683,9 +2910,9 @@ verbose = TRUE, check.memory = FALSE, distance.factor = 1)
     ## Method: Set operations
     ## Number of data points (after weighting): 0
     ## Dimensionality: 3
-    ## Volume: 0.007677
-    ## Random point density: 5064118.029985
-    ## Number of random points: 38879
+    ## Volume: 0.007680
+    ## Random point density: 5059838.622066
+    ## Number of random points: 38861
     ## Random point values:
     ##  min: 1.000
     ##  mean: 1.000

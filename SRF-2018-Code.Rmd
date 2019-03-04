@@ -510,7 +510,7 @@ GolfBall_Volume_Pre <- GolfBall_VidSync_Pre %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:13) {
   if (i == 3) {
@@ -538,7 +538,7 @@ HalfTire_Volume_Pre <- HalfTire_VidSync_Pre %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:8) {
   HalfTire_Volume_Pre %>%
@@ -560,7 +560,7 @@ RoachRun_Volume_Pre <- RoachRun_VidSync_Pre %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index) 
+  arrange(subsample, index)
 
 for (i in 1:19) {
   if (i == 3) {
@@ -596,7 +596,7 @@ GolfBall_Volume_Post <- GolfBall_VidSync_Post %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:6) {
   GolfBall_Volume_Post %>%
@@ -618,7 +618,7 @@ RoachRun_Volume_Post <- RoachRun_VidSync_Post %>%
             subsample = as.numeric(subsample)) %>%
   arrange(subsample, index, time) %>%
   select(subsample, index, X, Y, Z) %>%
-  arrange(index)
+  arrange(subsample, index)
 
 for (i in 1:33) {
   RoachRun_Volume_Post %>%
@@ -634,6 +634,21 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
 
 ####Pre-Augmentation
 ```{r}
+  for (B in 1:13) {
+    if (B == 3) {
+      next
+    }
+    if (B == 10) {
+      next
+    }
+    HV <- GolfBall_Volume_Pre %>%
+      filter(index == B) %>%
+      select(X, Y, Z) %>%
+      as.matrix() %>%
+      expectation_convex(check.memory = FALSE) %>%
+      print()
+  }
+
 HV2 <- GolfBall_Volume_Pre %>%
   filter(index == "2") %>%
   select(X, Y, Z) %>%
