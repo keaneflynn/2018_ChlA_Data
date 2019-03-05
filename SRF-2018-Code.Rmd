@@ -640,10 +640,10 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
 
 ####Pre-Augmentation
 ```{r}
-for (A in 1:6) {
-  GolfBall_Volume_Pre %>%
-    filter(subsample == A) %>%
-    group_by(subsample)
+#for (A in 1:6) {
+  #GolfBall_Volume_Pre %>%
+    #filter(subsample == A) %>%
+    #group_by(subsample)
   for (B in 1:13) {
     if (B == 3) {
       next
@@ -655,10 +655,10 @@ for (A in 1:6) {
       filter(index == B) %>%
       select(X, Y, Z) %>%
       as.matrix() %>%
-      expectation_convex(check.memory = FALSE) %>%
+      expectation_convex(check.memory = FALSE)
       print()
   }
-}
+#}
   
 
 #look into making a function or creating a list (i.e. list1 = c(HV1, HV2, HV3, etc.) for each forloop scenario)
@@ -675,8 +675,13 @@ HV4 <- GolfBall_Volume_Pre %>%
   as.matrix() %>%
   expectation_convex(check.memory = FALSE)
 
-hypervolume_set(HV2, HV4, num.points.max = NULL,
+test <- hypervolume_set(HV2, HV4, num.points.max = NULL,
 verbose = TRUE, check.memory = FALSE, distance.factor = 1)
+
+str(test)
+names(test)
+
+myvol <- test@HVList$Intersection@Volume
 ```
 ####Post-Augmentation
 ```{r}
