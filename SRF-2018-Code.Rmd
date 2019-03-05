@@ -640,6 +640,10 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
 
 ####Pre-Augmentation
 ```{r}
+for (A in 1:6) {
+  GolfBall_Volume_Pre %>%
+    filter(subsample == A) %>%
+    group_by(subsample)
   for (B in 1:13) {
     if (B == 3) {
       next
@@ -654,6 +658,8 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
       expectation_convex(check.memory = FALSE) %>%
       print()
   }
+}
+  
 
 #look into making a function or creating a list (i.e. list1 = c(HV1, HV2, HV3, etc.) for each forloop scenario)
 
