@@ -19,7 +19,1265 @@ library(geometry)
 library(rgl)
 library(hypervolume)
 library(zoo)
-```
+```───────────── tidyverse 1.2.1 ──
+✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+✔ tibble  1.4.2     ✔ stringr 1.3.1
+✔ tidyr   0.8.1     ✔ forcats 0.3.0
+── Conflicts ──────────────────────────────────────────────────────── tidyverse_conflicts() ──
+✖ tidyr::extract() masks raster::extract()
+✖ dplyr::filter()  masks stats::filter()
+✖ dplyr::lag()     masks stats::lag()
+✖ dplyr::select()  masks raster::select()
+
+Attaching package: ‘lubridate’
+
+The following object is masked from ‘package:base’:
+
+    date
+
+Loading required package: magic
+Loading required package: abind
+
+Attaching package: ‘magic’
+
+The following object is masked from ‘package:raster’:
+
+    shift
+
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Show in New WindowClear OutputExpand/Collapse Output
+Duplicated column names deduplicated: 'Site' => 'Site_1' [4]
+R Console
+Site
+<chr>
+Date_collected
+<chr>
+Date_processed
+<chr>
+Site_1
+<chr>
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	
+Porter_Above	5/1/18	5/2/18	Golf_Ball_18.3	
+Porter_Above	5/1/18	5/2/18	Golf_Ball_18.3	
+Next123456...8Previous
+1-10 of 72 rows | 1-4 of 15 columns
+grouped_df
+72 x 15
+Site
+<chr>
+Date_collected
+<chr>
+Date_processed
+<chr>
+Site_1
+<chr>
+Cobble_SID
+<dbl>
+Pool_or_Riffle
+<chr>
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	1	riffle	
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	5	riffle	
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	7	pool	
+Porter_Above	5/1/18	5/2/18	Frog_Legs_18.1	11	pool	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	8	riffle	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	9	riffle	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	15	pool	
+Porter_Above	5/1/18	5/2/18	Jesus_Toast_18.2	16	pool	
+Porter_Above	5/1/18	5/2/18	Golf_Ball_18.3	4	riffle	
+Porter_Above	5/1/18	5/2/18	Golf_Ball_18.3	6	riffle	
+Next123456...8Previous
+1-10 of 72 rows | 1-6 of 15 columns
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+Missing column names filled in: 'X14' [14], 'X15' [15]Duplicated column names deduplicated: 'Site' => 'Site_1' [4]number of columns of result is not a multiple of vector length (arg 1)19 parsing failures.
+row # A tibble: 5 x 5 col     row col   expected actual                                         file                    expected   <int> <chr> <chr>    <chr>                                          <chr>                   actual 1    30 Notes a double Odd donut shape in filter                      'ChlA-Data/AFD-Data.cs… file 2    33 Notes a double very small amount of algae scraped with force… 'ChlA-Data/AFD-Data.cs… row 3    48 Notes a double in oven at 5:10 PM                             'ChlA-Data/AFD-Data.cs… col 4    64 Notes a double in oven at 5:45 PM                             'ChlA-Data/AFD-Data.cs… expected 5    69 Notes a double MELTED IN OVEN REDO                            'ChlA-Data/AFD-Data.cs…
+... ................................. ... ............................................................................................. ........ .......................................................................................................................................................................................................................... ...... ............................................................................................................. .... ............................................................................................................. ... ............................................................................................................. ... ............................................................................................................. ........ .............................................................................................................
+See problems(...) for more details.
+R Console
+Date_collected
+<chr>
+Site_1
+<chr>
+Cobble_SID
+<dbl>
+Pool_or_Riffle
+<chr>
+5/1/18	Frog_Legs_18.1	1	riffle	
+5/1/18	Frog_Legs_18.1	5	riffle	
+5/1/18	Frog_Legs_18.1	7	pool	
+5/1/18	Frog_Legs_18.1	11	pool	
+5/1/18	Jesus_Toast_18.2	8	riffle	
+5/1/18	Jesus_Toast_18.2	9	riffle	
+5/1/18	Jesus_Toast_18.2	15	pool	
+5/1/18	Jesus_Toast_18.2	16	pool	
+5/1/18	Golf_Ball_18.3	4	riffle	
+5/1/18	Golf_Ball_18.3	6	riffle	
+Next123456...8Previous
+1-10 of 72 rows | 1-4 of 7 columns
+grouped_df
+72 x 7
+Date_collected
+<chr>
+Site_1
+<chr>
+Cobble_SID
+<dbl>
+Pool_or_Riffle
+<chr>
+Dry_Weight_g
+<dbl>
+AFD_Weight_g
+<dbl>
+5/1/18	Frog_Legs_18.1	1	riffle	1.1411	1.1388	
+5/1/18	Frog_Legs_18.1	5	riffle	1.1823	1.1717	
+5/1/18	Frog_Legs_18.1	7	pool	1.1637	1.1617	
+5/1/18	Frog_Legs_18.1	11	pool	1.1471	1.1460	
+5/1/18	Jesus_Toast_18.2	8	riffle	1.1405	1.1383	
+5/1/18	Jesus_Toast_18.2	9	riffle	1.1393	1.1368	
+5/1/18	Jesus_Toast_18.2	15	pool	1.1456	1.1437	
+5/1/18	Jesus_Toast_18.2	16	pool	1.1497	1.1472	
+5/1/18	Golf_Ball_18.3	4	riffle	1.1508	1.1480	
+5/1/18	Golf_Ball_18.3	6	riffle	1.1417	1.1401	
+Next123456...8Previous
+1-10 of 72 rows | 1-6 of 7 columns
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+number of columns of result is not a multiple of vector length (arg 1)50 parsing failures.
+row # A tibble: 5 x 5 col     row col          expected actual                file                                     expected   <int> <chr>        <chr>    <chr>                 <chr>                                    actual 1     1 MaxDepth_DO1 a double n/a (did not measure) 'Photosynthesis/2018-Photosynthesis.csv' file 2     1 MaxDepth_DO2 a double n/a                   'Photosynthesis/2018-Photosynthesis.csv' row 3     1 MaxDepth_DO3 a double n/a                   'Photosynthesis/2018-Photosynthesis.csv' col 4     2 MaxDepth_DO1 a double n/a                   'Photosynthesis/2018-Photosynthesis.csv' expected 5     2 MaxDepth_DO2 a double n/a                   'Photosynthesis/2018-Photosynthesis.csv'
+... ................................. ... ............................................................................................ ........ ......................................................................................................................................................................................................................... ...... ............................................................................................................ .... ............................................................................................................ ... ............................................................................................................ ... ............................................................................................................ ........ ............................................................................................................
+See problems(...) for more details.
+R Console
+Stream
+<chr>
+Date
+<chr>
+Site_Name
+<chr>
+Site_Num
+<dbl>
+Pool_Riffle
+<chr>
+Porter	5/1/18	Frog_Legs	18.1	R	
+Porter	5/1/18	Frog_Legs	18.1	R	
+Porter	5/1/18	Frog_Legs	18.1	P	
+Porter	5/1/18	Frog_Legs	18.1	P	
+Porter	5/1/18	Jesus_Toast	18.2	R	
+Porter	5/1/18	Jesus_Toast	18.2	R	
+Porter	5/1/18	Jesus_Toast	18.2	P	
+Porter	5/1/18	Jesus_Toast	18.2	P	
+Porter	5/1/18	Golf_Ball	18.3	R	
+Porter	5/1/18	Golf_Ball	18.3	R	
+Next123456...8Previous
+1-10 of 72 rows | 1-5 of 10 columns
+tbl_df
+72 x 10
+Stream
+<chr>
+Date
+<chr>
+Site_Name
+<chr>
+Site_Num
+<dbl>
+Pool_Riffle
+<chr>
+Max_Depth_DO
+<dbl>
+Light_Do_s
+<dbl>
+Light_DO_e
+<dbl>
+Porter	5/1/18	Frog_Legs	18.1	R	10.443333	10.03	10.84	
+Porter	5/1/18	Frog_Legs	18.1	R	10.443333	10.56	11.38	
+Porter	5/1/18	Frog_Legs	18.1	P	10.443333	10.62	11.30	
+Porter	5/1/18	Frog_Legs	18.1	P	10.443333	10.63	11.05	
+Porter	5/1/18	Jesus_Toast	18.2	R	10.100000	10.40	11.50	
+Porter	5/1/18	Jesus_Toast	18.2	R	10.100000	10.47	11.27	
+Porter	5/1/18	Jesus_Toast	18.2	P	10.100000	10.47	11.57	
+Porter	5/1/18	Jesus_Toast	18.2	P	10.100000	10.50	11.06	
+Porter	5/1/18	Golf_Ball	18.3	R	10.016667	10.56	11.39	
+Porter	5/1/18	Golf_Ball	18.3	R	10.016667	10.53	12.02	
+Next123456...8Previous
+1-10 of 72 rows | 1-8 of 10 columns
+Show in New WindowClear OutputExpand/Collapse Output
+Stream
+<chr>
+Date
+<chr>
+Site_Name
+<chr>
+Site_Num
+<dbl>
+Max_Depth_DO
+<dbl>
+Light_Do_s
+<dbl>
+Light_DO_e
+<dbl>
+Dark_Do_s
+<dbl>
+Porter	5/1/18	Frog_Legs	18.1	10.443333	10.4600	11.1425	10.6150	
+Porter	5/1/18	Jesus_Toast	18.2	10.100000	10.4600	11.3500	10.4050	
+Porter	5/1/18	Golf_Ball	18.3	10.016667	10.5350	11.2950	10.3775	
+Porter	5/1/18	Waterfall	18.4	9.896667	10.3250	11.6625	10.2000	
+Porter	5/18/18	Frog_Legs	18.1	10.183333	10.2700	10.5075	10.3275	
+Porter	5/18/18	Jesus_Toast	18.2	9.923333	10.0000	10.3625	9.9850	
+Porter	5/18/18	Golf_Ball	18.3	9.646667	9.8425	10.3125	9.7900	
+Porter	5/18/18	Waterfall	18.4	9.516667	9.6250	9.9600	9.5975	
+Porter	6/13/18	Frog_Legs	18.1	10.270000	10.0275	10.2450	10.2150	
+Porter	6/13/18	Jesus_Toast	18.2	10.280000	10.0325	10.9225	10.2175	
+Next12Previous
+1-10 of 20 rows | 1-8 of 9 columns
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+Missing column names filled in: 'X36' [36], 'X37' [37], 'X38' [38], 'X39' [39], 'X40' [40]Unnamed `col_types` should have the same length as `col_names`. Using smaller of the two.number of columns of result is not a multiple of vector length (arg 1)2006 parsing failures.
+row # A tibble: 5 x 5 col     row col                   expected   actual     file                                  expected   <int> <chr>                 <chr>      <chr>      <chr>                                 actual 1     1 Time_Per_Pass_Seconds a double   N/A        'FishPopulation/EFishingData2018.csv' file 2     1 NA                    35 columns 40 columns 'FishPopulation/EFishingData2018.csv' row 3     2 Time_Per_Pass_Seconds a double   N/A        'FishPopulation/EFishingData2018.csv' col 4     2 NA                    35 columns 40 columns 'FishPopulation/EFishingData2018.csv' expected 5     3 Time_Per_Pass_Seconds a double   N/A        'FishPopulation/EFishingData2018.csv'
+... ................................. ... ......................................................................................... ........ ...................................................................................................................................................................................................................... ...... ......................................................................................................... .... ................................................................................................................... ... ......................................................................................................... ... ................................................................................................................... ........ .........................................................................................................
+See problems(...) for more details.
+R Console
+Date
+<chr>
+Stream
+<chr>
+Unit
+<chr>
+Fish_Num_Per_Site
+<dbl>
+Fish_Num
+<dbl>
+5/23/2018	Porter	18.1.a	51	120	
+5/23/2018	Porter	18.1.a	52	121	
+5/23/2018	Porter	18.1.a	53	122	
+5/23/2018	Porter	18.1.a	54	123	
+5/23/2018	Porter	18.1.a	55	124	
+5/23/2018	Porter	18.1.a	56	125	
+5/23/2018	Porter	18.1.a	57	126	
+5/23/2018	Porter	18.1.a	58	127	
+5/23/2018	Porter	18.1.a	59	128	
+5/23/2018	Porter	18.1.a	60	129	
+Next123456...53Previous
+1-10 of 524 rows | 1-5 of 35 columns
+tbl_df
+524 x 35
+Date
+<chr>
+Stream
+<chr>
+Unit
+<chr>
+Fish_Num_Per_Site
+<dbl>
+Fish_Num
+<dbl>
+Pass_Num
+<dbl>
+Time_Per_Pass_Seconds
+<dbl>
+5/23/2018	Porter	18.1.a	51	120	1	289	
+5/23/2018	Porter	18.1.a	52	121	1	289	
+5/23/2018	Porter	18.1.a	53	122	1	289	
+5/23/2018	Porter	18.1.a	54	123	1	289	
+5/23/2018	Porter	18.1.a	55	124	1	289	
+5/23/2018	Porter	18.1.a	56	125	1	289	
+5/23/2018	Porter	18.1.a	57	126	1	289	
+5/23/2018	Porter	18.1.a	58	127	1	289	
+5/23/2018	Porter	18.1.a	59	128	1	289	
+5/23/2018	Porter	18.1.a	60	129	1	289	
+Next123456...53Previous
+1-10 of 524 rows | 1-7 of 35 columns
+Show in New WindowClear OutputExpand/Collapse Output
+Parsed with column specification:
+cols(
+  SampleDate = col_character(),
+  WaterTemp_C = col_double(),
+  WaterDepth_ft = col_double(),
+  Streamflow_cfs = col_double()
+)
+R Console
+Date
+<chr>
+Streamflow_cfs
+<dbl>
+Streamflow_gpm
+<dbl>
+1/1/18	0.4696875	210.4200		
+1/10/18	13.1536458	5892.8333		
+1/11/18	7.1351042	3196.5267		
+1/12/18	4.7450000	2125.7600		
+1/13/18	3.4373958	1539.9533		
+1/14/18	2.6912500	1205.6800		
+1/15/18	2.1938542	982.8467		
+1/16/18	2.0653125	925.2600		
+1/17/18	1.7464583	782.4133		
+1/18/18	1.9502083	873.6933		
+Next123456...25Previous
+1-10 of 247 rows
+tbl_df
+247 x 3
+Date
+<chr>
+Streamflow_cfs
+<dbl>
+Streamflow_gpm
+<dbl>
+1/1/18	0.4696875	210.4200		
+1/10/18	13.1536458	5892.8333		
+1/11/18	7.1351042	3196.5267		
+1/12/18	4.7450000	2125.7600		
+1/13/18	3.4373958	1539.9533		
+1/14/18	2.6912500	1205.6800		
+1/15/18	2.1938542	982.8467		
+1/16/18	2.0653125	925.2600		
+1/17/18	1.7464583	782.4133		
+1/18/18	1.9502083	873.6933		
+Next123456...25Previous
+1-10 of 247 rows
+Show in New WindowClear OutputExpand/Collapse Output
+Missing column names filled in: 'X1' [1]Parsed with column specification:
+cols(
+  X1 = col_integer(),
+  Date = col_character(),
+  avg_gpm = col_double(),
+  Min = col_integer(),
+  Max = col_integer(),
+  avg_clean = col_double(),
+  gpd = col_double(),
+  `ac-ft` = col_double(),
+  cum_ac_ft = col_double()
+)
+R Console
+X1
+<int>
+Date
+<chr>
+avg_gpm
+<dbl>
+1	1/3/18	73.18750000		
+2	1/4/18	25.08333333		
+3	1/5/18	0.02083333		
+4	1/6/18	0.06250000		
+5	1/7/18	0.00000000		
+6	1/8/18	0.16666667		
+7	1/9/18	0.06250000		
+8	1/10/18	0.12500000		
+9	1/11/18	0.14583333		
+10	1/12/18	0.04166667		
+Next123456...37Previous
+1-10 of 367 rows
+tbl_df
+367 x 3
+X1
+<int>
+Date
+<chr>
+avg_gpm
+<dbl>
+1	1/3/18	73.18750000		
+2	1/4/18	25.08333333		
+3	1/5/18	0.02083333		
+4	1/6/18	0.06250000		
+5	1/7/18	0.00000000		
+6	1/8/18	0.16666667		
+7	1/9/18	0.06250000		
+8	1/10/18	0.12500000		
+9	1/11/18	0.14583333		
+10	1/12/18	0.04166667		
+Next123456...37Previous
+1-10 of 367 rows
+Show in New WindowClear OutputExpand/Collapse Output
+Species_Lookup
+<chr>
+PIT
+<chr>
+Date_Lookup
+<chr>
+Date
+<chr>
+Time
+<S3: hms>
+Site
+<chr>
+HabitatType
+<chr>
+COHO SALMON	068D9B	6/7/18	6/7/18	12:15:46	POR 1	POOL	
+COHO SALMON	068D9B	6/7/18	6/8/18	13:28:21	POR 1.73	(blank)	
+COHO SALMON	068D9B	6/7/18	6/12/18	19:57:09	POR 1.73	(blank)	
+COHO SALMON	068DA1	6/7/18	6/7/18	12:44:11	POR 1	POOL	
+COHO SALMON	068DA1	6/7/18	6/8/18	13:42:22	POR 1.73	(blank)	
+COHO SALMON	068DA1	6/7/18	6/8/18	20:35:26	POR 1.73	(blank)	
+COHO SALMON	068DF4	6/7/18	6/7/18	12:23:43	POR 1	POOL	
+COHO SALMON	068DF4	6/7/18	6/8/18	13:35:47	POR 1.73	(blank)	
+COHO SALMON	068DF4	6/7/18	6/9/18	05:15:51	POR 1.73	(blank)	
+COHO SALMON	06A7C6	6/7/18	6/7/18	11:14:57	POR 1	POOL	
+Next123456...63Previous
+1-10 of 624 rows | 1-7 of 10 columns
+Show in New WindowClear OutputExpand/Collapse Output
+Species
+<chr>
+PIT
+<chr>
+Date_Lookup
+<chr>
+Date.x
+<chr>
+Time
+<S3: hms>
+Site
+<chr>
+Omykiss	06A7F7	6/7/18	6/10/18	02:00:36	POR 1.59	
+Okisutch	06A806	6/7/18	6/10/18	05:19:08	POR 1.59	
+Okisutch	06A806	6/7/18	6/10/18	05:19:08	POR 1.59	
+Omykiss	068DA6	6/7/18	6/10/18	05:45:48	POR 1.73	
+Okisutch	06A7C6	6/7/18	6/10/18	06:02:26	POR 1.59	
+Okisutch	06A7C6	6/7/18	6/10/18	06:02:26	POR 1.59	
+Omykiss	06A81F	6/4/18	6/10/18	09:54:50	POR 1.73	
+Omykiss	068DA6	6/7/18	6/10/18	15:39:07	POR 1.73	
+Omykiss	068DD7	6/7/18	6/10/18	17:29:01	POR 1.73	
+Okisutch	06A7C6	6/7/18	6/10/18	18:26:03	POR 1.59	
+Next123456...100Previous
+1-10 of 995 rows | 1-6 of 19 columns
+grouped_df
+995 x 19
+X1
+<int>
+Date
+<chr>
+Max_Ping_Tally
+<dbl>
+avg_gpm
+<dbl>
+153	6/4/18	0	0.13194444	
+155	6/6/18	5	0.04166667	
+156	6/7/18	24	0.19444444	
+157	6/8/18	47	0.04166667	
+158	6/9/18	29	0.00000000	
+159	6/10/18	15	0.17361111	
+160	6/11/18	26	0.00000000	
+161	6/12/18	13	0.04166667	
+162	6/13/18	6	0.31250000	
+165	6/16/18	2	0.02083333	
+Next1234567Previous
+1-10 of 68 rows
+grouped_df
+68 x 4
+X1
+<int>
+Date
+<chr>
+Max_Ping_Tally
+<dbl>
+avg_gpm
+<dbl>
+153	6/4/18	0	0.13194444	
+155	6/6/18	5	0.04166667	
+156	6/7/18	24	0.19444444	
+157	6/8/18	47	0.04166667	
+158	6/9/18	29	0.00000000	
+159	6/10/18	15	0.17361111	
+160	6/11/18	26	0.00000000	
+161	6/12/18	13	0.04166667	
+162	6/13/18	6	0.31250000	
+165	6/16/18	2	0.02083333	
+Next1234567Previous
+1-10 of 68 rows
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+Date
+<chr>
+Max_Ping_Tally
+<dbl>
+Streamflow_gpm
+<dbl>
+6/10/18	15	242.2000		
+6/11/18	26	234.3600		
+6/12/18	13	229.2733		
+6/13/18	6	211.9600		
+6/16/18	2	203.9333		
+6/18/18	1	228.4333		
+6/19/18	3	220.4533		
+6/22/18	2	175.0000		
+6/30/18	6	472.5933		
+6/4/18	0	298.0133		
+Next1234567Previous
+1-10 of 68 rows
+Show in New WindowClear OutputExpand/Collapse Output
+
+Show in New WindowClear OutputExpand/Collapse Output
+number of columns of result is not a multiple of vector length (arg 1)168 parsing failures.
+row # A tibble: 5 x 5 col     row col   expected   actual    file                                                       expected   <int> <chr> <chr>      <chr>     <chr>                                                      actual 1     1 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_GolfBall_30June… file 2     2 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_GolfBall_30June… row 3     3 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_GolfBall_30June… col 4     4 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_GolfBall_30June… expected 5     5 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_GolfBall_30June…
+... ................................. ... ............................................................................................. ........ .......................................................................................................................................................................................................................... ...... ....................................................................................................................... .... ....................................................................................................................... ... ....................................................................................................................... ... ....................................................................................................................... ........ .......................................................................................................................
+See problems(...) for more details.
+number of columns of result is not a multiple of vector length (arg 1)113 parsing failures.
+row # A tibble: 5 x 5 col     row col   expected   actual    file                                                       expected   <int> <chr> <chr>      <chr>     <chr>                                                      actual 1     1 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_HalfTire_29June… file 2     2 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_HalfTire_29June… row 3     3 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_HalfTire_29June… col 4     4 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_HalfTire_29June… expected 5     5 NA    11 columns 10 colum… 'VidSync-Data/PreAugmentation/Porter_BACI_HalfTire_29June…
+... ................................. ... ............................................................................................. ........ .......................................................................................................................................................................................................................... ...... ....................................................................................................................... .... ....................................................................................................................... ... ....................................................................................................................... ... ....................................................................................................................... ........ .......................................................................................................................
+See problems(...) for more details.
+Show in New WindowClear OutputExpand/Collapse Output
+number of columns of result is not a multiple of vector length (arg 1)107 parsing failures.
+row # A tibble: 5 x 5 col     row col   expected   actual    file                                                       expected   <int> <chr> <chr>      <chr>     <chr>                                                      actual 1     1 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_Golfball_6July… file 2     2 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_Golfball_6July… row 3     3 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_Golfball_6July… col 4     4 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_Golfball_6July… expected 5     5 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_Golfball_6July…
+... ................................. ... ............................................................................................. ........ .......................................................................................................................................................................................................................... ...... ....................................................................................................................... .... ....................................................................................................................... ... ....................................................................................................................... ... ....................................................................................................................... ........ .......................................................................................................................
+See problems(...) for more details.
+number of columns of result is not a multiple of vector length (arg 1)475 parsing failures.
+row # A tibble: 5 x 5 col     row col   expected   actual    file                                                       expected   <int> <chr> <chr>      <chr>     <chr>                                                      actual 1     1 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_RoachRun_5July… file 2     2 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_RoachRun_5July… row 3     3 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_RoachRun_5July… col 4     4 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_RoachRun_5July… expected 5     5 NA    11 columns 10 colum… 'VidSync-Data/PostAugmentation/Porter_BACI_RoachRun_5July…
+... ................................. ... ............................................................................................. ........ .......................................................................................................................................................................................................................... ...... ....................................................................................................................... .... ....................................................................................................................... ... ....................................................................................................................... ... ....................................................................................................................... ........ .......................................................................................................................
+See problems(...) for more details.
+Show in New WindowClear OutputExpand/Collapse Output
+date
+<date>
+BACI_date
+<date>
+event
+<chr>
+site
+<chr>
+subsample
+<dbl>
+index
+<dbl>
+DistPerTime_Median
+<dbl>
+DistPerTime_Mean
+<dbl>
+2018-06-30	2018-06-29	Before	18.3	1	1	0.87709522	1.0807043
+2018-06-30	2018-06-29	Before	18.3	1	2	0.14963316	0.1874108
+2018-06-30	2018-06-29	Before	18.3	1	3	22.57859760	22.5785976
+2018-06-30	2018-06-29	Before	18.3	2	4	0.29862560	0.3337757
+2018-06-30	2018-06-29	Before	18.3	3	5	0.13561797	0.1645662
+2018-06-30	2018-06-29	Before	18.3	3	6	4.16417117	4.8127829
+2018-06-30	2018-06-29	Before	18.3	3	7	12.26404430	15.8769741
+2018-06-30	2018-06-29	Before	18.3	4	8	3.33320435	2.9688421
+2018-06-30	2018-06-29	Before	18.3	4	9	80.39932715	57.8296255
+2018-06-30	2018-06-29	Before	18.3	4	10	0.81477078	0.8147708
+Next123456...8Previous
+1-10 of 78 rows
+Show in New WindowClear OutputExpand/Collapse Output
+$hull
+      [,1] [,2] [,3]
+ [1,]    1    2   11
+ [2,]    1    3    2
+ [3,]    4    2   11
+ [4,]    4    3    2
+ [5,]    5   10   11
+ [6,]    5    4   11
+ [7,]    9    1   11
+ [8,]    9    8    1
+ [9,]    9   10   11
+[10,]    9    8   10
+[11,]    7    1    3
+[12,]    7    8    1
+[13,]    6    7    3
+[14,]    6    4    3
+[15,]    6    5    4
+[16,]    6    5   10
+[17,]    6    8   10
+[18,]    6    7    8
+
+$area
+[1] 17.54319
+
+$vol
+[1] 3.572776
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    3    9   10
+ [2,]    3    1    2
+ [3,]    3    9    2
+ [4,]    8    1    2
+ [5,]    5    9    2
+ [6,]    5    8    2
+ [7,]    5    8   10
+ [8,]    4    3    1
+ [9,]    4    8    1
+[10,]    4    3   10
+[11,]    4    8   10
+[12,]    7    9   10
+[13,]    7    5   10
+[14,]    7    5    9
+
+$area
+[1] 0.2842032
+
+$vol
+[1] 0.005368735
+
+$hull
+      [,1] [,2] [,3]
+ [1,]   10    4    9
+ [2,]    5    9    1
+ [3,]    5   10    9
+ [4,]   11    4    9
+ [5,]    3    5    1
+ [6,]    3    5   10
+ [7,]    3   10    4
+ [8,]    7   11    9
+ [9,]    7   11    4
+[10,]    6    9    1
+[11,]    6    7    1
+[12,]    6    7    9
+[13,]    2    3    4
+[14,]    2    7    4
+[15,]    2    3    1
+[16,]    2    7    1
+
+$area
+[1] 0.4229652
+
+$vol
+[1] 0.01056027
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    7    4    5
+ [2,]   11    4    5
+ [3,]   11    4    2
+ [4,]   10    4    2
+ [5,]   10    7    2
+ [6,]    9   11    5
+ [7,]    9    7    5
+ [8,]    6    7    4
+ [9,]    6   10    4
+[10,]    6   10    7
+[11,]    3   11    2
+[12,]    3    9   11
+[13,]    3    7    2
+[14,]    3    9    7
+
+$area
+[1] 0.1019071
+
+$vol
+[1] 0.001129695
+
+$hull
+     [,1] [,2] [,3]
+[1,]    2    1    6
+[2,]    3    2    6
+[3,]    3    5    6
+[4,]    4    1    6
+[5,]    4    5    6
+[6,]    4    3    5
+[7,]    4    2    1
+[8,]    4    3    2
+
+$area
+[1] 102.0796
+
+$vol
+[1] 16.1811
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    9    6   10
+ [2,]    8    6    7
+ [3,]    8    9    7
+ [4,]    8    9    6
+ [5,]    1    6    7
+ [6,]    1    5    7
+ [7,]    1    6   10
+ [8,]    1    5   10
+ [9,]    4    9    7
+[10,]    4    5    7
+[11,]    4    9   10
+[12,]    4    5   10
+
+$area
+[1] 1222.774
+
+$vol
+[1] 1298.271
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    2    6    4
+ [2,]    3    9   11
+ [3,]    3    9    4
+ [4,]   10    9   11
+ [5,]   10    9    6
+ [6,]    5    6    4
+ [7,]    5    9    4
+ [8,]    5    9    6
+ [9,]    1    2    4
+[10,]    1    3    4
+[11,]    1    2    6
+[12,]    7    1    6
+[13,]    7   10   11
+[14,]    7   10    6
+[15,]    7    3   11
+[16,]    7    1    3
+
+$area
+[1] 87.85428
+
+$vol
+[1] 17.89703
+
+$hull
+     [,1] [,2] [,3]
+[1,]    4    2    3
+[2,]    1    2    3
+[3,]    1    4    3
+[4,]    1    4    2
+
+$area
+[1] 661.3971
+
+$vol
+[1] 22.31643
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    2    8   11
+ [2,]    2    8    1
+ [3,]    2   10   11
+ [4,]    2    5    1
+ [5,]    2   10    5
+ [6,]    9    8   11
+ [7,]    9    5    8
+ [8,]    9   10   11
+ [9,]    9   10    5
+[10,]    3    8    1
+[11,]    3    5    1
+[12,]    7    5    8
+[13,]    7    3    8
+[14,]    7    3    5
+
+$area
+[1] 138.945
+
+$vol
+[1] 34.66847
+
+$hull
+     [,1] [,2] [,3]
+[1,]    3    9    2
+[2,]    3    9    4
+[3,]    3    5    2
+[4,]    3    5    4
+[5,]    8    9    2
+[6,]    8    5    2
+[7,]    8    9    4
+[8,]    8    5    4
+
+$area
+[1] 3.899656
+
+$vol
+[1] 0.1942445
+
+$hull
+     [,1] [,2] [,3]
+[1,]    3    5    2
+[2,]    4    5    2
+[3,]    4    3    5
+[4,]    1    3    2
+[5,]    1    4    2
+[6,]    1    4    3
+
+$area
+[1] 1400.067
+
+$vol
+[1] 2627.808
+
+$hull
+     [,1] [,2] [,3]
+[1,]    6    1    4
+[2,]    3    1    4
+[3,]    5    6    4
+[4,]    5    3    4
+[5,]    5    6    1
+[6,]    5    3    1
+
+$area
+[1] 1284.728
+
+$vol
+[1] 790.8059
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    7    5    8
+ [2,]    1    7    8
+ [3,]    2    5    8
+ [4,]    2    4    5
+ [5,]    2    1    8
+ [6,]    6    7    5
+ [7,]    3    1    7
+ [8,]    3    6    7
+ [9,]    3    2    4
+[10,]    3    2    1
+[11,]    3    4    5
+[12,]    3    6    5
+
+$area
+[1] 4376.576
+
+$vol
+[1] 4623.805
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    2    7    8
+ [2,]    2    7    3
+ [3,]    9    7    8
+ [4,]    9    2    8
+ [5,]    1    9    7
+ [6,]    6    7    3
+ [7,]    6    1    3
+ [8,]    6    1    7
+ [9,]    4    1    3
+[10,]    4    1    9
+[11,]    4    2    3
+[12,]    4    9    2
+
+$area
+[1] 1787.963
+
+$vol
+[1] 1941.927
+
+$hull
+     [,1] [,2] [,3]
+[1,]    2    1    5
+[2,]    4    2    5
+[3,]    3    1    5
+[4,]    3    4    5
+[5,]    3    2    1
+[6,]    3    4    2
+
+$area
+[1] 651.3871
+
+$vol
+[1] 418.8056
+
+$hull
+     [,1] [,2] [,3]
+[1,]    7    3    1
+[2,]    7    3    8
+[3,]    6    3    1
+[4,]    6    7    1
+[5,]    6    7    8
+[6,]    4    3    8
+[7,]    4    6    8
+[8,]    4    6    3
+
+$area
+[1] 3964.071
+
+$vol
+[1] 2153.043
+
+$hull
+     [,1] [,2] [,3]
+[1,]    5    1    4
+[2,]    2    5    4
+[3,]    2    5    1
+[4,]    3    1    4
+[5,]    3    2    4
+[6,]    3    2    1
+
+$area
+[1] 977.0674
+
+$vol
+[1] 208.3656
+
+$hull
+     [,1] [,2] [,3]
+[1,]    5    7    4
+[2,]    1    5    7
+[3,]    3    7    4
+[4,]    3    1    7
+[5,]    6    3    4
+[6,]    6    3    1
+[7,]    6    5    4
+[8,]    6    1    5
+
+$area
+[1] 1715.592
+
+$vol
+[1] 1761.056
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    5   10    1
+ [2,]    5   10    6
+ [3,]    3   10    1
+ [4,]    7   10    6
+ [5,]    7    3    6
+ [6,]    7    3   10
+ [7,]    4    5    6
+ [8,]    4    3    6
+ [9,]    4    5    1
+[10,]    4    3    1
+
+$area
+[1] 3735.021
+
+$vol
+[1] 5329.532
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    3    2    7
+ [2,]    1    2    7
+ [3,]    1    9    2
+ [4,]   10    1    7
+ [5,]   10    1    9
+ [6,]   10    8    7
+ [7,]   10    8    9
+ [8,]    6    3    7
+ [9,]    6    8    7
+[10,]    6    8    3
+[11,]    4    8    3
+[12,]    4    8    9
+[13,]    4    3    2
+[14,]    4    9    2
+
+$area
+[1] 92.91676
+
+$vol
+[1] 35.39281
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    2    3    1
+ [2,]    4    2    1
+ [3,]    9    3    7
+ [4,]    9    3    1
+ [5,]   11    2    3
+ [6,]   11    4    2
+ [7,]   11    3    7
+ [8,]    6   11    7
+ [9,]    6   11    4
+[10,]    5    4    1
+[11,]    5    9    1
+[12,]    5    6    4
+[13,]    5    9    7
+[14,]    5    6    7
+
+$area
+[1] 166.9069
+
+$vol
+[1] 53.06112
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    8    1    7
+ [2,]    8    4    7
+ [3,]    9    8    1
+ [4,]    9    8    4
+ [5,]    6    1    7
+ [6,]    6    4    7
+ [7,]    3    9    1
+ [8,]    3    9    4
+ [9,]    3    6    1
+[10,]    3    6    4
+
+$area
+[1] 909.039
+
+$vol
+[1] 1089.977
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    7    6   10
+ [2,]    2    6   10
+ [3,]   11    7    1
+ [4,]   11    2    1
+ [5,]   11    2   10
+ [6,]    3    2    1
+ [7,]    3    2    6
+ [8,]    8    7   10
+ [9,]    8   11   10
+[10,]    8   11    7
+[11,]    4    3    1
+[12,]    4    7    1
+[13,]    5    3    6
+[14,]    5    4    3
+[15,]    5    7    6
+[16,]    5    4    7
+
+$area
+[1] 82.60097
+
+$vol
+[1] 33.98795
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    4    7    2
+ [2,]    6    5    7
+ [3,]    6    4    7
+ [4,]    6    4    5
+ [5,]    1    7    2
+ [6,]    1    5    7
+ [7,]    3    4    5
+ [8,]    3    1    5
+ [9,]    3    4    2
+[10,]    3    1    2
+
+$area
+[1] 5345.584
+
+$vol
+[1] 6648.572
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    3    1    4
+ [2,]    9    8    4
+ [3,]    9    3    4
+ [4,]    6    1    4
+ [5,]    6    8    4
+ [6,]    2    3    1
+ [7,]    2    9    3
+ [8,]    7    9    8
+ [9,]   11    6    1
+[10,]   11    2    1
+[11,]   11    6    8
+[12,]   11    7    8
+[13,]   11    2    9
+[14,]   11    7    9
+
+$area
+[1] 10.56231
+
+$vol
+[1] 1.759631
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    1    2    8
+ [2,]    4    8    5
+ [3,]    4    1    8
+ [4,]    7    2    8
+ [5,]    7    6    2
+ [6,]    7    8    5
+ [7,]    7    6    5
+ [8,]    3    1    2
+ [9,]    3    4    1
+[10,]    3    6    2
+[11,]    3    6    5
+[12,]    3    4    5
+
+$area
+[1] 956.7945
+
+$vol
+[1] 1030.59
+
+$hull
+     [,1] [,2] [,3]
+[1,]    2    1    3
+[2,]    6    2    3
+[3,]    6    2    1
+[4,]    4    1    3
+[5,]    4    6    3
+[6,]    5    6    1
+[7,]    5    4    1
+[8,]    5    4    6
+
+$area
+[1] 508.412
+
+$vol
+[1] 160.8925
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    3    2    4
+ [2,]    3    8    4
+ [3,]    7    2    9
+ [4,]    7    2    4
+ [5,]    7    8    9
+ [6,]    7    8    4
+ [7,]    6    2    9
+ [8,]    6    8    9
+ [9,]    1    3    2
+[10,]    1    3    8
+[11,]    1    6    2
+[12,]    1    6    8
+
+$area
+[1] 2.771477
+
+$vol
+[1] 0.1886601
+
+$hull
+     [,1] [,2] [,3]
+[1,]    2    5    1
+[2,]    2    3    1
+[3,]    2    3    5
+[4,]    4    5    1
+[5,]    4    3    1
+[6,]    4    3    5
+
+$area
+[1] 16.44502
+
+$vol
+[1] 1.156468
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    2    5    1
+ [2,]    6    2    1
+ [3,]   11    5   10
+ [4,]   11    6   10
+ [5,]   11    6    1
+ [6,]    8    6    2
+ [7,]    8    2    5
+ [8,]    4    5    1
+ [9,]    4   11    1
+[10,]    4   11    5
+[11,]    9    5   10
+[12,]    9    8    5
+[13,]    9    6   10
+[14,]    9    8    6
+
+$area
+[1] 108.2664
+
+$vol
+[1] 69.95656
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    2    7    5
+ [2,]    8    2    7
+ [3,]    8   11    7
+ [4,]    6    7    5
+ [5,]    6   11    7
+ [6,]   10    8    2
+ [7,]   10    8   11
+ [8,]    4    6    5
+ [9,]    4    2    5
+[10,]    4   10    2
+[11,]    3   10   11
+[12,]    3    4   10
+[13,]    3    6   11
+[14,]    3    4    6
+
+$area
+[1] 224.6459
+
+$vol
+[1] 174.4089
+
+$hull
+      [,1] [,2] [,3]
+ [1,]    9    7   10
+ [2,]    5    7   10
+ [3,]    8    7    1
+ [4,]    8    9    1
+ [5,]    8    9    7
+ [6,]   11    5   10
+ [7,]   11    9   10
+ [8,]   11    9    1
+ [9,]    2    7    1
+[10,]    2    5    7
+[11,]    2   11    1
+[12,]    2   11    5
+
+$area
+[1] 441.4269
+
+$vol
+[1] 222.4795
+
+$hull
+     [,1] [,2] [,3]
+[1,]    2    6    3
+[2,]    1    2    3
+[3,]    1    2    6
+[4,]    4    6    3
+[5,]    4    1    3
+[6,]    4    1    6
+
+$area
+[1] 540.7251
+
+$vol
+[1] 164.438
+
+$hull
+     [,1] [,2] [,3]
+[1,]    3    1    4
+[2,]    2    1    4
+[3,]    2    3    4
+[4,]    2    3    1
+
+$area
+[1] 7.671573
+
+$vol
+[1] 0.1675174
+
+Show in New WindowClear OutputExpand/Collapse Output
+subsample
+<dbl>
+index
+<dbl>
+X
+<dbl>
+Y
+<dbl>
+Z
+<dbl>
+1	1	45.767326	18.348572	19.531727
+1	1	45.546421	20.536438	19.743763
+1	1	50.996304	23.169432	20.903540
+1	1	52.110165	20.991636	18.093042
+1	1	47.729237	19.488501	21.260769
+1	1	54.736748	22.126566	21.776726
+1	1	54.448341	21.688272	19.451294
+1	1	45.160717	20.956539	22.492073
+1	1	48.010471	18.725950	21.854570
+1	1	39.363724	22.230516	21.438242
+Next123456...30Previous
+1-10 of 298 rows
+Show in New WindowClear OutputExpand/Collapse Output
+Calculating linear constraints...done.
+Sampling 53958 random points via hit-and-run, 1000 per chunk...
+                                                                                            
+done.
+Error in print(Volume) : object 'Volume' not found
 
 #Productivity Data
 
@@ -475,7 +1733,11 @@ RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
 
 MovementPerTime_Data <-
 bind_rows(GolfBall_DistPerTime_Pre, HalfTire_DistPerTime_Pre, RoachRun_DistPerTime_Pre, GolfBall_DistPerTime_Post, RoachRun_DistPerTime_Post) %>%
-  arrange(BACI_date, site) 
+  arrange(BACI_date, site) %>%
+  mutate(ID = 1) %>% 
+  group_by(ID) %>%
+  mutate(unique_ID = cumsum(ID)) %>%
+  select(date, BACI_date, event, site, unique_ID, subsample, index, DistPerTime_Median, DistPerTime_Mean)
 MovementPerTime_Data
 ```
 ###Distance to Forage Attempt (DFA)
