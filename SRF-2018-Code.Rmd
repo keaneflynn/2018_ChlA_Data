@@ -638,6 +638,14 @@ for (i in 1:33) {
     convhulln("FA") %>%
     print()
 }
+
+vol_test <- RoachRun_Volume_Post %>%
+   filter(index == 1) %>%
+    select(X, Y, Z) %>%
+    as.matrix() %>%
+    convhulln("FA") 
+
+print(vol_test$vol)
 ```
 ###Overlap in Forage Volumes
 Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
@@ -683,7 +691,6 @@ test <- hypervolume_set(HV2, HV4, num.points.max = NULL,
 verbose = TRUE, check.memory = FALSE, distance.factor = 1)
 
 str(test)
-names(test)
 
 myvol <- test@HVList$Intersection@Volume
 ```
