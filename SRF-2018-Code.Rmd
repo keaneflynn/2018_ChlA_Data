@@ -321,6 +321,11 @@ RoachRun_VidSync_Post <-
            skip = 2,
                     col_names = c("objects", "event", "timecode", "time", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
                     col_types = "cccdddddddd")
+
+HalfTire_VidSync_Post <- readr::read_csv(file = "VidSync-Data/PostAugmentation/Porter_BACI_HalfTire_5July2018_Part3.csv",
+           skip = 2,
+                    col_names = c("objects", "event", "timecode", "time", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
+                    col_types = "cccdddddddd")
 ```
 ##Analyzation
 We will be analyzing functions such as NND, distance travelled per time (cm/s), distance to forage attempt (DFA), proportion of forage types, volume occupied, overlap in forage volumes, etc.
@@ -473,8 +478,34 @@ RoachRun_DistPerTime_Post <- RoachRun_VidSync_Post %>%
   distinct() %>%
   arrange(as.numeric(index))
 
+HalfTire_DistPerTime_Post <- HalfTire_VidSync_Post %>%
+  arrange(objects, time) %>% 
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = as.numeric(str_extract(objects, "\\d"))) %>%
+  mutate(index = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(fish_distance_travelled_cm = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  mutate(date = as.Date("2018-07-05")) %>%
+  mutate(BACI_date = as.Date("2018-07-05")) %>%
+  mutate(site = "18.5") %>%
+  mutate(event = "After") %>%
+  group_by(index) %>%
+  mutate(distance_cm_per_sec = fish_distance_travelled_cm /(time - lag(time, default = first(time)))) %>%
+  filter(!distance_cm_per_sec == Inf) %>%
+  mutate(DistPerTime_Median = median(fish_distance_travelled_cm)) %>%
+  mutate(DistPerTime_Mean = mean(fish_distance_travelled_cm)) %>%
+  dplyr::select(date, BACI_date, event, site, subsample, index, DistPerTime_Median, DistPerTime_Mean) %>%
+  distinct() %>%
+  arrange(as.numeric(index))
+
 MovementPerTime_Data <-
-bind_rows(GolfBall_DistPerTime_Pre, HalfTire_DistPerTime_Pre, RoachRun_DistPerTime_Pre, GolfBall_DistPerTime_Post, RoachRun_DistPerTime_Post) %>%
+bind_rows(RoachRun_DistPerTime_Pre, RoachRun_DistPerTime_Post, GolfBall_DistPerTime_Pre, GolfBall_DistPerTime_Post, HalfTire_DistPerTime_Pre, HalfTire_DistPerTime_Post) %>%
   arrange(BACI_date, site) %>%
   mutate(ID = 1) %>% 
   group_by(ID) %>%
@@ -529,6 +560,7 @@ for (i in 1:13) {
   if (i == 10) {
     next
   }
+  GB_Pre_Filename <- paste("GB_Vol_Pre_", toString(i), sep = "")
   GolfBall_Volume_Pre %>%
     filter(index == i) %>%
     select(X, Y, Z) %>%
@@ -639,6 +671,55 @@ for (i in 1:33) {
     print()
 }
 
+HalfTire_Volume_Post <- HalfTire_VidSync_Post %>%
+  arrange(objects) %>%
+  filter(!grepl("Surface_Shots.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  mutate(subsample = str_extract(objects, "\\d")) %>%
+  mutate(index = str_extract(objects, "\\h\\d{1,2}")) %>%
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>%
+  transform(index = as.numeric(index),
+            subsample = as.numeric(subsample)) %>%
+  arrange(subsample, index, time) %>%
+  select(subsample, index, X, Y, Z) %>%
+  arrange(subsample, index)
+
+for (i in 1:48) {
+  if (i == 6) {
+    next
+  }
+  if (i == 7) {
+    next
+  }
+  if (i == 8) {
+    next
+  }
+  if (i == 14) {
+    next
+  }
+  if (i == 20) {
+    next
+  }
+  if (i == 29) {
+    next
+  }
+  if (i == 36) {
+    next
+  }
+  if (i == 40) {
+    next
+  }
+  if (i == 41) {
+    next
+  }
+  HalfTire_Volume_Post %>%
+    filter(index == i) %>%
+    select(X, Y, Z) %>%
+    as.matrix() %>%
+    convhulln("FA") %>%
+    print()
+}
+
 vol_test <- RoachRun_Volume_Post %>%
    filter(index == 1) %>%
     select(X, Y, Z) %>%
@@ -654,8 +735,7 @@ Using the 'Hypervolume' package to calculate overlap in occupied volumes by the 
 ```{r}
 #for (A in 1:6) {
   #GolfBall_Volume_Pre %>%
-    #filter(subsample == A) %>%
-    #group_by(subsample)
+    #filter(subsample == A)
   for (B in 1:13) {
     if (B == 3) {
       next
