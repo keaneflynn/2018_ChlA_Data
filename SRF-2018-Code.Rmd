@@ -19,6 +19,7 @@ library(geometry)
 library(rgl)
 library(hypervolume)
 library(zoo)
+library(stringr)
 ```
 
 #Productivity Data
@@ -333,11 +334,115 @@ We will be analyzing functions such as NND, distance travelled per time (cm/s), 
 This will use the three dimensional distance formula to look at nearest neighbor at any given time during the subsample rather than the average centroid point.
 ####Pre-Augmentation
 ```{r}
+nnd_GolfBall_Pre <- GolfBall_VidSync_Pre %>%
+  ungroup() %>%
+  filter(grepl("^Subsample.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  filter(!grepl("^Attack.*", event)) %>%
+  filter(!grepl("^Nip.*", event)) %>%
+  mutate(Fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
+  dplyr::select(Fish_ID, event, time, X, Y, Z) %>%
+  arrange(time) %>%
+  group_by(time) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(nnd = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(time) %>%
+  filter(!nnd == 0) %>%
+  filter(nnd == min(nnd)) %>%
+  ungroup() %>%
+  group_by(Fish_ID) #%>%
+  #summarise(median_nnd = median(nnd))
+nnd_GolfBall_Pre
 
+nnd_HalfTire_Pre <- HalfTire_VidSync_Pre %>%
+  ungroup() %>%
+  filter(grepl("^Subsample.*", objects)) %>%
+  mutate(Fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
+  dplyr::select(Fish_ID, time, X, Y, Z) %>%
+  arrange(time) %>%
+  group_by(time) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(nnd = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(time) %>%
+  filter(!nnd == 0) %>%
+  filter(nnd == min(nnd)) %>%
+  ungroup() %>%
+  group_by(Fish_ID) %>%
+  summarise(median_nnd = median(nnd))
+nnd_HalfTire_Pre
 ```
 ####Post-Augmentation
 ```{r}
+nnd_GolfBall_Post <- GolfBall_VidSync_Post %>%
+  ungroup() %>%
+  filter(grepl("^Subsample.*", objects)) %>%
+  mutate(Fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
+  dplyr::select(Fish_ID, time, X, Y, Z) %>%
+  arrange(time) %>%
+  group_by(time) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(nnd = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(time) %>%
+  filter(!nnd == 0) %>%
+  filter(nnd == min(nnd)) %>%
+  ungroup() %>%
+  group_by(Fish_ID) %>%
+  summarise(median_nnd = median(nnd))
+nnd_GolfBall_Post
 
+nnd_HalfTire_Post <- HalfTire_VidSync_Post %>%
+  ungroup() %>%
+  filter(grepl("^Subsample.*", objects)) %>%
+  mutate(Fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
+  dplyr::select(Fish_ID, time, X, Y, Z) %>%
+  arrange(time) %>%
+  group_by(time) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(nnd = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(time) %>%
+  filter(!nnd == 0) %>%
+  filter(nnd == min(nnd)) %>%
+  ungroup() %>%
+  group_by(Fish_ID) %>%
+  summarise(median_nnd = median(nnd))
+nnd_HalfTire_Post
+
+nnd_RoachRun_Pre <- RoachRun_VidSync_Pre %>%
+  ungroup() %>%
+  filter(grepl("^Subsample.*", objects)) %>%
+  mutate(Fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
+  dplyr::select(Fish_ID, time, X, Y, Z) %>%
+  arrange(time) %>%
+  group_by(time) %>%
+  mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
+  mutate(distance_travelled_Y_cm = Y - lag(Y, default = first(Y))) %>%
+  mutate(distance_travelled_Z_cm = Z - lag(Z, default = first(Z))) %>%
+  mutate(nnd = sqrt((distance_travelled_X_cm)^2
+                                        + (distance_travelled_Y_cm)^2
+                                        + (distance_travelled_Z_cm)^2)) %>%
+  group_by(time) %>%
+  filter(!nnd == 0) %>%
+  filter(nnd == min(nnd)) %>%
+  ungroup() %>%
+  group_by(Fish_ID) %>%
+  summarise(median_nnd = median(nnd))
+nnd_RoachRun_Pre
 ```
 ###Distance Travelled per Time (cm/s)
 This will use the three dimensional distance formula divided by time.
@@ -717,7 +822,6 @@ for (i in 1:48) {
     as.matrix() %>%
     convhulln("FA") %>%
     print()
-    #print.HypervolumeList()
 }
 
 vol_test <- RoachRun_Volume_Post %>%
@@ -731,26 +835,28 @@ print(vol_test$vol)
 ###Overlap in Forage Volumes
 Using the 'Hypervolume' package to calculate overlap in occupied volumes by the fish observed in each subsample.
 
+Potential list of tools to use from this package: 
+expectation_convex
+get_volume
+get_centroid
+
+
 ####Pre-Augmentation
 ```{r}
-#for (A in 1:6) {
-  #GolfBall_Volume_Pre %>%
-    #filter(subsample == A)
-  for (B in 1:13) {
-    if (B == 3) {
+for (i in 1:13) {
+  if (i == 3) {
       next
     }
-    if (B == 10) {
+  if (i == 10) {
       next
     }
-    HV <- GolfBall_Volume_Pre %>%
-      filter(index == B) %>%
+    GolfBall_Volume_Pre %>%
+      filter(index == i) %>%
       select(X, Y, Z) %>%
-      as.matrix() %>%
       expectation_convex(check.memory = FALSE) %>%
       print()
   }
-#}
+
   
 
 #look into making a function or creating a list (i.e. list1 = c(HV1, HV2, HV3, etc.) for each forloop scenario)
@@ -764,8 +870,7 @@ HV2 <- GolfBall_Volume_Pre %>%
 HV4 <- GolfBall_Volume_Pre %>%
   filter(index == "4") %>%
   select(X, Y, Z) %>%
-  as.matrix() %>%
-  expectation_convex(check.memory = FALSE)
+  expectation_convex(check.memory = FALSE) 
 
 test <- hypervolume_set(HV2, HV4, num.points.max = NULL,
 verbose = TRUE, check.memory = FALSE, distance.factor = 1)
@@ -773,6 +878,8 @@ verbose = TRUE, check.memory = FALSE, distance.factor = 1)
 str(test)
 
 myvol <- test@HVList$Intersection@Volume
+
+get_volume(HV4)
 ```
 ####Post-Augmentation
 ```{r}
