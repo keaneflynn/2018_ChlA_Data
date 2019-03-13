@@ -354,8 +354,8 @@ nnd_GolfBall_Pre <- GolfBall_VidSync_Pre %>%
   filter(!nnd == 0) %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
-  group_by(Fish_ID) #%>%
-  #summarise(median_nnd = median(nnd))
+  group_by(Fish_ID) %>%
+  summarise(median_nnd = median(nnd))
 nnd_GolfBall_Pre
 
 nnd_HalfTire_Pre <- HalfTire_VidSync_Pre %>%
@@ -385,7 +385,7 @@ nnd_GolfBall_Post <- GolfBall_VidSync_Post %>%
   ungroup() %>%
   filter(grepl("^Subsample.*", objects)) %>%
   mutate(Fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
-  dplyr::select(Fish_ID, time, X, Y, Z) %>%
+  dplyr::select(Fish_ID, event, time, X, Y, Z) %>%
   arrange(time) %>%
   group_by(time) %>%
   mutate(distance_travelled_X_cm = X - lag(X, default = first(X))) %>%
@@ -398,8 +398,8 @@ nnd_GolfBall_Post <- GolfBall_VidSync_Post %>%
   filter(!nnd == 0) %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
-  group_by(Fish_ID) %>%
-  summarise(median_nnd = median(nnd))
+  group_by(Fish_ID) #%>%
+  #summarise(median_nnd = median(nnd))
 nnd_GolfBall_Post
 
 nnd_HalfTire_Post <- HalfTire_VidSync_Post %>%
@@ -857,7 +857,7 @@ for (i in 1:13) {
       print()
   }
 
-  
+function()
 
 #look into making a function or creating a list (i.e. list1 = c(HV1, HV2, HV3, etc.) for each forloop scenario)
 
