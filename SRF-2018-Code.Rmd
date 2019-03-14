@@ -503,6 +503,11 @@ nnd_RoachRun_Post <- RoachRun_VidSync_Post %>%
   mutate(site = "18.5") %>%
   mutate(event = "After") 
 nnd_RoachRun_Post
+
+nnd_data <- 
+  bind_rows(nnd_RoachRun_Pre, nnd_RoachRun_Post, nnd_GolfBall_Pre, nnd_GolfBall_Post, nnd_HalfTire_Pre, nnd_HalfTire_Post) %>%
+  select(date, BACI_date, event, site, index, mean_nnd)
+nnd_data
 ```
 ###Distance Travelled per Time (cm/s)
 This will use the three dimensional distance formula divided by time.
