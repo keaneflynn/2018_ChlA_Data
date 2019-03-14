@@ -355,7 +355,7 @@ nnd_GolfBall_Pre <- GolfBall_VidSync_Pre %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
   group_by(index) %>%
-  summarise(mean_nnd = mean(nnd)) %>%
+  summarise(mean_nnd = mean(nnd), median_nnd = median(nnd)) %>%
   mutate(date = as.Date("2018-06-30")) %>%
   mutate(BACI_date = as.Date("2018-06-29")) %>%
   mutate(site = "18.3") %>%
@@ -383,7 +383,7 @@ nnd_HalfTire_Pre <- HalfTire_VidSync_Pre %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
   group_by(index) %>%
-  summarise(mean_nnd = mean(nnd)) %>%
+  summarise(mean_nnd = mean(nnd), median_nnd = median(nnd)) %>%
   mutate(date = as.Date("2018-06-29")) %>%
   mutate(BACI_date = as.Date("2018-06-29")) %>%
   mutate(site = "18.8") %>%
@@ -411,7 +411,7 @@ nnd_RoachRun_Pre <- RoachRun_VidSync_Pre %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
   group_by(index) %>%
-  summarise(mean_nnd = mean(nnd)) %>%
+  summarise(mean_nnd = mean(nnd), median_nnd = median(nnd)) %>%
   mutate(date = as.Date("2018-06-29")) %>%
   mutate(BACI_date = as.Date("2018-06-29")) %>%
   mutate(site = "18.5") %>%
@@ -441,7 +441,7 @@ nnd_GolfBall_Post <- GolfBall_VidSync_Post %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
   group_by(index) %>%
-  summarise(mean_nnd = mean(nnd)) %>%
+  summarise(mean_nnd = mean(nnd), median_nnd = median(nnd)) %>%
   mutate(date = as.Date("2018-07-06")) %>%
   mutate(BACI_date = as.Date("2018-07-05")) %>%
   mutate(site = "18.3") %>%
@@ -469,7 +469,7 @@ nnd_HalfTire_Post <- HalfTire_VidSync_Post %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
   group_by(index) %>%
-  summarise(mean_nnd = mean(nnd)) %>%
+  summarise(mean_nnd = mean(nnd), median_nnd = median(nnd)) %>%
   mutate(date = as.Date("2018-07-05")) %>%
   mutate(BACI_date = as.Date("2018-07-05")) %>%
   mutate(site = "18.8") %>%
@@ -497,7 +497,7 @@ nnd_RoachRun_Post <- RoachRun_VidSync_Post %>%
   filter(nnd == min(nnd)) %>%
   ungroup() %>%
   group_by(index) %>%
-  summarise(mean_nnd = mean(nnd)) %>%
+  summarise(mean_nnd = mean(nnd), median_nnd = median(nnd)) %>%
   mutate(date = as.Date("2018-07-05")) %>%
   mutate(BACI_date = as.Date("2018-07-05")) %>%
   mutate(site = "18.5") %>%
@@ -506,7 +506,7 @@ nnd_RoachRun_Post
 
 nnd_data <- 
   bind_rows(nnd_RoachRun_Pre, nnd_RoachRun_Post, nnd_GolfBall_Pre, nnd_GolfBall_Post, nnd_HalfTire_Pre, nnd_HalfTire_Post) %>%
-  select(date, BACI_date, event, site, index, mean_nnd)
+  select(date, BACI_date, event, site, index, mean_nnd, median_nnd)
 nnd_data
 ```
 ###Distance Travelled per Time (cm/s)
