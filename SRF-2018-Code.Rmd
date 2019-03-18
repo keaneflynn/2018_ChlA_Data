@@ -698,7 +698,16 @@ Breaking down the proportion of each type of forage event and how it changes thr
 
 ####Pre-Augmentation
 ```{r}
-
+GolfBall_ForageDist_Pre <- GolfBall_VidSync_Pre %>%
+  filter(grepl("^Subsample.*", objects)) %>%
+  filter(!grepl("^Length.*", event)) %>%
+  select(objects, event, time) %>%
+  arrange(time) %>%
+  mutate(drift_forage = if_else(grepl("^Drift_Forage", event), 1, 0)) %>%
+  mutate(search_forage = if_else(grepl("^Search_Forage", event), 1, 0)) %>%
+  mutate(benthic_forage = if_else(grepl("^Benthic_Forage", event), 1, 0)) %>%
+  mutate(other = if_else(grepl("Movement|Surface_Strike|Nip|Attack", event), 1, 0))
+GolfBall_Forage_Pre
 ```
 ####Post-Augmentation
 ```{r}
@@ -923,8 +932,8 @@ for (i in 1:13) {
   }
 
 hypervolume_grab <- function(X, Y, Z) {
-  base::as.matrix() %>%
   group_by(index) %>%
+  base::as.matrix() %>%
   select(X, Y, Z) %>%
   expectation_convex(check.memory = FALSE) 
 }
