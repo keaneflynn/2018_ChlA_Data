@@ -198,7 +198,8 @@ CombiningMovement_Efish <- EFishing_Data %>%
 #TU Hydrology Data
 ```{r}
 Porter_FlowData <-
-  readr::read_csv("Hydrology/PorterCreek_FlowData_TU.csv") %>%
+  readr::read_csv("Hydrology/PorterCreek_FlowData_TU/Po04-Table 1.csv", 
+                  skip = 4) %>%
   mutate(Date = str_extract(SampleDate, "\\d......")) %>%
   group_by(Date) %>%
   summarise(Streamflow_cfs = mean(Streamflow_cfs)) %>%
@@ -270,19 +271,53 @@ Flow_MovementData <- EFish_Movement_Data %>%
   filter(!Date.x == "NA")
   names(Flow_MovementData)[1] <- "Date"
 Flow_MovementData
-Flow_MovementData$Date <- as.Date(Flow_MovementData$Date, "%m/%d/%Y")
+Flow_MovementData$Date <- as.Date(Flow_MovementData$Date, "%m/%d/%y")
+Flow_MovementData
 ```
 
 ###Movement Data vs Discharge Data
 ```{r}
 ggplot(Flow_MovementData) + 
-  geom_col(aes(x = Date, y = Max_Ping_Tally), width = 0.5, fill = "blue") + 
-  geom_line(aes(x = Date, y = Streamflow_gpm/5), group = 1, color = "red") + 
+  geom_col(aes(x = Date, y = Max_Ping_Tally), width = 0.5, fill = "darkblue") + 
+  geom_line(aes(x = Date, y = Streamflow_gpm/5), group = 1, color = "goldenrod") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Discharge (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
   ggtitle("Discharge vs Interpool Movement Relationship") +
-  theme(axis.text.y.right = element_text(colour="red"), axis.text.y.left = element_text(colour="blue"), axis.title.y.right = element_text(color = "red"), axis.title.y.left = element_text(color = "blue"))
+  theme(axis.text.y.right = element_text(colour="goldenrod", face = "bold"), axis.text.y.left = element_text(colour="darkblue", face = "bold"), axis.title.y.right = element_text(color = "goldenrod", face = "bold"), axis.title.y.left = element_text(color = "darkblue", face = "bold"), plot.title = element_text(hjust = 0.5, size = 22, face = "bold"), axis.title.x = element_text(face = "bold", size = 18), axis.text.x = element_text(size = 12)) +
+  theme_bw()
+```
+
+#Macroinvertebrate Drift Data
+```{r}
+BMI_Drift_Flux_Dataset <- 
+  read_csv(file = "Macroinvertebrate/Porter_BACI_Study_Drift - BACI_Sites_2018.csv",
+           col_types = "cccccttdddddccdddddc") %>% 
+  arrange(desc(Event), Pool) %>% 
+  mutate(Test_Reach = ifelse(Pool == "18.2", "Control", if_else(Pool == "18.3", "Control", if_else(Pool == "18.4", "Control", "Augmented Flow")))) %>% 
+  select(Date, Test_Reach, Event, Pool, Duration_hrs, ID, biomass) %>% 
+  na.omit(TRUE) %>% 
+  group_by(Event, Pool) %>% 
+  mutate(BMI_Flux_mg_hrs = sum(biomass)/Duration_hrs) 
+BMI_Drift_Flux_Dataset$Date <- base::as.Date(BMI_Drift_Flux_Dataset$Date, "%m/%d/%Y")
+BMI_Drift_Flux_Dataset
+
+BMI_Drift_Flux_Dataset$Event <- factor(BMI_Drift_Flux_Dataset$Event, levels = c("Before", "After"))
+
+col_value <- c("Control" = "goldenrod", "Augmented Flow" = "darkblue")
+
+Macroinvertebrate_BACI_Flux <- 
+  ggplot(BMI_Drift_Flux_Dataset, aes(x = Event, y = BMI_Flux_mg_hrs)) + 
+  geom_point(aes(color = Test_Reach)) +
+  geom_line(aes(group = Pool, color = Test_Reach)) +
+  geom_text(aes(label = Pool, hjust = -0.2, vjust = -0.5, color = Test_Reach), check_overlap = TRUE) + 
+  scale_color_manual(values = col_value) +
+  xlab("Before/After Flow Augmentation") +
+  ylab("BMI Flux (mg/hour)") +
+  ggtitle("Changes in BMI Flux as a Function of Flow Augmentation") +
+  theme(plot.title = element_text(face = "bold", size = 15, hjust = 0.5), axis.title.x = element_text(size = 12, face = "bold"), axis.title.y = element_text(size = 12, face = "bold"), legend.title = element_text(size = 15), legend.text = element_text(size = 11)) +
+  labs(color = "Study Site")
+Macroinvertebrate_BACI_Flux
 ```
 
 #VidSync Data
@@ -707,7 +742,7 @@ GolfBall_ForageDist_Pre <- GolfBall_VidSync_Pre %>%
   mutate(search_forage = if_else(grepl("^Search_Forage", event), 1, 0)) %>%
   mutate(benthic_forage = if_else(grepl("^Benthic_Forage", event), 1, 0)) %>%
   mutate(other = if_else(grepl("Movement|Surface_Strike|Nip|Attack", event), 1, 0))
-GolfBall_Forage_Pre
+GolfBall_ForageDist_Pre
 ```
 ####Post-Augmentation
 ```{r}
@@ -931,15 +966,6 @@ for (i in 1:13) {
       print()
   }
 
-hypervolume_grab <- function(X, Y, Z) {
-  group_by(index) %>%
-  base::as.matrix() %>%
-  select(X, Y, Z) %>%
-  expectation_convex(check.memory = FALSE) 
-}
-
-
-hypervolume_grab(GolfBall_Volume_Pre)
 
 #look into making a function or creating a list (i.e. list1 = c(HV1, HV2, HV3, etc.) for each forloop scenario)
 
