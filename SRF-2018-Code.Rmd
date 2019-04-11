@@ -20,6 +20,7 @@ library(rgl)
 library(hypervolume)
 library(zoo)
 library(stringr)
+library(data.table)
 ```
 
 #Productivity Data
@@ -249,6 +250,23 @@ Augmentation_MovementData <- EFish_Movement_Data %>%
 Augmentation_MovementData 
 Augmentation_MovementData$Date <- as.Date(Augmentation_MovementData$Date, "%m/%d/%Y")
 ```
+###Fish Growth Data
+```{r}
+FishGrowth_Data <- EFishing_Data %>% 
+  select(Date, Unit, PIT, Recapture, Species, Length_mm, Weight_g) %>% 
+  filter(!PIT == "N/A") %>% 
+  filter(Species == "Omykiss" | Species == "Okisutch") %>% 
+  mutate(secondary = duplicated(PIT)) %>% 
+  add_count(PIT) %>% 
+  filter(n > 1) %>% 
+  arrange(PIT) %>% 
+  mutate(growth_g = Weight_g - lag(Weight_g)) %>%
+  mutate(growth_mm = Length_mm - lag(Length_mm)) %>% 
+  filter(secondary == TRUE) %>% 
+  select(Date, Unit, PIT, Species, Length_mm, Weight_g, growth_g, growth_mm)
+FishGrowth_Data
+```
+
 
 ###Movement Data vs Flow Graph
 ```{r}
@@ -283,9 +301,9 @@ ggplot(Flow_MovementData) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
   scale_y_continuous(sec.axis = sec_axis(~.*5, name = "Discharge (GPM)")) + 
   labs(x = "Date", y = "Salmonid PIT Movement Pings") + 
+  theme_bw() +
   ggtitle("Discharge vs Interpool Movement Relationship") +
-  theme(axis.text.y.right = element_text(colour="goldenrod", face = "bold"), axis.text.y.left = element_text(colour="darkblue", face = "bold"), axis.title.y.right = element_text(color = "goldenrod", face = "bold"), axis.title.y.left = element_text(color = "darkblue", face = "bold"), plot.title = element_text(hjust = 0.5, size = 22, face = "bold"), axis.title.x = element_text(face = "bold", size = 18), axis.text.x = element_text(size = 12)) +
-  theme_bw()
+  theme(axis.text.y.right = element_text(colour="goldenrod", face = "bold"), axis.text.y.left = element_text(colour="darkblue", face = "bold"), axis.title.y.right = element_text(color = "goldenrod", face = "bold"), axis.title.y.left = element_text(color = "darkblue", face = "bold"), plot.title = element_text(hjust = 0.5, size = 22, face = "bold"), axis.title.x = element_text(face = "bold", size = 18), axis.text.x = element_text(size = 12)) 
 ```
 
 #Macroinvertebrate Drift Data
